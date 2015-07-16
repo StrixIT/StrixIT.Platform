@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9D822AE8-E26C-4E35-B1CA-A8E8FB6147CC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StrixIT.Platform.Core</RootNamespace>
+    <AssemblyName>StrixIT.Platform.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Caching" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\ImageAttribute.cs" />
+    <Compile Include="Attributes\StrixNotDefaultAttribute.cs" />
+    <Compile Include="Attributes\StrixNotDefaultWithMembershipAttribute.cs" />
+    <Compile Include="Attributes\StrixRequiredAttribute.cs" />
+    <Compile Include="Attributes\StrixRequiredWithMembershipAttribute.cs" />
+    <Compile Include="BaseCrudDto.cs" />
+    <Compile Include="Cache\CacheService.cs" />
+    <Compile Include="Cache\ICacheService.cs" />
+    <Compile Include="Data Access\CustomFields\CustomField.cs" />
+    <Compile Include="Data Access\CustomFields\CustomFields.cs" />
+    <Compile Include="Data Access\CustomFields\CustomFieldType.cs" />
+    <Compile Include="Data Access\CustomFields\CustomFieldValue.cs" />
+    <Compile Include="Data Access\EntityFrameworkDataSource.cs" />
+    <Compile Include="Data Access\IDataSource.cs" />
+    <Compile Include="Data Access\ModifiedPropertyValue.cs" />
+    <Compile Include="Data Filtering\DataFilter.cs" />
+    <Compile Include="Data Filtering\Filter.cs" />
+    <Compile Include="Data Filtering\FilterField.cs" />
+    <Compile Include="Data Filtering\FilterFieldOperator.cs" />
+    <Compile Include="Data Filtering\FilterOptions.cs" />
+    <Compile Include="Data Filtering\FilterSortMap.cs" />
+    <Compile Include="Data Filtering\FilterSortMappingComparer.cs" />
+    <Compile Include="Data Filtering\FilterType.cs" />
+    <Compile Include="Data Filtering\SortField.cs" />
+    <Compile Include="Data Filtering\TraverseList.cs" />
+    <Compile Include="Data Mapping\CreateMapEventArgs.cs" />
+    <Compile Include="Data Mapping\DataMapper.cs" />
+    <Compile Include="Data Mapping\MapConfig.cs" />
+    <Compile Include="Entities\IValidationBase.cs" />
+    <Compile Include="Entities\ValidationBase.cs" />
+    <Compile Include="Environment\CultureData.cs" />
+    <Compile Include="Environment\DefaultEnvironment.cs" />
+    <Compile Include="Environment\IEnvironment.cs" />
+    <Compile Include="Environment\IUserContext.cs" />
+    <Compile Include="Environment\NullUserContext.cs" />
+    <Compile Include="Events\GeneralEvent.cs" />
+    <Compile Include="Events\IHandlePlatformEvent.cs" />
+    <Compile Include="Events\IPlatformEvent.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Files\FileSystemWrapper.cs" />
+    <Compile Include="Files\IFileSystemWrapper.cs" />
+    <Compile Include="Files\TemplateData.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="ICrudService.cs" />
+    <Compile Include="IMembershipService.cs" />
+    <Compile Include="Libraries\DynamicLinq.cs" />
+    <Compile Include="ListConfiguration.cs" />
+    <Compile Include="ListFieldConfiguration.cs" />
+    <Compile Include="Logging\ILoggingService.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
+    <Compile Include="Mailing\DefaultSmtpClient.cs" />
+    <Compile Include="Mailing\IMailer.cs" />
+    <Compile Include="Mailing\ISmtpClient.cs" />
+    <Compile Include="Mailing\Mailer.cs" />
+    <Compile Include="Mailing\MailQueueItem.cs" />
+    <Compile Include="Membership\GroupData.cs" />
+    <Compile Include="Membership\UserData.cs" />
+    <Compile Include="PlatformConstants.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceHelper.cs" />
+    <Compile Include="Resources\ClientEnumAttribute.cs" />
+    <Compile Include="Resources\DefaultInterface.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DefaultInterface.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\DefaultInterface.nl.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DefaultInterface.nl.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Diacritics.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Diacritics.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SaveResult.cs" />
+    <Compile Include="Startup and Configuration\Bootstrapper.cs" />
+    <Compile Include="Startup and Configuration\CoreRegistry.cs" />
+    <Compile Include="Startup and Configuration\DependencyInjector.cs" />
+    <Compile Include="Startup and Configuration\IDependencyInjector.cs" />
+    <Compile Include="Startup and Configuration\IInitializer.cs" />
+    <Compile Include="Startup and Configuration\IModuleConfiguration.cs" />
+    <Compile Include="Startup and Configuration\IWebInitializer.cs" />
+    <Compile Include="Startup and Configuration\ModuleLink.cs" />
+    <Compile Include="Startup and Configuration\ModuleManager.cs" />
+    <Compile Include="Startup and Configuration\PlatformConfigurationSection.cs" />
+    <Compile Include="Startup and Configuration\StructureMapDependencyInjector.cs" />
+    <Compile Include="StrixPlatform.cs" />
+    <Compile Include="Tokenizer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DefaultInterface.nl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DefaultInterface.nl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DefaultInterface.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DefaultInterface.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Diacritics.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Diacritics.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
