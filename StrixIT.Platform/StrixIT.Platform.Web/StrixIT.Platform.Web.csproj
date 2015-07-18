@@ -133,7 +133,6 @@
     <Compile Include="Web\LocalizedRoute.cs" />
     <Compile Include="Web\MvcConstants.cs" />
     <Compile Include="Web\MvcExtensions.cs" />
-    <Compile Include="Web\PlatformModelBinder.cs" />
     <Compile Include="Web\StrixPlatformBinder.cs" />
     <Compile Include="Web\UrlHelpers.cs" />
   </ItemGroup>
