@@ -166,6 +166,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y /E /F /I "$(TargetPath)" "c:\builds\"
+xcopy /Y /E /F /I "$(TargetPath)\..\nl" "c:\builds\nl"
+xcopy /Y /E /F /I "$(TargetPath)" "$(TargetPath)\..\..\..\..\StrixIT.Platform.WebClient\Libraries"
+xcopy /Y /E /F /I "$(TargetPath)\..\nl" "$(TargetPath)\..\..\..\..\StrixIT.Platform.WebClient\Libraries\nl"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
