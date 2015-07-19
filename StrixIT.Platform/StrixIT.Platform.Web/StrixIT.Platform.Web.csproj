@@ -165,8 +165,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y /E /F /I /D "$(TargetPath)" "c:\builds\Platform\"
-xcopy /Y /E /F /I "$(TargetPath)\..\nl\" "c:\builds\Platform\nl\"
+    <PostBuildEvent>xcopy /Y /E /F /I /D "$(TargetPath)" "c:\builds\Platform\Binaries\"
+xcopy /Y /E /F /I "$(TargetPath)\..\nl" "c:\builds\Platform\Binaries\nl\"
 xcopy /Y /E /F /I "$(TargetPath)" "$(TargetPath)\..\..\..\..\StrixIT.Platform.WebClient\Libraries"
 xcopy /Y /E /F /I "$(TargetPath)\..\nl" "$(TargetPath)\..\..\..\..\StrixIT.Platform.WebClient\Libraries\nl"</PostBuildEvent>
   </PropertyGroup>
