@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C1A04BD9-2789-4945-A5C6-AC24D0BCB250}</ProjectGuid>
+    <ProjectGuid>{F9CD1F26-1E1A-4BF1-A610-02F40D8CA2EA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StrixIT.Platform.Web.Tests</RootNamespace>
-    <AssemblyName>StrixIT.Platform.Web.Tests</AssemblyName>
+    <RootNamespace>StrixIT.Platform.Testing</RootNamespace>
+    <AssemblyName>StrixIT.Platform.Testing</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,27 +35,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver.2.46.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
@@ -71,71 +60,21 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Entities\CustomValidateEntity.cs" />
-    <Compile Include="Entities\EntityTests.cs" />
-    <Compile Include="Entities\TestController.cs" />
-    <Compile Include="Entities\TestEntity.cs" />
-    <Compile Include="JsonStatusResultTests.cs" />
+    <Compile Include="DriverExtensions.cs" />
+    <Compile Include="IISExpressProcess.cs" />
+    <Compile Include="IISRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\CmsClient.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CmsClient.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\CmsClient.nl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CmsClient.nl.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\MembershipClient.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MembershipClient.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\MembershipClient.nl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MembershipClient.nl.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\ResourceTests.cs" />
-    <Compile Include="TestEntityFactory.cs" />
-    <Compile Include="UrlHelpersTests.cs" />
-    <Compile Include="WebEnvironmentTests.cs" />
+    <Compile Include="TestBrowser.cs" />
+    <Compile Include="TestManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\CmsClient.nl.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>CmsClient.nl.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\CmsClient.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>CmsClient.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MembershipClient.nl.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>MembershipClient.nl.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MembershipClient.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>MembershipClient.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StrixIT.Platform.Core\StrixIT.Platform.Core.csproj">
       <Project>{9d822ae8-e26c-4e35-b1ca-a8e8fb6147cc}</Project>
       <Name>StrixIT.Platform.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StrixIT.Platform.Web\StrixIT.Platform.Web.csproj">
-      <Project>{85229ff8-8642-48e2-8043-93050b93af34}</Project>
-      <Name>StrixIT.Platform.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
@@ -158,6 +97,10 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y /E /F /I "$(TargetPath)" "c:\builds\Platform\Binaries\"
+xcopy /Y /E /F /I "$(TargetPath)" "$(TargetPath)\..\..\..\..\StrixIT.Platform.WebClient\Libraries"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

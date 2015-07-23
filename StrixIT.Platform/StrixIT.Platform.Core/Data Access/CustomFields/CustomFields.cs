@@ -28,7 +28,7 @@ using System.Linq.Dynamic;
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// A helper class to use custom fields.
+    /// A helper class to for custom fields.
     /// </summary>
     public static class CustomFields
     {
@@ -41,7 +41,7 @@ namespace StrixIT.Platform.Core
         /// <param name="query">The custom field value query</param>
         /// <param name="groupPropertyName">The property to group the custom field values by</param>
         /// <returns>The list of custom field values</returns>
-        public static IList<dynamic> GetCustomFieldsList<TType, TValue>(IQueryable<TValue> query, string groupPropertyName)
+        public static IList<dynamic> GetCustomFieldsList<TType, TValue>(this IQueryable<TValue> query, string groupPropertyName)
             where TType : CustomField
             where TValue : CustomFieldValue<TType> 
         {

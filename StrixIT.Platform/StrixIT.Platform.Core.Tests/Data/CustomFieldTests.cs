@@ -17,7 +17,8 @@ namespace StrixIT.Platform.Core.Tests
         public void GetTestFieldsForPropertyShouldReturnFieldsWithAllData()
         {
             var id = AdminId;
-            var result = CustomFields.GetCustomFieldsList<TestCustomField, TestCustomFieldValue>(GetCustomFields.AsQueryable().Where(x => x.UserId == id && x.Culture == "en"), "UserId").First();
+            var query = GetCustomFields.AsQueryable().Where(x => x.UserId == id && x.Culture == "en");
+            var result = query.GetCustomFieldsList<TestCustomField, TestCustomFieldValue>("UserId").First();
             Assert.AreEqual(new DateTime(1980, 8, 26), result.BirthDate);
             Assert.AreEqual("Leusden", result.City);
             Assert.AreEqual(5, result.Stars);
@@ -28,7 +29,8 @@ namespace StrixIT.Platform.Core.Tests
         public void GetTestFieldsForListShouldReturnListOfFieldsWithAllData()
         {
             var id = AdminId;
-            var result = CustomFields.GetCustomFieldsList<TestCustomField, TestCustomFieldValue>(GetCustomFields.AsQueryable(), "UserId");
+            var query = GetCustomFields.AsQueryable();
+            var result = query.GetCustomFieldsList<TestCustomField, TestCustomFieldValue>("UserId");
             var first = result[0];
             var second = result[1];
             Assert.AreEqual(new DateTime(1980, 8, 26), first.BirthDate);
