@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="UrlHelpers.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,13 +17,13 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Net;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -92,13 +93,13 @@ namespace StrixIT.Platform.Web
                 }
                 else if (value == replaceChar.Value
 
-                    // Ascii number range
+                         // Ascii number range
                          || (value >= 48 && value <= 57)
 
-                    // Ascii Upper case range
+                         // Ascii Upper case range
                          || (value >= 65 && value <= 90)
 
-                    // Ascii lower case range
+                         // Ascii lower case range
                          || (value >= 97 && value <= 122))
                 {
                     cleanText.Append(value);

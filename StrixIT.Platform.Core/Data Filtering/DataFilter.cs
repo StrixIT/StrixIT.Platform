@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="DataFilter.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.Collections.Concurrent;
@@ -66,7 +68,7 @@ namespace StrixIT.Platform.Core
             }
         }
 
-        #endregion
+        #endregion Filter Maps
 
         #region Filter, Sort and Page
 
@@ -139,11 +141,11 @@ namespace StrixIT.Platform.Core
         /// <param name="options">The page options to use</param>
         /// <returns>The paged query</returns>
         public static IQueryable Page(this IQueryable query, FilterOptions options)
-        {     
+        {
             return PageQuery(query, options);
         }
 
-        #endregion
+        #endregion Filter, Sort and Page
 
         #region Private Methods
 
@@ -389,6 +391,6 @@ namespace StrixIT.Platform.Core
             return prop.Name;
         }
 
-        #endregion
+        #endregion Private Methods
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="MvcService.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,15 +17,16 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
+#endregion Apache License
+
+using StrixIT.Platform.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using StrixIT.Platform.Core;
 
 namespace StrixIT.Platform.Web
 {
@@ -59,7 +61,7 @@ namespace StrixIT.Platform.Web
         public void ConfigureRoutes(RouteCollection routes)
         {
             var culture = StrixPlatform.DefaultCultureCode.ToLower();
-            
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.LowercaseUrls = true;
             routes.RouteExistingFiles = true;

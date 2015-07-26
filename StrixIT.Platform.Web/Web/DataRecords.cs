@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="DataRecords.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,10 +17,11 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
-using System.Collections;
+#endregion Apache License
+
 using StrixIT.Platform.Core;
+using System.Collections;
 
 namespace StrixIT.Platform.Web
 {
@@ -28,7 +30,9 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class DataRecords
     {
-        public DataRecords(IEnumerable data) : this(data, null) { }
+        public DataRecords(IEnumerable data) : this(data, null)
+        {
+        }
 
         public DataRecords(IEnumerable data, FilterOptions options)
         {

@@ -4,11 +4,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StrixIT.Platform.Core;
-using System;
 
 namespace StrixIT.Platform.Core.Tests
-{  
+{
     [TestClass()]
     public class StrixNotDefaultAttributeTest
     {

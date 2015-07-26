@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="DisplayOptions.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 namespace StrixIT.Platform.Web
 {
@@ -29,14 +31,18 @@ namespace StrixIT.Platform.Web
         /// Initializes a new instance of the <see cref="DisplayOptions" /> class.
         /// </summary>
         /// <param name="controller">The content controller</param>
-        public DisplayOptions(string controller) : this(null, controller, null, null, null, null) { }
+        public DisplayOptions(string controller) : this(null, controller, null, null, null, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisplayOptions" /> class.
         /// </summary>
         /// <param name="controller">The content controller</param>
         /// <param name="url">The content url</param>
-        public DisplayOptions(string controller, string url) : this(null, controller, null, url, null, null) { }
+        public DisplayOptions(string controller, string url) : this(null, controller, null, url, null, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisplayOptions" /> class.
@@ -44,7 +50,9 @@ namespace StrixIT.Platform.Web
         /// <param name="controller">The content controller</param>
         /// <param name="action">The content action</param>
         /// <param name="url">The content url</param>
-        public DisplayOptions(string controller, string action, string url) : this(null, controller, action, url, null, null) { }
+        public DisplayOptions(string controller, string action, string url) : this(null, controller, action, url, null, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisplayOptions" /> class.

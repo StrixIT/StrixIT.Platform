@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="CacheService.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.Collections.Generic;
@@ -34,17 +36,17 @@ namespace StrixIT.Platform.Core
         private int _absoluteExpiration = 6;
         private int _slidingExpiration = 0;
 
-        public int AbsoluteExpiration 
-        { 
-            get 
-            { 
+        public int AbsoluteExpiration
+        {
+            get
+            {
                 return this._absoluteExpiration;
             }
 
             set
             {
-                this._absoluteExpiration = value; 
-            } 
+                this._absoluteExpiration = value;
+            }
         }
 
         public int SlidingExpiration
@@ -54,7 +56,7 @@ namespace StrixIT.Platform.Core
                 return this._slidingExpiration;
             }
 
-            set 
+            set
             {
                 this._slidingExpiration = value;
             }

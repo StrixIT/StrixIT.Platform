@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="CustomFields.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.Collections;
@@ -43,7 +45,7 @@ namespace StrixIT.Platform.Core
         /// <returns>The list of custom field values</returns>
         public static IList<dynamic> GetCustomFieldsList<TType, TValue>(this IQueryable<TValue> query, string groupPropertyName)
             where TType : CustomField
-            where TValue : CustomFieldValue<TType> 
+            where TValue : CustomFieldValue<TType>
         {
             if (query == null)
             {
@@ -69,26 +71,30 @@ namespace StrixIT.Platform.Core
                             {
                                 customObject[property.CustomField.Name] = Convert.ToInt64(property.NumberValue);
                             }
- 
+
                             break;
+
                         case CustomFieldType.Float:
                             {
                                 customObject[property.CustomField.Name] = property.NumberValue;
-                            } 
+                            }
 
                             break;
+
                         case CustomFieldType.DateTime:
                             {
                                 customObject[property.CustomField.Name] = new DateTime(Convert.ToInt64(property.NumberValue));
-                            } 
+                            }
 
                             break;
+
                         case CustomFieldType.Boolean:
                             {
                                 customObject[property.CustomField.Name] = Convert.ToBoolean(property.NumberValue);
-                            } 
+                            }
 
                             break;
+
                         case CustomFieldType.String:
                             {
                                 customObject[property.CustomField.Name] = property.StringValue;

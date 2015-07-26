@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="WebRegistry.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,13 +17,14 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
-using System.Linq;
-using System.Web;
+#endregion Apache License
+
+using StrixIT.Platform.Core;
 using StructureMap.Configuration.DSL;
 using StructureMap.Web.Pipeline;
-using StrixIT.Platform.Core;
+using System.Linq;
+using System.Web;
 
 namespace StrixIT.Platform.Web
 {

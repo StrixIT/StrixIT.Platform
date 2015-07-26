@@ -4,7 +4,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System.Data.Entity;
-using System.Collections;
 
 namespace StrixIT.Platform.Core.Tests
 {

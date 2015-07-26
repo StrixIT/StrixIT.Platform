@@ -1,4 +1,5 @@
 ﻿#region License
+
 /*
 ** Code taken from SpecsForMvc to build a project and run it in IIS. Modified it to do the minimum
 ** required to run an integration test with Selenium.
@@ -15,7 +16,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#endregion
+
+#endregion License
 
 using System;
 using System.Diagnostics;
@@ -57,7 +59,7 @@ namespace StrixIT.Platform.Testing
             processStartInfo.Arguments = string.Format("/path:\"{0}\" /port:{1}", (object)this._pathToSite, (object)this.PortNumber);
 
             string path = (!string.IsNullOrEmpty(processStartInfo.EnvironmentVariables["programfiles(x86)"]) ? processStartInfo.EnvironmentVariables["programfiles(x86)"] : processStartInfo.EnvironmentVariables["programfiles"]) + "\\IIS Express\\iisexpress.exe";
-            
+
             if (!System.IO.File.Exists(path))
             {
                 throw new FileNotFoundException(string.Format("Did not find iisexpress.exe at {0}. Ensure that IIS Express is installed to the default location.", (object)path));

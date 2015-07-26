@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="FilterField.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,9 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
-using System;
+#endregion Apache License
 
 namespace StrixIT.Platform.Core
 {
@@ -31,13 +31,17 @@ namespace StrixIT.Platform.Core
         /// Initializes a new instance of the <see cref="FilterField" /> class.
         /// The operator is set to "Equals".
         /// </summary>
-        public FilterField() : this(FilterFieldOperator.Equals, null, null) { }
+        public FilterField() : this(FilterFieldOperator.Equals, null, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FilterField" /> class.
         /// </summary>
         /// <param name="filterOperator">The operator to use for filtering</param>
-        public FilterField(FilterFieldOperator filterOperator) : this(filterOperator, null, null) { }
+        public FilterField(FilterFieldOperator filterOperator) : this(filterOperator, null, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FilterField" /> class.

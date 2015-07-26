@@ -1,5 +1,4 @@
-﻿#region Apache License
-//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="FileSystemWrapper.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
 //
@@ -16,7 +15,6 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -28,8 +26,34 @@ namespace StrixIT.Platform.Core
 {
     public class FileSystemWrapper : IFileSystemWrapper
     {
-        private List<string> _savedQueue = new List<string>();
+        #region Private Fields
+
         private List<string> _deleteQueue = new List<string>();
+        private List<string> _savedQueue = new List<string>();
+
+        #endregion Private Fields
+
+        #region Public Methods
+
+        public void ClearDeleteQueue()
+        {
+            this._deleteQueue.Clear();
+        }
+
+        public void ClearSavedQueue()
+        {
+            this._savedQueue.Clear();
+        }
+
+        public void DeleteFile(string fullPath)
+        {
+            if (string.IsNullOrWhiteSpace(fullPath))
+            {
+                throw new ArgumentException("Invalid full path");
+            }
+
+            this._deleteQueue.Add(fullPath);
+        }
 
         public IList<TemplateData> GetHtmlTemplate(string directory, string templateName, string culture)
         {
@@ -107,6 +131,16 @@ namespace StrixIT.Platform.Core
             return results;
         }
 
+        public bool ProcessDeleteQueue()
+        {
+            return this.ProcessQueue(this._deleteQueue);
+        }
+
+        public bool RemoveFilesInSavedQueue()
+        {
+            return this.ProcessQueue(this._savedQueue);
+        }
+
         public bool SaveFile(string fullPath, byte[] data)
         {
             if (string.IsNullOrWhiteSpace(fullPath))
@@ -152,35 +186,9 @@ namespace StrixIT.Platform.Core
             return result;
         }
 
-        public void DeleteFile(string fullPath)
-        {
-            if (string.IsNullOrWhiteSpace(fullPath))
-            {
-                throw new ArgumentException("Invalid full path");
-            }
+        #endregion Public Methods
 
-            this._deleteQueue.Add(fullPath);
-        }
-
-        public bool ProcessDeleteQueue()
-        {
-            return this.ProcessQueue(this._deleteQueue);
-        }
-
-        public bool RemoveFilesInSavedQueue()
-        {
-            return this.ProcessQueue(this._savedQueue);
-        }
-
-        public void ClearDeleteQueue()
-        {
-            this._deleteQueue.Clear();
-        }
-
-        public void ClearSavedQueue()
-        {
-            this._savedQueue.Clear();
-        }
+        #region Private Methods
 
         private static Stream GetStream(string fileName)
         {
@@ -209,5 +217,7 @@ namespace StrixIT.Platform.Core
             queue.Clear();
             return result;
         }
+
+        #endregion Private Methods
     }
 }

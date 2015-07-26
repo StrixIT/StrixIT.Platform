@@ -5,10 +5,6 @@
 //------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using StrixIT.Platform.Core;
-using System.ComponentModel;
-using Moq;
 using System.Linq;
 
 namespace StrixIT.Platform.Core.Tests
@@ -84,7 +80,8 @@ namespace StrixIT.Platform.Core.Tests
             var result = ObjectExtensions.HasAttribute(type, typeof(SerializableAttribute), true);
             Assert.AreEqual(true, result);
         }
-        #endregion
+
+        #endregion Properties and Attributes
 
         #region Typed Values
 
@@ -159,7 +156,7 @@ namespace StrixIT.Platform.Core.Tests
             Assert.AreEqual(FilterFieldOperator.Contains, result);
         }
 
-        #endregion
+        #endregion Typed Values
 
         [TestMethod()]
         public void CreateGenericListShouldCreateANewList()

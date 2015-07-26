@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="NullUserContext.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.Collections.Generic;
@@ -27,9 +29,9 @@ namespace StrixIT.Platform.Core
     {
         public string Name
         {
-            get 
-            { 
-                return null; 
+            get
+            {
+                return null;
             }
         }
 

@@ -107,7 +107,7 @@ namespace StrixIT.Platform.Core.Tests
                 {
                     Name = "Test generated 1",
                     Number = 1
-                }, 
+                },
                 new TestEntity
                 {
                     Name = "Test generated 2",
@@ -136,7 +136,7 @@ namespace StrixIT.Platform.Core.Tests
             Assert.IsTrue(result.All(r => r.NotAvailable == null));
         }
 
-        #endregion
+        #endregion Project
 
         private void Init()
         {

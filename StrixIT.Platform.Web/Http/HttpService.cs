@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="HttpService.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,13 +17,14 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
+#endregion Apache License
+
+using StrixIT.Platform.Core;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using StrixIT.Platform.Core;
 
 namespace StrixIT.Platform.Web
 {

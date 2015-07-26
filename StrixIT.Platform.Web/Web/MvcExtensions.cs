@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="MvcExtensions.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,8 +17,12 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
+#endregion Apache License
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using StrixIT.Platform.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,9 +33,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using StrixIT.Platform.Core;
 
 namespace StrixIT.Platform.Web
 {
@@ -298,7 +300,7 @@ namespace StrixIT.Platform.Web
             return route;
         }
 
-        #endregion
+        #endregion Localized Route
 
         #region Admin Links
 
@@ -376,7 +378,7 @@ namespace StrixIT.Platform.Web
             return link;
         }
 
-        #endregion
+        #endregion Admin Links
 
         #region Render Razor templates
 
@@ -428,9 +430,10 @@ namespace StrixIT.Platform.Web
             return result;
         }
 
-        #endregion
+        #endregion Render Razor templates
 
         // Code taken from http://blog.falafel.com/loading-javascript-css-resources-nested-asp-net-partial-views/. Adapted to work for partials only.
+
         #region Scrips and Styles for Partials
 
         /// <summary>
@@ -485,7 +488,7 @@ namespace StrixIT.Platform.Web
             Styles.Add(styleUrl);
         }
 
-        #endregion
+        #endregion Scrips and Styles for Partials
 
         #region Content Links
 
@@ -640,7 +643,7 @@ namespace StrixIT.Platform.Web
             return helper.Action(action, controllerName, new { url = url });
         }
 
-        #endregion
+        #endregion Content Links
 
         #region RenderHtml
 
@@ -654,7 +657,7 @@ namespace StrixIT.Platform.Web
             return helper.Raw(Web.Helpers.HtmlDecode(text, false));
         }
 
-        #endregion
+        #endregion RenderHtml
 
         #region Private Methods
 
@@ -685,6 +688,6 @@ namespace StrixIT.Platform.Web
             return controller;
         }
 
-        #endregion
+        #endregion Private Methods
     }
 }

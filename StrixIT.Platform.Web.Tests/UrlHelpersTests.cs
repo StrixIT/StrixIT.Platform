@@ -5,8 +5,6 @@
 //------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using StrixIT.Platform.Core;
-using StrixIT.Platform.Web;
 
 namespace StrixIT.Platform.Web.Tests
 {
@@ -47,7 +45,7 @@ namespace StrixIT.Platform.Web.Tests
             Assert.AreEqual("2", result);
         }
 
-        #endregion
+        #endregion Clean Urls
 
         #region Unique Urls
 
@@ -81,6 +79,6 @@ namespace StrixIT.Platform.Web.Tests
             Assert.AreEqual("rutger-3", url);
         }
 
-        #endregion
+        #endregion Unique Urls
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="WebAssemblyLoader.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,10 +17,11 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
-using System.Web.Compilation;
+#endregion Apache License
+
 using StrixIT.Platform.Core;
+using System.Web.Compilation;
 
 namespace StrixIT.Platform.Web
 {

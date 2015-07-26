@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="ImageAttribute.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 
@@ -40,7 +42,9 @@ namespace StrixIT.Platform.Core
         /// </summary>
         /// <param name="width">The width of the image</param>
         /// <param name="height">The height of the image</param>
-        public ImageAttribute(int width, int height) : this(width, height, true, null) { }
+        public ImageAttribute(int width, int height) : this(width, height, true, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageAttribute" /> class.
@@ -48,7 +52,9 @@ namespace StrixIT.Platform.Core
         /// <param name="width">The width of the image</param>
         /// <param name="height">The height of the image</param>
         /// <param name="keepAspectRatio">True if the aspect ratio must be maintained, false otherwise</param>
-        public ImageAttribute(int width, int height, bool keepAspectRatio) : this(width, height, keepAspectRatio, null) { }
+        public ImageAttribute(int width, int height, bool keepAspectRatio) : this(width, height, keepAspectRatio, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageAttribute" /> class.
@@ -70,7 +76,9 @@ namespace StrixIT.Platform.Core
         /// </summary>
         /// <param name="widthProperty">The property that returns the width of the image</param>
         /// <param name="heightProperty">The property that returns the height of the image</param>
-        public ImageAttribute(string widthProperty, string heightProperty) : this(widthProperty, heightProperty, true, null) { }
+        public ImageAttribute(string widthProperty, string heightProperty) : this(widthProperty, heightProperty, true, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageAttribute" /> class.
@@ -78,7 +86,9 @@ namespace StrixIT.Platform.Core
         /// <param name="widthProperty">The property that returns the width of the image</param>
         /// <param name="heightProperty">The property that returns the height of the image</param>
         /// <param name="keepAspectRatio">True if the aspect ratio must be maintained, false otherwise</param>
-        public ImageAttribute(string widthProperty, string heightProperty, bool keepAspectRatio) : this(widthProperty, heightProperty, keepAspectRatio, null) { }
+        public ImageAttribute(string widthProperty, string heightProperty, bool keepAspectRatio) : this(widthProperty, heightProperty, keepAspectRatio, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageAttribute" /> class.

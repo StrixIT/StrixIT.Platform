@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="UserData.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,11 +17,11 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using StrixIT.Platform.Core;
 
 namespace StrixIT.Platform.Core
 {
@@ -33,7 +34,9 @@ namespace StrixIT.Platform.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="UserData" /> class.
         /// </summary>
-        public UserData() { }
+        public UserData()
+        {
+        }
 
         public UserData(Guid userId, string userName, string email)
         {

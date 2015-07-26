@@ -4,10 +4,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
-using StrixIT.Platform.Core;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StrixIT.Platform.Core.Tests
 {
@@ -32,7 +31,7 @@ namespace StrixIT.Platform.Core.Tests
             Assert.IsTrue(result.SequenceEqual(new string[] { "a", "b", "c" }));
         }
 
-        #endregion
+        #endregion ToLowerCase
 
         #region Length
 
@@ -44,7 +43,7 @@ namespace StrixIT.Platform.Core.Tests
             Assert.AreEqual(3, result);
         }
 
-        #endregion
+        #endregion Length
 
         #region IsEmpty
 
@@ -72,7 +71,7 @@ namespace StrixIT.Platform.Core.Tests
             Assert.AreEqual(false, result);
         }
 
-        #endregion
+        #endregion IsEmpty
 
         [TestMethod]
         public void GetFirstShouldReturnFirstMemberOfIEnumerable()

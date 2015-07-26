@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="DataMapper.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,8 +17,11 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
+#endregion Apache License
+
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -26,8 +30,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 
 namespace StrixIT.Platform.Core
 {
@@ -370,6 +372,6 @@ namespace StrixIT.Platform.Core
             return _autoMapperMethods[name].MakeGenericMethod(parameters);
         }
 
-        #endregion
+        #endregion Private Methods
     }
 }

@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="Mailer.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.IO;
@@ -40,7 +42,7 @@ namespace StrixIT.Platform.Core
             mail.IsBodyHtml = true;
             bool success = false;
             var mailSettings = Helpers.GetConfigSectionGroup<MailSettingsSectionGroup>("system.net/mailSettings");
-            var pickupDir = mailSettings != null && 
+            var pickupDir = mailSettings != null &&
                             mailSettings.Smtp != null &&
                             mailSettings.Smtp.SpecifiedPickupDirectory != null ?
                             mailSettings.Smtp.SpecifiedPickupDirectory.PickupDirectoryLocation : null;

@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="HomeController.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,10 +17,11 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
-using System.Web.Mvc;
+#endregion Apache License
+
 using StrixIT.Platform.Core;
+using System.Web.Mvc;
 
 namespace StrixIT.Platform.Web
 {
@@ -37,7 +39,7 @@ namespace StrixIT.Platform.Web
         public ActionResult Index()
         {
             this.WriteMessagesOnStartup();
-            
+
             if (StrixPlatform.Configuration.SecureHomeController && !this.HttpContext.Request.IsAuthenticated)
             {
                 return this.RedirectToAction("Login", "Account", new { area = "Membership", culture = StrixPlatform.CurrentCultureCode });

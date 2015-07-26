@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="DefaultEnvironment.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System.Collections.Generic;
 using System.IO;
@@ -36,7 +38,7 @@ namespace StrixIT.Platform.Core
 
         public string WorkingDirectory
         {
-            get 
+            get
             {
                 var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToLower();
 

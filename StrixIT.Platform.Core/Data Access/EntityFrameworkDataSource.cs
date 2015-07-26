@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="EntityFrameworkDataSource.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.Collections;
@@ -47,7 +49,9 @@ namespace StrixIT.Platform.Core
         /// </summary>
         /// <param name="connectionStringName">The name of the connection string to use. This name can be located in any of the configuration files loaded
         /// by the <see cref="ConfigurationLoader" />class</param>
-        protected EntityFrameworkDataSource(string connectionStringName) : base(GetConnection(connectionStringName)) { }
+        protected EntityFrameworkDataSource(string connectionStringName) : base(GetConnection(connectionStringName))
+        {
+        }
 
         #region Query
 
@@ -63,7 +67,7 @@ namespace StrixIT.Platform.Core
             return query;
         }
 
-        #endregion
+        #endregion Query
 
         #region Save
 
@@ -160,7 +164,7 @@ namespace StrixIT.Platform.Core
             return null;
         }
 
-        #endregion
+        #endregion Save
 
         #region Delete
 
@@ -203,7 +207,7 @@ namespace StrixIT.Platform.Core
             }
         }
 
-        #endregion
+        #endregion Delete
 
         #region SaveChanges
 
@@ -215,7 +219,7 @@ namespace StrixIT.Platform.Core
             base.SaveChanges();
         }
 
-        #endregion
+        #endregion SaveChanges
 
         #region Protected Methods
 
@@ -302,7 +306,7 @@ namespace StrixIT.Platform.Core
             return keyValues;
         }
 
-        #endregion
+        #endregion Protected Methods
 
         #region Private Methods
 
@@ -356,7 +360,7 @@ namespace StrixIT.Platform.Core
             }
 
             // If there is only one key property and it is an integer, return null to prevent returning
-            // an arbitrary object with an initial key value. 
+            // an arbitrary object with an initial key value.
             if (keyValues.Length == 1)
             {
                 var keyType = keyValues.First().GetType();
@@ -372,6 +376,6 @@ namespace StrixIT.Platform.Core
             return this.Set(type).Find(keyValues.ToArray());
         }
 
-        #endregion
+        #endregion Private Methods
     }
 }

@@ -5,7 +5,6 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using StrixIT.Platform.Core;
 
 namespace StrixIT.Platform.Core.Tests
 {

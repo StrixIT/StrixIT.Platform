@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="ClientResourceCollection.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.Collections.Generic;
@@ -28,10 +30,14 @@ namespace StrixIT.Platform.Web
     /// A class to collect resources (strings from resource files and localized enums) to send to the client.
     /// </summary>
     [Serializable]
-    public class ClientResourceCollection : Dictionary<string, IDictionary<string, string>> 
+    public class ClientResourceCollection : Dictionary<string, IDictionary<string, string>>
     {
-        public ClientResourceCollection() { }
+        public ClientResourceCollection()
+        {
+        }
 
-        protected ClientResourceCollection(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        protected ClientResourceCollection(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
     }
 }

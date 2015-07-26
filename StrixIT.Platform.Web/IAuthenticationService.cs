@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="IAuthenticationService.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System.Collections.Generic;
 
@@ -25,7 +27,9 @@ namespace StrixIT.Platform.Web
     public interface IAuthenticationService
     {
         LoginUserResult LogOn(string email, string password);
+
         void LogOff(string email);
+
         void LogOff(string email, IDictionary<string, object> sessionValues);
     }
 }

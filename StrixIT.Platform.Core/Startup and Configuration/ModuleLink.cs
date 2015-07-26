@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="ModuleLink.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 namespace StrixIT.Platform.Core
 {
@@ -29,14 +31,18 @@ namespace StrixIT.Platform.Core
         /// Initializes a new instance of the <see cref="ModuleLink" /> class.
         /// </summary>
         /// <param name="controllerName">The name of the controller for the link</param>
-        public ModuleLink(string controllerName) : this(controllerName, null, controllerName, null) { }
+        public ModuleLink(string controllerName) : this(controllerName, null, controllerName, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModuleLink" /> class.
         /// </summary>
         /// <param name="requiredPermission">The permission required to view and access the link</param>
         /// <param name="controllerName">The name of the controller for the link</param>
-        public ModuleLink(string requiredPermission, string controllerName) : this(controllerName, requiredPermission, controllerName, null) { }
+        public ModuleLink(string requiredPermission, string controllerName) : this(controllerName, requiredPermission, controllerName, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModuleLink" /> class.
@@ -44,7 +50,9 @@ namespace StrixIT.Platform.Core
         /// <param name="title">The link text</param>
         /// <param name="requiredPermission">The permission required to view and access the link</param>
         /// <param name="controllerName">The name of the controller for the link</param>
-        public ModuleLink(string title, string requiredPermission, string controllerName) : this(title, requiredPermission, controllerName, null) { }
+        public ModuleLink(string title, string requiredPermission, string controllerName) : this(title, requiredPermission, controllerName, null)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModuleLink" /> class.

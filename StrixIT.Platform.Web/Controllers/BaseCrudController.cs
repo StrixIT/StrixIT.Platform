@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="BaseCrudController.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,13 +17,14 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
+#endregion Apache License
+
+using StrixIT.Platform.Core;
 using System;
 using System.ComponentModel;
 using System.Web;
 using System.Web.Mvc;
-using StrixIT.Platform.Core;
 
 namespace StrixIT.Platform.Web
 {
@@ -36,12 +38,12 @@ namespace StrixIT.Platform.Web
         where TModel : class
     {
         /// <summary>
-        /// The CRUD service used. Exposed as a protected field to be able to use an upcast in specialized controllers more easily. 
+        /// The CRUD service used. Exposed as a protected field to be able to use an upcast in specialized controllers more easily.
         /// </summary>
         protected ICrudService<TKey, TModel> _service;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseCrudController{TKey,TModel}" /> class. 
+        /// Initializes a new instance of the <see cref="BaseCrudController{TKey,TModel}" /> class.
         /// </summary>
         /// <param name="service">The CRUD service to use</param>
         protected BaseCrudController(ICrudService<TKey, TModel> service)

@@ -6,10 +6,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using System.Drawing;
-using StrixIT.Platform.Core;
-using Moq;
-using System.Reflection;
 
 namespace StrixIT.Platform.Core.Tests
 {

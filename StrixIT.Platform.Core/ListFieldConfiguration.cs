@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="ListFieldConfiguration.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 namespace StrixIT.Platform.Core
 {
@@ -29,14 +31,18 @@ namespace StrixIT.Platform.Core
         /// Initializes a new instance of the <see cref="ListFieldConfiguration" /> class.
         /// </summary>
         /// <param name="name">The field name</param>
-        public ListFieldConfiguration(string name) : this(name, null, FilterFieldOperator.Contains) { }
+        public ListFieldConfiguration(string name) : this(name, null, FilterFieldOperator.Contains)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListFieldConfiguration" /> class.
         /// </summary>
         /// <param name="name">The field name</param>
         /// <param name="filterName">The name of the filter to render the field</param>
-        public ListFieldConfiguration(string name, string filterName) : this(name, filterName, FilterFieldOperator.Contains) { }
+        public ListFieldConfiguration(string name, string filterName) : this(name, filterName, FilterFieldOperator.Contains)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListFieldConfiguration" /> class.

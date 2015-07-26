@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="Bootstrapper.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 namespace StrixIT.Platform.Core
 {
@@ -30,30 +32,30 @@ namespace StrixIT.Platform.Core
         /// </summary>
         public static void Run()
         {
-                StrixPlatform.WriteStartupMessage("Application bootstrap start. Load assemblies if still required.");
-                ModuleManager.LoadAssemblies();
+            StrixPlatform.WriteStartupMessage("Application bootstrap start. Load assemblies if still required.");
+            ModuleManager.LoadAssemblies();
 
-                StrixPlatform.WriteStartupMessage("Load module configurations.");
-                ModuleManager.LoadConfigurations();
+            StrixPlatform.WriteStartupMessage("Load module configurations.");
+            ModuleManager.LoadConfigurations();
 
-                // Initialize membership data
-                var membershipService = DependencyInjector.TryGet<IMembershipService>();
+            // Initialize membership data
+            var membershipService = DependencyInjector.TryGet<IMembershipService>();
 
-                if (membershipService != null)
-                {
-                    StrixPlatform.WriteStartupMessage("Initialize membership");
-                    membershipService.Initialize();
-                }
+            if (membershipService != null)
+            {
+                StrixPlatform.WriteStartupMessage("Initialize membership");
+                membershipService.Initialize();
+            }
 
-                StrixPlatform.WriteStartupMessage("Run all application initializers");
+            StrixPlatform.WriteStartupMessage("Run all application initializers");
 
-                foreach (var initializer in DependencyInjector.GetAll<IInitializer>())
-                {
-                    StrixPlatform.WriteStartupMessage(string.Format("Start initializer {0}.", initializer.GetType().Name));
-                    initializer.Initialize();
-                }
+            foreach (var initializer in DependencyInjector.GetAll<IInitializer>())
+            {
+                StrixPlatform.WriteStartupMessage(string.Format("Start initializer {0}.", initializer.GetType().Name));
+                initializer.Initialize();
+            }
 
-                StrixPlatform.WriteStartupMessage("Application boostrap finished.");
+            StrixPlatform.WriteStartupMessage("Application boostrap finished.");
         }
     }
 }

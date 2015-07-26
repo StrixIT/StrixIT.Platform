@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="JsonNetResult.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,21 +17,24 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
+#endregion Apache License
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Globalization;
 using System.Text;
 using System.Web.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 
 namespace StrixIT.Platform.Web
 {
     public class JsonNetResult : ActionResult
     {
-        public JsonNetResult(object data, string contentType, Encoding contentEncoding) : this(data, contentType, contentEncoding, JsonRequestBehavior.DenyGet) { }
+        public JsonNetResult(object data, string contentType, Encoding contentEncoding) : this(data, contentType, contentEncoding, JsonRequestBehavior.DenyGet)
+        {
+        }
 
         public JsonNetResult(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior requestBehavior)
         {

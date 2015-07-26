@@ -4,9 +4,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace StrixIT.Platform.Core.Tests
 {

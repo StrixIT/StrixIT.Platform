@@ -10,8 +10,6 @@ using StrixIT.Platform.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace StrixIT.Platform.Web.Tests
@@ -19,8 +17,8 @@ namespace StrixIT.Platform.Web.Tests
     [TestClass]
     public class WebEnvironmentTests
     {
-        Mock<HttpContextBase> _httpContextMock = new Mock<HttpContextBase>();
-        Mock<HttpSessionStateBase> _sessionMock = new Mock<HttpSessionStateBase>();
+        private Mock<HttpContextBase> _httpContextMock = new Mock<HttpContextBase>();
+        private Mock<HttpSessionStateBase> _sessionMock = new Mock<HttpSessionStateBase>();
 
         [TestMethod]
         public void GetStringFromSessionWhenStoredInSessionAsSerializedStringShouldReturnString()

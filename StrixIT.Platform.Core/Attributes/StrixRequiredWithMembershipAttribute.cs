@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="StrixRequiredWithMembershipAttribute.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,7 +17,8 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -57,7 +59,7 @@ namespace StrixIT.Platform.Core
                 else if (objectType.Equals(typeof(string)))
                 {
                     if (string.IsNullOrWhiteSpace(value.ToString()))
-                    { 
+                    {
                         isValid = false;
                     }
                 }

@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="ConfirmationConfig.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,13 +17,16 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
+
+#endregion Apache License
 
 namespace StrixIT.Platform.Web
 {
     public class ConfirmationConfig
     {
-        public ConfirmationConfig() : this(null) { }
+        public ConfirmationConfig() : this(null)
+        {
+        }
 
         public ConfirmationConfig(string id)
         {

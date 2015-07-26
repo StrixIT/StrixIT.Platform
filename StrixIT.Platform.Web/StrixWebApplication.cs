@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="StrixWebApplication.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,17 +17,19 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
-using System;
-using System.Web;
-using System.Web.Mvc;
-using System.IO;
-using System.Web.Hosting;
+#endregion Apache License
+
 using StrixIT.Platform.Core;
 using StrixIT.Platform.Web;
+using System;
+using System.IO;
+using System.Web;
+using System.Web.Hosting;
+using System.Web.Mvc;
 
 [assembly: PreApplicationStartMethod(typeof(WebAssemblyLoader), "LoadAssemblies")]
+
 namespace StrixIT.Platform.Web
 {
     public class StrixWebApplication : HttpApplication

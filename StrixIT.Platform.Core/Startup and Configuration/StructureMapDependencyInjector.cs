@@ -1,4 +1,5 @@
 ﻿#region Apache License
+
 //-----------------------------------------------------------------------
 // <copyright file="StructureMapDependencyInjector.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
@@ -16,13 +17,14 @@
 // limitations under the License.
 // </copyright>
 //-----------------------------------------------------------------------
-#endregion
 
+#endregion Apache License
+
+using StructureMap;
+using StructureMap.Configuration.DSL;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using StructureMap;
-using StructureMap.Configuration.DSL;
 
 namespace StrixIT.Platform.Core
 {
