@@ -60,6 +60,10 @@ namespace StrixIT.Platform.Core
                     {
                         allText = allText.Substring(2);
                     }
+                    else if (allText.StartsWith("\n"))
+                    {
+                        allText = allText.Substring(1);
+                    }
                 }
                 else
                 {
