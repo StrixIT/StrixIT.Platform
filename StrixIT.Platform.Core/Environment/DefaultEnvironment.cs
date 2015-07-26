@@ -28,6 +28,8 @@ namespace StrixIT.Platform.Core
 {
     public class DefaultEnvironment : IEnvironment
     {
+        #region Public Properties
+
         public string CurrentUserEmail
         {
             get
@@ -51,6 +53,25 @@ namespace StrixIT.Platform.Core
             }
         }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public void AbandonSession()
+        {
+            return;
+        }
+
+        public T GetFromSession<T>(string key)
+        {
+            return default(T);
+        }
+
+        public IDictionary<string, object> GetSessionDictionary()
+        {
+            return new Dictionary<string, object>();
+        }
+
         public string MapPath(string path)
         {
             if (path.Contains("/"))
@@ -61,24 +82,11 @@ namespace StrixIT.Platform.Core
             return path;
         }
 
-        public T GetFromSession<T>(string key)
-        {
-            return default(T);
-        }
-
         public void StoreInSession(string key, object theObject)
         {
             return;
         }
 
-        public void AbandonSession()
-        {
-            return;
-        }
-
-        public IDictionary<string, object> GetSessionDictionary()
-        {
-            return new Dictionary<string, object>();
-        }
+        #endregion Public Methods
     }
 }

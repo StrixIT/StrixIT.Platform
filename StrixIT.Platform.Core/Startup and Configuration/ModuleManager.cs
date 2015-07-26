@@ -35,27 +35,34 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class ModuleManager
     {
-        private static object _loadAssembliesLock = new object();
-        private static object _loadConfigLock = new object();
-        private static bool _assembliesLoaded = false;
-        private static bool _configurationsLoaded = false;
+        #region Private Fields
+
         private static IList<Assembly> _assemblies = null;
+        private static bool _assembliesLoaded = false;
         private static Dictionary<string, IDictionary<string, string>> _combinedAppSettings;
         private static ConnectionStringSettingsCollection _combinedConnections;
+        private static bool _configurationsLoaded = false;
+        private static object _loadAssembliesLock = new object();
+        private static object _loadConfigLock = new object();
+
+        #endregion Private Fields
+
+        #region Public Properties
 
         /// <summary>
-        /// Gets all loaded assemblies.
+        /// Gets the app settings from all loaded config files.
         /// </summary>
-        public static IList<Assembly> LoadedAssemblies
+        /// <returns>A dictionary containing the app settings per module</returns>
+        public static IDictionary<string, IDictionary<string, string>> AppSettings
         {
             get
             {
-                if (!_assembliesLoaded)
+                if (!_configurationsLoaded)
                 {
-                    LoadAssemblies();
+                    LoadConfigurations();
                 }
 
-                return _assemblies;
+                return _combinedAppSettings;
             }
         }
 
@@ -77,34 +84,28 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Gets the app settings from all loaded config files.
+        /// Gets all loaded assemblies.
         /// </summary>
-        /// <returns>A dictionary containing the app settings per module</returns>
-        public static IDictionary<string, IDictionary<string, string>> AppSettings
+        public static IList<Assembly> LoadedAssemblies
         {
             get
             {
-                if (!_configurationsLoaded)
+                if (!_assembliesLoaded)
                 {
-                    LoadConfigurations();
+                    LoadAssemblies();
                 }
 
-                return _combinedAppSettings;
+                return _assemblies;
             }
         }
 
-        /// <summary>
-        /// Gets all types that can be assigned from the specified type from all loaded assemblies.
-        /// </summary>
-        /// <param name="baseType">The base type</param>
-        /// <returns>The types</returns>
-        public static IList<Type> GetTypeList(Type baseType)
-        {
-            return LoadedAssemblies.SelectMany(a => a.GetTypes().Where(t => baseType.IsAssignableFrom(t))).ToList();
-        }
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
-        /// Gets instances of all non-abstract types that can be assigned from the specified type from all loaded assemblies.
+        /// Gets instances of all non-abstract types that can be assigned from the specified type
+        /// from all loaded assemblies.
         /// </summary>
         /// <typeparam name="T">The base type</typeparam>
         /// <returns>The instances</returns>
@@ -142,6 +143,16 @@ namespace StrixIT.Platform.Core
         public static Type GetObjectTypeByName(string typeName)
         {
             return GetObjectType(typeName, x => x.Name.ToLower() == typeName.ToLower());
+        }
+
+        /// <summary>
+        /// Gets all types that can be assigned from the specified type from all loaded assemblies.
+        /// </summary>
+        /// <param name="baseType">The base type</param>
+        /// <returns>The types</returns>
+        public static IList<Type> GetTypeList(Type baseType)
+        {
+            return LoadedAssemblies.SelectMany(a => a.GetTypes().Where(t => baseType.IsAssignableFrom(t))).ToList();
         }
 
         /// <summary>
@@ -258,6 +269,20 @@ namespace StrixIT.Platform.Core
             }
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private static Assembly CurrentDomainAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (args.RequestingAssembly != null)
+            {
+                return args.RequestingAssembly;
+            }
+
+            return _assemblies.SingleOrDefault(x => x.FullName == args.Name);
+        }
+
         private static Type GetObjectType(string typeName, Func<Type, bool> func)
         {
             var assembly = LoadedAssemblies.Where(a => a.GetTypes().Any(func)).FirstOrDefault();
@@ -270,14 +295,32 @@ namespace StrixIT.Platform.Core
             return assembly.GetTypes().First(func);
         }
 
-        private static Assembly CurrentDomainAssemblyResolve(object sender, ResolveEventArgs args)
+        private static void LoadAppSettings(Configuration config)
         {
-            if (args.RequestingAssembly != null)
+            AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
+
+            if (section == null)
             {
-                return args.RequestingAssembly;
+                return;
             }
 
-            return _assemblies.SingleOrDefault(x => x.FullName == args.Name);
+            var pathParts = config.FilePath.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
+            var moduleName = pathParts.ElementAt(pathParts.Length - 2);
+
+            if (moduleName.ToLower() == "views")
+            {
+                return;
+            }
+
+            if (!_combinedAppSettings.ContainsKey(moduleName))
+            {
+                _combinedAppSettings.Add(moduleName, new Dictionary<string, string>());
+
+                foreach (KeyValueConfigurationElement s in section.Settings)
+                {
+                    _combinedAppSettings[moduleName].Add(s.Key, s.Value.ToLower());
+                }
+            }
         }
 
         private static void LoadConnectionStrings(Configuration config)
@@ -310,32 +353,6 @@ namespace StrixIT.Platform.Core
             }
         }
 
-        private static void LoadAppSettings(Configuration config)
-        {
-            AppSettingsSection section = config.GetSection("appSettings") as AppSettingsSection;
-
-            if (section == null)
-            {
-                return;
-            }
-
-            var pathParts = config.FilePath.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
-            var moduleName = pathParts.ElementAt(pathParts.Length - 2);
-
-            if (moduleName.ToLower() == "views")
-            {
-                return;
-            }
-
-            if (!_combinedAppSettings.ContainsKey(moduleName))
-            {
-                _combinedAppSettings.Add(moduleName, new Dictionary<string, string>());
-
-                foreach (KeyValueConfigurationElement s in section.Settings)
-                {
-                    _combinedAppSettings[moduleName].Add(s.Key, s.Value.ToLower());
-                }
-            }
-        }
+        #endregion Private Methods
     }
 }

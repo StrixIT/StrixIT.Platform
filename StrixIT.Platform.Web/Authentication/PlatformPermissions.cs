@@ -27,7 +27,11 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public static class PlatformPermissions
     {
-        public const string ViewAdminDashboard = "StrixIT.Platform.ViewAdminDashboard";
+        #region Public Fields
+
         public const string AccessSite = "StrixIT.Platform.AccessSite";
+        public const string ViewAdminDashboard = "StrixIT.Platform.ViewAdminDashboard";
+
+        #endregion Public Fields
     }
 }

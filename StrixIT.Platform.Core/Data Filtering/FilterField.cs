@@ -27,16 +27,18 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class FilterField
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilterField" /> class.
-        /// The operator is set to "Equals".
+        /// Initializes a new instance of the <see cref="FilterField"/> class. The operator is set
+        /// to "Equals".
         /// </summary>
         public FilterField() : this(FilterFieldOperator.Equals, null, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilterField" /> class.
+        /// Initializes a new instance of the <see cref="FilterField"/> class.
         /// </summary>
         /// <param name="filterOperator">The operator to use for filtering</param>
         public FilterField(FilterFieldOperator filterOperator) : this(filterOperator, null, null)
@@ -44,7 +46,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilterField" /> class.
+        /// Initializes a new instance of the <see cref="FilterField"/> class.
         /// </summary>
         /// <param name="filterOperator">The operator to use for filtering</param>
         /// <param name="name">The field name</param>
@@ -55,6 +57,10 @@ namespace StrixIT.Platform.Core
             this.Field = name ?? string.Empty;
             this.Value = value;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the name of the property to filter on.
@@ -70,5 +76,7 @@ namespace StrixIT.Platform.Core
         /// Gets or sets the value of the filter.
         /// </summary>
         public string Value { get; set; }
+
+        #endregion Public Properties
     }
 }

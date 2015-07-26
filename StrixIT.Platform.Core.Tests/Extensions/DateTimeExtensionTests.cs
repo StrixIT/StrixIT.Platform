@@ -11,6 +11,8 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass()]
     public class DateTimeExtensionTests
     {
+        #region Public Methods
+
         [TestMethod]
         public void WhenADateTimeIsInRangeTheCheckForRangeShouldReturnTrue()
         {
@@ -26,5 +28,7 @@ namespace StrixIT.Platform.Core.Tests
             var result = dateTime.IsInRange(DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-5));
             Assert.IsFalse(result);
         }
+
+        #endregion Public Methods
     }
 }

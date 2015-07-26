@@ -32,7 +32,28 @@ namespace StrixIT.Platform.Web
 {
     public class WebEnvironment : IEnvironment
     {
+        #region Private Fields
+
         private HttpContextBase _httpContext;
+
+        #endregion Private Fields
+
+        #region Public Properties
+
+        public string CurrentUserEmail
+        {
+            get
+            {
+                var context = this.HttpContext;
+
+                if (context == null || context.User == null)
+                {
+                    return null;
+                }
+
+                return context.User.Identity.Name;
+            }
+        }
 
         public HttpContextBase HttpContext
         {
@@ -61,25 +82,25 @@ namespace StrixIT.Platform.Web
                     return HttpRuntime.AppDomainAppPath;
                 }
 
-                // If the HttpRuntime.AppDomainAppVirtualPath is null, we're not running in a web context although the web
-                // environment is loaded. This is the case when running code first migration scripts. Use the default
-                // environment working directory in that case.
+                // If the HttpRuntime.AppDomainAppVirtualPath is null, we're not running in a web
+                // context although the web environment is loaded. This is the case when running
+                // code first migration scripts. Use the default environment working directory in
+                // that case.
                 return new DefaultEnvironment().WorkingDirectory;
             }
         }
 
-        public string CurrentUserEmail
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public void AbandonSession()
         {
-            get
+            var context = this.HttpContext;
+
+            if (context != null && context.Session != null)
             {
-                var context = this.HttpContext;
-
-                if (context == null || context.User == null)
-                {
-                    return null;
-                }
-
-                return context.User.Identity.Name;
+                context.Session.Abandon();
             }
         }
 
@@ -111,16 +132,6 @@ namespace StrixIT.Platform.Web
             else
             {
                 return (T)result;
-            }
-        }
-
-        public void StoreInSession(string key, object theObject)
-        {
-            var context = this.HttpContext;
-
-            if (context != null && context.Session != null)
-            {
-                context.Session[key.ToLower()] = theObject;
             }
         }
 
@@ -159,14 +170,16 @@ namespace StrixIT.Platform.Web
             return path;
         }
 
-        public void AbandonSession()
+        public void StoreInSession(string key, object theObject)
         {
             var context = this.HttpContext;
 
             if (context != null && context.Session != null)
             {
-                context.Session.Abandon();
+                context.Session[key.ToLower()] = theObject;
             }
         }
+
+        #endregion Public Methods
     }
 }

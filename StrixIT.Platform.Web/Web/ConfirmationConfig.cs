@@ -24,6 +24,8 @@ namespace StrixIT.Platform.Web
 {
     public class ConfirmationConfig
     {
+        #region Public Constructors
+
         public ConfirmationConfig() : this(null)
         {
         }
@@ -36,14 +38,17 @@ namespace StrixIT.Platform.Web
             this.ConfirmMethod = "confirmDelete";
         }
 
-        public string Id { get; set; }
+        #endregion Public Constructors
 
-        public string Title { get; set; }
+        #region Public Properties
 
         public string Body { get; set; }
-
         public string ConfirmMethod { get; set; }
+        public string Id { get; set; }
 
         public string ScopeId { get; set; }
+        public string Title { get; set; }
+
+        #endregion Public Properties
     }
 }

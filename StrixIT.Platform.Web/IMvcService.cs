@@ -24,6 +24,10 @@ namespace StrixIT.Platform.Web
 {
     public interface IMvcService
     {
+        #region Public Methods
+
         void Initialize();
+
+        #endregion Public Methods
     }
 }

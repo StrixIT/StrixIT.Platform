@@ -9,6 +9,10 @@ namespace StrixIT.Platform.Core.Tests
 {
     public class TestCustomField : CustomField
     {
+        #region Public Properties
+
         public Guid GroupId { get; set; }
+
+        #endregion Public Properties
     }
 }

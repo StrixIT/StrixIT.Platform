@@ -32,6 +32,8 @@ namespace StrixIT.Platform.Web
 {
     public class JsonNetResult : ActionResult
     {
+        #region Public Constructors
+
         public JsonNetResult(object data, string contentType, Encoding contentEncoding) : this(data, contentType, contentEncoding, JsonRequestBehavior.DenyGet)
         {
         }
@@ -48,17 +50,24 @@ namespace StrixIT.Platform.Web
             this.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public Encoding ContentEncoding { get; private set; }
 
         public string ContentType { get; private set; }
 
         public object Data { get; private set; }
 
+        public Formatting Formatting { get; set; }
         public JsonRequestBehavior RequestBehavior { get; private set; }
 
         public JsonSerializerSettings SerializerSettings { get; set; }
 
-        public Formatting Formatting { get; set; }
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void ExecuteResult(ControllerContext context)
         {
@@ -97,5 +106,7 @@ namespace StrixIT.Platform.Web
                 writer.Flush();
             }
         }
+
+        #endregion Public Methods
     }
 }

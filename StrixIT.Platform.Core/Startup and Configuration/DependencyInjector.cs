@@ -28,8 +28,14 @@ namespace StrixIT.Platform.Core
 {
     public static class DependencyInjector
     {
-        private static IDependencyInjector _dependencyInjector;
+        #region Private Fields
+
         private static IDependencyInjector _defaultInjector;
+        private static IDependencyInjector _dependencyInjector;
+
+        #endregion Private Fields
+
+        #region Public Properties
 
         public static IDependencyInjector Injector
         {
@@ -55,6 +61,10 @@ namespace StrixIT.Platform.Core
             }
         }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public static T Get<T>()
         {
             return Injector.Get<T>();
@@ -63,6 +73,21 @@ namespace StrixIT.Platform.Core
         public static T Get<T>(string instanceKey)
         {
             return Injector.Get<T>(instanceKey);
+        }
+
+        public static object Get(Type type)
+        {
+            return Injector.Get(type);
+        }
+
+        public static IEnumerable<T> GetAll<T>()
+        {
+            return Injector.GetAll<T>();
+        }
+
+        public static IEnumerable GetAll(Type dependencyType)
+        {
+            return Injector.GetAll(dependencyType);
         }
 
         public static T TryGet<T>()
@@ -75,24 +100,11 @@ namespace StrixIT.Platform.Core
             return Injector.TryGet<T>(instanceKey);
         }
 
-        public static object Get(Type type)
-        {
-            return Injector.Get(type);
-        }
-
         public static object TryGet(Type dependencyType)
         {
             return Injector.TryGet(dependencyType);
         }
 
-        public static IEnumerable<T> GetAll<T>()
-        {
-            return Injector.GetAll<T>();
-        }
-
-        public static IEnumerable GetAll(Type dependencyType)
-        {
-            return Injector.GetAll(dependencyType);
-        }
+        #endregion Public Methods
     }
 }

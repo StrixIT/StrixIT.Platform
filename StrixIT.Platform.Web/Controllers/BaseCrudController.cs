@@ -37,13 +37,20 @@ namespace StrixIT.Platform.Web
         where TKey : struct
         where TModel : class
     {
+        #region Protected Fields
+
         /// <summary>
-        /// The CRUD service used. Exposed as a protected field to be able to use an upcast in specialized controllers more easily.
+        /// The CRUD service used. Exposed as a protected field to be able to use an upcast in
+        /// specialized controllers more easily.
         /// </summary>
         protected ICrudService<TKey, TModel> _service;
 
+        #endregion Protected Fields
+
+        #region Protected Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseCrudController{TKey,TModel}" /> class.
+        /// Initializes a new instance of the <see cref="BaseCrudController{TKey,TModel}"/> class.
         /// </summary>
         /// <param name="service">The CRUD service to use</param>
         protected BaseCrudController(ICrudService<TKey, TModel> service)
@@ -52,102 +59,23 @@ namespace StrixIT.Platform.Web
             this._service = service;
         }
 
-        /// <summary>
-        /// Gets the Index view, which has the template for the content list.
-        /// </summary>
-        /// <returns>The index view</returns>
-        public abstract ActionResult Index();
+        #endregion Protected Constructors
 
-        /// <summary>
-        /// Gets a JSON list of view models.
-        /// </summary>
-        /// <param name="options">The filter to use</param>
-        /// <returns>The list of view models</returns>
-        public virtual ActionResult List(FilterOptions options)
-        {
-            if (typeof(TModel).HasProperty("SortOrder") && options != null && options.Sort.IsEmpty())
-            {
-                options.Sort.Add(new SortField { Field = "SortOrder", Dir = "desc" });
-            }
-
-            var entries = this._service.List(options);
-            return this.Json(entries.DataRecords(options));
-        }
-
-        /// <summary>
-        /// Gets the details view.
-        /// </summary>
-        /// <returns>The details view</returns>
-        public virtual ActionResult Details()
-        {
-            ViewBag.ModelType = typeof(TModel);
-            return this.View("Details");
-        }
-
-        /// <summary>
-        /// Gets the edit view.
-        /// </summary>
-        /// <returns>The edit view</returns>
-        public virtual ActionResult Edit()
-        {
-            ViewBag.ModelType = typeof(TModel);
-            this.SetReturnUrl(typeof(TModel));
-            return this.View("Edit");
-        }
+        #region Public Methods
 
         /// <summary>
         /// Checks whether an entity with the same name already exists.
         /// </summary>
         /// <param name="value">The name to check for</param>
         /// <param name="id">The id of the current entity</param>
-        /// <returns>True if no entity other than the one the id was supplied for with the current name exists, false otherwise</returns>
+        /// <returns>
+        /// True if no entity other than the one the id was supplied for with the current name
+        /// exists, false otherwise
+        /// </returns>
         [HttpPost]
         public virtual JsonResult CheckName(string value, TKey? id)
         {
             return new JsonStatusResult() { Success = !this._service.Exists(value, id) };
-        }
-
-        /// <summary>
-        /// Gets a view model for an entity using the entity's id.
-        /// </summary>
-        /// <param name="id">The id of the entity to get the view model for</param>
-        /// <returns>The view model</returns>
-        public virtual ActionResult Get(string id)
-        {
-            var key = this.GetKey(id);
-            return this.Json(this._service.Get(key));
-        }
-
-        [HttpPost]
-        public virtual JsonResult Edit(TModel model)
-        {
-            var result = new JsonStatusResult();
-
-            if (model == null)
-            {
-                return null;
-            }
-
-            var saveResult = this._service.Save(model);
-
-            if (!saveResult.Success)
-            {
-                if (typeof(TModel).HasProperty("Name"))
-                {
-                    result.Message = string.Format(Core.Resources.DefaultInterface.ErrorSavingItemWithName, typeof(TModel).Name.ToLower(), model.GetPropertyValue("Name"));
-                }
-                else
-                {
-                    result.Message = string.Format(Core.Resources.DefaultInterface.ErrorSavingItem, typeof(TModel).Name.ToLower());
-                }
-            }
-            else
-            {
-                result.Data = saveResult.Model;
-                result.Success = true;
-            }
-
-            return result;
         }
 
         /// <summary>
@@ -188,6 +116,103 @@ namespace StrixIT.Platform.Web
             return result;
         }
 
+        /// <summary>
+        /// Gets the details view.
+        /// </summary>
+        /// <returns>The details view</returns>
+        public virtual ActionResult Details()
+        {
+            ViewBag.ModelType = typeof(TModel);
+            return this.View("Details");
+        }
+
+        /// <summary>
+        /// Gets the edit view.
+        /// </summary>
+        /// <returns>The edit view</returns>
+        public virtual ActionResult Edit()
+        {
+            ViewBag.ModelType = typeof(TModel);
+            this.SetReturnUrl(typeof(TModel));
+            return this.View("Edit");
+        }
+
+        [HttpPost]
+        public virtual JsonResult Edit(TModel model)
+        {
+            var result = new JsonStatusResult();
+
+            if (model == null)
+            {
+                return null;
+            }
+
+            var saveResult = this._service.Save(model);
+
+            if (!saveResult.Success)
+            {
+                if (typeof(TModel).HasProperty("Name"))
+                {
+                    result.Message = string.Format(Core.Resources.DefaultInterface.ErrorSavingItemWithName, typeof(TModel).Name.ToLower(), model.GetPropertyValue("Name"));
+                }
+                else
+                {
+                    result.Message = string.Format(Core.Resources.DefaultInterface.ErrorSavingItem, typeof(TModel).Name.ToLower());
+                }
+            }
+            else
+            {
+                result.Data = saveResult.Model;
+                result.Success = true;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a view model for an entity using the entity's id.
+        /// </summary>
+        /// <param name="id">The id of the entity to get the view model for</param>
+        /// <returns>The view model</returns>
+        public virtual ActionResult Get(string id)
+        {
+            var key = this.GetKey(id);
+            return this.Json(this._service.Get(key));
+        }
+
+        /// <summary>
+        /// Gets the Index view, which has the template for the content list.
+        /// </summary>
+        /// <returns>The index view</returns>
+        public abstract ActionResult Index();
+
+        /// <summary>
+        /// Gets a JSON list of view models.
+        /// </summary>
+        /// <param name="options">The filter to use</param>
+        /// <returns>The list of view models</returns>
+        public virtual ActionResult List(FilterOptions options)
+        {
+            if (typeof(TModel).HasProperty("SortOrder") && options != null && options.Sort.IsEmpty())
+            {
+                options.Sort.Add(new SortField { Field = "SortOrder", Dir = "desc" });
+            }
+
+            var entries = this._service.List(options);
+            return this.Json(entries.DataRecords(options));
+        }
+
+        #endregion Public Methods
+
+        #region Protected Methods
+
+        protected TKey? GetKey(string id)
+        {
+            var converter = TypeDescriptor.GetConverter(typeof(TKey?));
+            var key = (TKey?)converter.ConvertFromInvariantString(id);
+            return key;
+        }
+
         protected void SetReturnUrl(Type type)
         {
             string returnUrl = this.Request.UrlReferrer != null ? this.Request.UrlReferrer.ToString() : null;
@@ -209,11 +234,6 @@ namespace StrixIT.Platform.Web
             this.ViewBag.ReturnUrl = returnUrl;
         }
 
-        protected TKey? GetKey(string id)
-        {
-            var converter = TypeDescriptor.GetConverter(typeof(TKey?));
-            var key = (TKey?)converter.ConvertFromInvariantString(id);
-            return key;
-        }
+        #endregion Protected Methods
     }
 }

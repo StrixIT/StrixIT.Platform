@@ -26,13 +26,15 @@ using System.ComponentModel.DataAnnotations;
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// A class to look up user names in the Cms when querying, as these are stored in another database
-    /// which makes it impossible to join them in a query.
+    /// A class to look up user names in the Cms when querying, as these are stored in another
+    /// database which makes it impossible to join them in a query.
     /// </summary>
     public class UserData : ValidationBase
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserData" /> class.
+        /// Initializes a new instance of the <see cref="UserData"/> class.
         /// </summary>
         public UserData()
         {
@@ -44,6 +46,17 @@ namespace StrixIT.Platform.Core
             this.Name = userName;
             this.Email = email;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the email of the user.
+        /// </summary>
+        [StrixRequiredWithMembershipAttribute]
+        [StringLength(250)]
+        public string Email { get; set; }
 
         /// <summary>
         /// Gets or sets the id of the user.
@@ -58,11 +71,6 @@ namespace StrixIT.Platform.Core
         [StringLength(250)]
         public string Name { get; set; }
 
-        /// <summary>
-        /// Gets or sets the email of the user.
-        /// </summary>
-        [StrixRequiredWithMembershipAttribute]
-        [StringLength(250)]
-        public string Email { get; set; }
+        #endregion Public Properties
     }
 }

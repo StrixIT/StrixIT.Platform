@@ -30,13 +30,7 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class PlatformModuleConfiguration : IModuleConfiguration
     {
-        public string Name
-        {
-            get
-            {
-                return string.Empty;
-            }
-        }
+        #region Public Properties
 
         public IList<ModuleLink> ModuleLinks
         {
@@ -68,5 +62,15 @@ namespace StrixIT.Platform.Web
                 return dictionary;
             }
         }
+
+        public string Name
+        {
+            get
+            {
+                return string.Empty;
+            }
+        }
+
+        #endregion Public Properties
     }
 }

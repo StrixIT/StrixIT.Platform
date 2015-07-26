@@ -31,6 +31,8 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class ObjectExtensions
     {
+        #region Public Methods
+
         /// <summary>
         /// Gets the attribute of the specified type from the type, propertyinfo or object, if it exists.
         /// </summary>
@@ -59,6 +61,18 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
+        /// Gets the value of the specified property of the object.
+        /// </summary>
+        /// <param name="entity">The object to get the property value of</param>
+        /// <param name="propertyName">The name of the property to get the value for</param>
+        /// <returns>The property value</returns>
+        public static object GetPropertyValue(this object entity, string propertyName)
+        {
+            PropertyInfo info = GetProperty(entity, propertyName);
+            return info.GetValue(entity);
+        }
+
+        /// <summary>
         /// Checks whether the type, propertyinfo or object has the specified attribute.
         /// </summary>
         /// <typeparam name="T">The type of the attribute to check for</typeparam>
@@ -70,11 +84,14 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Gets a value indicating whether the specified type has an attribute of the specified attribute type.
+        /// Gets a value indicating whether the specified type has an attribute of the specified
+        /// attribute type.
         /// </summary>
         /// <param name="type">The type</param>
         /// <param name="attributeType">The type of the attribute to check for</param>
-        /// <param name="includeProperties">True if the properties of the type should be included in the search, false otherwise</param>
+        /// <param name="includeProperties">
+        /// True if the properties of the type should be included in the search, false otherwise
+        /// </param>
         /// <returns>True if the type has the property, false otherwise</returns>
         public static bool HasAttribute(this Type type, Type attributeType, bool includeProperties = false)
         {
@@ -99,30 +116,6 @@ namespace StrixIT.Platform.Core
             }
 
             return found;
-        }
-
-        /// <summary>
-        /// Gets the value of the specified property of the object.
-        /// </summary>
-        /// <param name="entity">The object to get the property value of</param>
-        /// <param name="propertyName">The name of the property to get the value for</param>
-        /// <returns>The property value</returns>
-        public static object GetPropertyValue(this object entity, string propertyName)
-        {
-            PropertyInfo info = GetProperty(entity, propertyName);
-            return info.GetValue(entity);
-        }
-
-        /// <summary>
-        /// Sets the value of the specified property of the object.
-        /// </summary>
-        /// <param name="entity">The object to set the property value of</param>
-        /// <param name="propertyName">The name of the property to set the value for</param>
-        /// <param name="propertyValue">The value for the property</param>
-        public static void SetPropertyValue(this object entity, string propertyName, object propertyValue)
-        {
-            PropertyInfo info = GetProperty(entity, propertyName);
-            info.SetValue(entity, propertyValue);
         }
 
         /// <summary>
@@ -154,6 +147,18 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
+        /// Sets the value of the specified property of the object.
+        /// </summary>
+        /// <param name="entity">The object to set the property value of</param>
+        /// <param name="propertyName">The name of the property to set the value for</param>
+        /// <param name="propertyValue">The value for the property</param>
+        public static void SetPropertyValue(this object entity, string propertyName, object propertyValue)
+        {
+            PropertyInfo info = GetProperty(entity, propertyName);
+            info.SetValue(entity, propertyValue);
+        }
+
+        /// <summary>
         /// Converts a string to camel case.
         /// </summary>
         /// <param name="input">The input string</param>
@@ -178,6 +183,10 @@ namespace StrixIT.Platform.Core
             return new CultureInfo(StrixPlatform.CurrentCultureCode).TextInfo.ToTitleCase(input);
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         private static PropertyInfo GetProperty(object entity, string propertyName)
         {
             if (entity == null)
@@ -200,5 +209,7 @@ namespace StrixIT.Platform.Core
 
             return info;
         }
+
+        #endregion Private Methods
     }
 }

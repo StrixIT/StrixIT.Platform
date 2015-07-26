@@ -30,18 +30,11 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface IUserContext
     {
-        /// <summary>
-        /// Gets the current user's name.
-        /// </summary>
-        string Name { get; }
+        #region Public Properties
 
         /// <summary>
-        /// Gets the current user's id, or an empty GUID if no user is currently active.
-        /// </summary>
-        Guid Id { get; }
-
-        /// <summary>
-        /// Gets or sets the current user's current group id, or the id of the main group if no user is currently active.
+        /// Gets or sets the current user's current group id, or the id of the main group if no user
+        /// is currently active.
         /// </summary>
         Guid GroupId { get; set; }
 
@@ -56,6 +49,11 @@ namespace StrixIT.Platform.Core
         IDictionary<Guid, string> Groups { get; set; }
 
         /// <summary>
+        /// Gets the current user's id, or an empty GUID if no user is currently active.
+        /// </summary>
+        Guid Id { get; }
+
+        /// <summary>
         /// Gets a value indicating whether the current user is an administrator.
         /// </summary>
         bool IsAdministrator { get; }
@@ -66,18 +64,13 @@ namespace StrixIT.Platform.Core
         bool IsInMainGroup { get; }
 
         /// <summary>
-        /// Checks whether the currently active user is in one of the specified roles.
+        /// Gets the current user's name.
         /// </summary>
-        /// <param name="roleNames">The roles to check membership for</param>
-        /// <returns>True if the user is in one of the roles, false otherwise</returns>
-        bool IsInRoles(IEnumerable<string> roleNames);
+        string Name { get; }
 
-        /// <summary>
-        /// Checks whether the currently active user is in the specified role.
-        /// </summary>
-        /// <param name="roleName">The role to check membership for</param>
-        /// <returns>True if the user is in the role, false otherwise</returns>
-        bool IsInRole(string roleName);
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Checks whether the currently active user has one of the specified permissions.
@@ -92,5 +85,21 @@ namespace StrixIT.Platform.Core
         /// <param name="permission">The permission to check</param>
         /// <returns>True if the user has the specified permission, false otherwise</returns>
         bool HasPermission(string permission);
+
+        /// <summary>
+        /// Checks whether the currently active user is in the specified role.
+        /// </summary>
+        /// <param name="roleName">The role to check membership for</param>
+        /// <returns>True if the user is in the role, false otherwise</returns>
+        bool IsInRole(string roleName);
+
+        /// <summary>
+        /// Checks whether the currently active user is in one of the specified roles.
+        /// </summary>
+        /// <param name="roleNames">The roles to check membership for</param>
+        /// <returns>True if the user is in one of the roles, false otherwise</returns>
+        bool IsInRoles(IEnumerable<string> roleNames);
+
+        #endregion Public Methods
     }
 }

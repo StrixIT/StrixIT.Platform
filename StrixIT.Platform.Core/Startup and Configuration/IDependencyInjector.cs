@@ -31,19 +31,14 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface IDependencyInjector
     {
+        #region Public Methods
+
         /// <summary>
         /// Gets an instance of the class of type T.
         /// </summary>
         /// <typeparam name="T">The type to get an instance of</typeparam>
         /// <returns>The instance</returns>
         T Get<T>();
-
-        /// <summary>
-        /// Tries to get an instance of the class of type T.
-        /// </summary>
-        /// <typeparam name="T">The type to get an instance of</typeparam>
-        /// <returns>The instance, or NULL if it was not found</returns>
-        T TryGet<T>();
 
         /// <summary>
         /// Gets an instance of the class of the specified type.
@@ -53,27 +48,12 @@ namespace StrixIT.Platform.Core
         object Get(Type dependencyType);
 
         /// <summary>
-        /// Tries to get an instance of the class of the specified type.
-        /// </summary>
-        /// <param name="dependencyType">The type to get an instance of</param>
-        /// <returns>The instance, or NULL if it was not found</returns>
-        object TryGet(Type dependencyType);
-
-        /// <summary>
         /// Gets a named instance of the class of type T.
         /// </summary>
         /// <typeparam name="T">The type to get an instance of</typeparam>
         /// <param name="key">The instance name</param>
         /// <returns>The instance</returns>
         T Get<T>(string key);
-
-        /// <summary>
-        /// Tries to get a named instance of the class of type T.
-        /// </summary>
-        /// <typeparam name="T">The type to get an instance of</typeparam>
-        /// <param name="key">The instance name</param>
-        /// <returns>The instance, or NULL if it was not found</returns>
-        T TryGet<T>(string key);
 
         /// <summary>
         /// Gets an instance of all classes of type T.
@@ -88,5 +68,29 @@ namespace StrixIT.Platform.Core
         /// <param name="dependencyType">The type of the classes to get</param>
         /// <returns>An instance of all classes of the specified type</returns>
         IEnumerable GetAll(Type dependencyType);
+
+        /// <summary>
+        /// Tries to get an instance of the class of type T.
+        /// </summary>
+        /// <typeparam name="T">The type to get an instance of</typeparam>
+        /// <returns>The instance, or NULL if it was not found</returns>
+        T TryGet<T>();
+
+        /// <summary>
+        /// Tries to get an instance of the class of the specified type.
+        /// </summary>
+        /// <param name="dependencyType">The type to get an instance of</param>
+        /// <returns>The instance, or NULL if it was not found</returns>
+        object TryGet(Type dependencyType);
+
+        /// <summary>
+        /// Tries to get a named instance of the class of type T.
+        /// </summary>
+        /// <typeparam name="T">The type to get an instance of</typeparam>
+        /// <param name="key">The instance name</param>
+        /// <returns>The instance, or NULL if it was not found</returns>
+        T TryGet<T>(string key);
+
+        #endregion Public Methods
     }
 }

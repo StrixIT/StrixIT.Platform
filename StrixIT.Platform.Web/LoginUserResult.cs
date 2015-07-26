@@ -24,10 +24,7 @@ namespace StrixIT.Platform.Web
 {
     public class LoginUserResult
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether the login was successful.
-        /// </summary>
-        public bool Success { get; set; }
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the message to display when the login was not successful.
@@ -38,5 +35,12 @@ namespace StrixIT.Platform.Web
         /// Gets or sets the preferred culture of the user to use after logging in.
         /// </summary>
         public string PreferredCulture { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the login was successful.
+        /// </summary>
+        public bool Success { get; set; }
+
+        #endregion Public Properties
     }
 }

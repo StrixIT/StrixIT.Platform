@@ -27,6 +27,8 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface ICacheService
     {
+        #region Public Properties
+
         /// <summary>
         /// Gets or sets the absolute expiration for cache items in hours.
         /// </summary>
@@ -37,6 +39,10 @@ namespace StrixIT.Platform.Core
         /// </summary>
         int SlidingExpiration { get; set; }
 
+        #endregion Public Properties
+
+        #region Public Indexers
+
         /// <summary>
         /// Gets or sets a value for the specified key from/in the cache, if the cache contains it.
         /// </summary>
@@ -44,15 +50,21 @@ namespace StrixIT.Platform.Core
         /// <returns>The value if available, or NULL</returns>
         object this[string key] { get; set; }
 
+        #endregion Public Indexers
+
+        #region Public Methods
+
+        /// <summary>
+        /// Clears the cache.
+        /// </summary>
+        void Clear();
+
         /// <summary>
         /// Deletes an object from the cache based on a key.
         /// </summary>
         /// <param name="key">The key to use</param>
         void Delete(string key);
 
-        /// <summary>
-        /// Clears the cache.
-        /// </summary>
-        void Clear();
+        #endregion Public Methods
     }
 }

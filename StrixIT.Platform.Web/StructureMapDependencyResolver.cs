@@ -30,6 +30,8 @@ namespace StrixIT.Platform.Web
 {
     public class StructureMapDependencyResolver : IDependencyResolver
     {
+        #region Public Methods
+
         public object GetService(Type serviceType)
         {
             return DependencyInjector.TryGet(serviceType);
@@ -39,5 +41,7 @@ namespace StrixIT.Platform.Web
         {
             return DependencyInjector.GetAll(serviceType).Cast<object>();
         }
+
+        #endregion Public Methods
     }
 }

@@ -29,9 +29,13 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface IValidationBase : IValidatableObject
     {
+        #region Public Properties
+
         /// <summary>
         /// Gets a value indicating whether the entity is valid.
         /// </summary>
         bool IsValid { get; }
+
+        #endregion Public Properties
     }
 }

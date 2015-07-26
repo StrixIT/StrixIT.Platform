@@ -27,10 +27,12 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class ModifiedPropertyValue
     {
+        #region Public Properties
+
         /// <summary>
-        /// Gets or sets the property name.
+        /// Gets or sets the new value.
         /// </summary>
-        public string PropertyName { get; set; }
+        public object NewValue { get; set; }
 
         /// <summary>
         /// Gets or sets the old value.
@@ -38,8 +40,10 @@ namespace StrixIT.Platform.Core
         public object OldValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the new value.
+        /// Gets or sets the property name.
         /// </summary>
-        public object NewValue { get; set; }
+        public string PropertyName { get; set; }
+
+        #endregion Public Properties
     }
 }

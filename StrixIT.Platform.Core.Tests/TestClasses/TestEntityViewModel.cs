@@ -7,15 +7,17 @@ namespace StrixIT.Platform.Core.Tests
 {
     public class TestEntityViewModel
     {
+        #region Public Properties
+
+        public string Description { get; set; }
         public int Id { get; set; }
 
         public string Name { get; set; }
-
-        public string Description { get; set; }
+        public string NotAvailable { get; set; }
 
         [StrixRequired]
         public long Number { get; set; }
 
-        public string NotAvailable { get; set; }
+        #endregion Public Properties
     }
 }

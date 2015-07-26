@@ -33,7 +33,13 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class StrixPlatformBinder : DefaultModelBinder
     {
+        #region Private Fields
+
         private static char[] startingChars = new char[] { '<', '&' };
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
@@ -68,18 +74,9 @@ namespace StrixIT.Platform.Web
             return result;
         }
 
-        protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)
-        {
-            if (value != null && value.GetType().Equals(typeof(string)))
-            {
-                if (controllerContext.Controller.ValidateRequest && bindingContext.PropertyMetadata[propertyDescriptor.Name].RequestValidationEnabled)
-                {
-                    value = GetSafeValue((string)value);
-                }
-            }
+        #endregion Public Methods
 
-            base.SetProperty(controllerContext, bindingContext, propertyDescriptor, value);
-        }
+        #region Protected Methods
 
         protected override bool OnPropertyValidating(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)
         {
@@ -113,6 +110,23 @@ namespace StrixIT.Platform.Web
 
             return base.OnPropertyValidating(controllerContext, bindingContext, propertyDescriptor, value);
         }
+
+        protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)
+        {
+            if (value != null && value.GetType().Equals(typeof(string)))
+            {
+                if (controllerContext.Controller.ValidateRequest && bindingContext.PropertyMetadata[propertyDescriptor.Name].RequestValidationEnabled)
+                {
+                    value = GetSafeValue((string)value);
+                }
+            }
+
+            base.SetProperty(controllerContext, bindingContext, propertyDescriptor, value);
+        }
+
+        #endregion Protected Methods
+
+        #region Private Methods
 
         private static string GetSafeValue(string value)
         {
@@ -167,5 +181,7 @@ namespace StrixIT.Platform.Web
                 startIndex = num2 + 1;
             }
         }
+
+        #endregion Private Methods
     }
 }

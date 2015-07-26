@@ -30,6 +30,8 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class DataRecords
     {
+        #region Public Constructors
+
         public DataRecords(IEnumerable data) : this(data, null)
         {
         }
@@ -41,19 +43,25 @@ namespace StrixIT.Platform.Web
             this.Total = options != null ? options.Total : data.Length();
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         /// <summary>
         /// Gets or sets the list of entities to wrap in this data records object.
         /// </summary>
         public IEnumerable Data { get; set; }
 
         /// <summary>
+        /// Gets the search options that will be send back to the client.
+        /// </summary>
+        public FilterOptions Options { get; private set; }
+
+        /// <summary>
         /// Gets the total number of records available in the source.
         /// </summary>
         public int Total { get; private set; }
 
-        /// <summary>
-        /// Gets the search options that will be send back to the client.
-        /// </summary>
-        public FilterOptions Options { get; private set; }
+        #endregion Public Properties
     }
 }

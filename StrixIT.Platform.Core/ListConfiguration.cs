@@ -31,10 +31,16 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class ListConfiguration
     {
+        #region Private Fields
+
         private IList<ListFieldConfiguration> _fields;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListConfiguration" /> class.
+        /// Initializes a new instance of the <see cref="ListConfiguration"/> class.
         /// </summary>
         /// <param name="dtoType">The dto type the list is for</param>
         public ListConfiguration(Type dtoType) : this(dtoType, null)
@@ -42,7 +48,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListConfiguration" /> class.
+        /// Initializes a new instance of the <see cref="ListConfiguration"/> class.
         /// </summary>
         /// <param name="dtoType">The dto type the list is for</param>
         /// <param name="propertyNames">The names of the properties to use in the list</param>
@@ -65,25 +71,29 @@ namespace StrixIT.Platform.Core
             }
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         /// <summary>
-        /// Gets or sets the type of the resource file to localize the list.
+        /// Gets or sets a value indicating whether the user can create objects for this list.
         /// </summary>
-        public Type InterfaceResourceType { get; set; }
+        public bool CanCreate { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can delete objects in this list.
+        /// </summary>
+        public bool CanDelete { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can edit objects in this list.
+        /// </summary>
+        public bool CanEdit { get; set; }
 
         /// <summary>
         /// Gets or sets the dto type the list is for.
         /// </summary>
         public Type DtoType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the type te configuration is for.
-        /// </summary>
-        public string TypeName { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the name column should be hidden.
-        /// </summary>
-        public bool HideNameColumn { get; set; }
 
         /// <summary>
         /// Gets the list fields.
@@ -97,18 +107,20 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can create objects for this list.
+        /// Gets or sets a value indicating whether the name column should be hidden.
         /// </summary>
-        public bool CanCreate { get; set; }
+        public bool HideNameColumn { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can edit objects in this list.
+        /// Gets or sets the type of the resource file to localize the list.
         /// </summary>
-        public bool CanEdit { get; set; }
+        public Type InterfaceResourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can delete objects in this list.
+        /// Gets or sets the name of the type te configuration is for.
         /// </summary>
-        public bool CanDelete { get; set; }
+        public string TypeName { get; set; }
+
+        #endregion Public Properties
     }
 }

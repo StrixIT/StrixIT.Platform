@@ -29,12 +29,22 @@ namespace StrixIT.Platform.Core
 {
     public class Mailer : IMailer
     {
+        #region Private Fields
+
         private ISmtpClient _smtpClient;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Mailer(ISmtpClient smtpClient)
         {
             this._smtpClient = smtpClient;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public bool SendMail(string fromAddress, string toAddress, string subject, string body)
         {
@@ -68,5 +78,7 @@ namespace StrixIT.Platform.Core
 
             return success;
         }
+
+        #endregion Public Methods
     }
 }

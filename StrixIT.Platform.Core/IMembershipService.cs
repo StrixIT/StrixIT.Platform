@@ -30,6 +30,13 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface IMembershipService
     {
+        #region Public Properties
+
+        /// <summary>
+        /// Gets the id of the admin user.
+        /// </summary>
+        Guid AdminId { get; }
+
         /// <summary>
         /// Gets the id of the application.
         /// </summary>
@@ -40,10 +47,15 @@ namespace StrixIT.Platform.Core
         /// </summary>
         Guid MainGroupId { get; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         /// <summary>
-        /// Gets the id of the admin user.
+        /// Gets a query of group data.
         /// </summary>
-        Guid AdminId { get; }
+        /// <returns>The group data</returns>
+        IQueryable<GroupData> GroupData();
 
         /// <summary>
         /// Initializes the membership service.
@@ -56,10 +68,6 @@ namespace StrixIT.Platform.Core
         /// <returns>The user data</returns>
         IQueryable<UserData> UserData();
 
-        /// <summary>
-        /// Gets a query of group data.
-        /// </summary>
-        /// <returns>The group data</returns>
-        IQueryable<GroupData> GroupData();
+        #endregion Public Methods
     }
 }

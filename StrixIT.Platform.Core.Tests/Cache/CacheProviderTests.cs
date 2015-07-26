@@ -11,14 +11,28 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass()]
     public class CacheProviderTests
     {
+        #region Public Methods
+
         [TestMethod()]
-        public void SaveEntityInCacheTest()
+        public void ClearCacheTest()
         {
             ICacheService target = new CacheService();
             var value = TestEntityFactory.GetEntity();
-            target["Test"] = value;
-            bool result = target["Test"].Equals(value);
-            Assert.IsTrue(result);
+            target["TestEntity2"] = value;
+            target.Clear();
+            var result = target["Test"];
+            Assert.IsNull(result);
+        }
+
+        [TestMethod()]
+        public void RemoveEntityFromCacheTest()
+        {
+            ICacheService target = new CacheService();
+            var value = TestEntityFactory.GetEntity();
+            target["TestEntity2"] = value;
+            target.Delete("Test");
+            var result = target["Test"];
+            Assert.IsNull(result);
         }
 
         [TestMethod()]
@@ -38,25 +52,15 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod()]
-        public void RemoveEntityFromCacheTest()
+        public void SaveEntityInCacheTest()
         {
             ICacheService target = new CacheService();
             var value = TestEntityFactory.GetEntity();
-            target["TestEntity2"] = value;
-            target.Delete("Test");
-            var result = target["Test"];
-            Assert.IsNull(result);
+            target["Test"] = value;
+            bool result = target["Test"].Equals(value);
+            Assert.IsTrue(result);
         }
 
-        [TestMethod()]
-        public void ClearCacheTest()
-        {
-            ICacheService target = new CacheService();
-            var value = TestEntityFactory.GetEntity();
-            target["TestEntity2"] = value;
-            target.Clear();
-            var result = target["Test"];
-            Assert.IsNull(result);
-        }
+        #endregion Public Methods
     }
 }

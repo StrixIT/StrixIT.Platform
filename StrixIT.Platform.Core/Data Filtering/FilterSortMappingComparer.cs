@@ -30,6 +30,8 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class FilterSortMappingComparer : EqualityComparer<FilterSortMap>
     {
+        #region Public Methods
+
         public override bool Equals(FilterSortMap x, FilterSortMap y)
         {
             if (x == null)
@@ -54,5 +56,7 @@ namespace StrixIT.Platform.Core
 
             return obj.GetHashCode();
         }
+
+        #endregion Public Methods
     }
 }

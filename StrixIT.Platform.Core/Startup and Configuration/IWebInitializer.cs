@@ -27,9 +27,13 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface IWebInitializer
     {
+        #region Public Methods
+
         /// <summary>
         /// Initializes the component for the web.
         /// </summary>
         void WebInitialize();
+
+        #endregion Public Methods
     }
 }

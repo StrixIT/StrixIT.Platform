@@ -2111,9 +2111,8 @@ namespace System.Linq.Dynamic
             return better;
         }
 
-        // Return 1 if s -> t1 is a better conversion than s -> t2
-        // Return -1 if s -> t2 is a better conversion than s -> t1
-        // Return 0 if neither conversion is better
+        // Return 1 if s -> t1 is a better conversion than s -> t2 Return -1 if s -> t2 is a better
+        // conversion than s -> t1 Return 0 if neither conversion is better
         private static int CompareConversions(Type s, Type t1, Type t2)
         {
             if (t1 == t2) return 0;

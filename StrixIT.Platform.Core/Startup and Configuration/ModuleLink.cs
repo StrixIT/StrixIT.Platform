@@ -27,8 +27,10 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class ModuleLink
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModuleLink" /> class.
+        /// Initializes a new instance of the <see cref="ModuleLink"/> class.
         /// </summary>
         /// <param name="controllerName">The name of the controller for the link</param>
         public ModuleLink(string controllerName) : this(controllerName, null, controllerName, null)
@@ -36,7 +38,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModuleLink" /> class.
+        /// Initializes a new instance of the <see cref="ModuleLink"/> class.
         /// </summary>
         /// <param name="requiredPermission">The permission required to view and access the link</param>
         /// <param name="controllerName">The name of the controller for the link</param>
@@ -45,7 +47,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModuleLink" /> class.
+        /// Initializes a new instance of the <see cref="ModuleLink"/> class.
         /// </summary>
         /// <param name="title">The link text</param>
         /// <param name="requiredPermission">The permission required to view and access the link</param>
@@ -55,7 +57,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModuleLink" /> class.
+        /// Initializes a new instance of the <see cref="ModuleLink"/> class.
         /// </summary>
         /// <param name="title">The link text</param>
         /// <param name="requiredPermission">The permission required to view and access the link</param>
@@ -69,15 +71,14 @@ namespace StrixIT.Platform.Core
             this.ActionName = actionName != null ? actionName : "index";
         }
 
-        /// <summary>
-        /// Gets the link text.
-        /// </summary>
-        public string Title { get; private set; }
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
-        /// Gets the permission required to see and access this link.
+        /// Gets the action name for the link.
         /// </summary>
-        public string RequiredPermission { get; private set; }
+        public string ActionName { get; private set; }
 
         /// <summary>
         /// Gets the controller name for the link.
@@ -85,8 +86,15 @@ namespace StrixIT.Platform.Core
         public string ControllerName { get; private set; }
 
         /// <summary>
-        /// Gets the action name for the link.
+        /// Gets the permission required to see and access this link.
         /// </summary>
-        public string ActionName { get; private set; }
+        public string RequiredPermission { get; private set; }
+
+        /// <summary>
+        /// Gets the link text.
+        /// </summary>
+        public string Title { get; private set; }
+
+        #endregion Public Properties
     }
 }

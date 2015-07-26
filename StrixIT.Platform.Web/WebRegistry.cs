@@ -30,6 +30,8 @@ namespace StrixIT.Platform.Web
 {
     public class WebRegistry : Registry
     {
+        #region Public Constructors
+
         public WebRegistry()
         {
             // Scope all data sources to http or thread local.
@@ -38,9 +40,11 @@ namespace StrixIT.Platform.Web
                 For(type).LifecycleIs(new HybridLifecycle());
             }
 
-            // Tell StructureMap how to construct the objects for which the HttpContext is needed. A Func<object> is needed, because these have to be
-            // created per request by StructureMap.
+            // Tell StructureMap how to construct the objects for which the HttpContext is needed. A
+            // Func<object> is needed, because these have to be created per request by StructureMap.
             For<HttpContextBase>().Use(() => System.Web.HttpContext.Current != null ? new HttpContextWrapper(System.Web.HttpContext.Current) : null);
         }
+
+        #endregion Public Constructors
     }
 }

@@ -29,16 +29,23 @@ using System.Web.Mvc;
 namespace StrixIT.Platform.Web
 {
     /// <summary>
-    /// A custom autorization attribute for authorization of MVC controllers using StrixIT membership functionality.
+    /// A custom autorization attribute for authorization of MVC controllers using StrixIT
+    /// membership functionality.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class StrixAuthorizationAttribute : AuthorizeAttribute
     {
+        #region Public Properties
+
         /// <summary>
         /// Gets or sets the permissions that the role a user is part of needs to have one or more
         /// of to be allowed access.
         /// </summary>
         public string Permissions { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
@@ -59,23 +66,9 @@ namespace StrixIT.Platform.Web
             }
         }
 
-        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
-        {
-            if (filterContext == null)
-            {
-                throw new ArgumentNullException("filterContext");
-            }
+        #endregion Public Methods
 
-            // if ajax request set status code and end responcse
-            if (AjaxRequestExtensions.IsAjaxRequest(filterContext.HttpContext.Request))
-            {
-                filterContext.Result = new HttpStatusCodeResult(401);
-                filterContext.HttpContext.Response.SuppressFormsAuthenticationRedirect = true;
-                return;
-            }
-
-            base.HandleUnauthorizedRequest(filterContext);
-        }
+        #region Protected Methods
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
@@ -101,6 +94,28 @@ namespace StrixIT.Platform.Web
             return base.AuthorizeCore(httpContext);
         }
 
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            if (filterContext == null)
+            {
+                throw new ArgumentNullException("filterContext");
+            }
+
+            // if ajax request set status code and end responcse
+            if (AjaxRequestExtensions.IsAjaxRequest(filterContext.HttpContext.Request))
+            {
+                filterContext.Result = new HttpStatusCodeResult(401);
+                filterContext.HttpContext.Response.SuppressFormsAuthenticationRedirect = true;
+                return;
+            }
+
+            base.HandleUnauthorizedRequest(filterContext);
+        }
+
+        #endregion Protected Methods
+
+        #region Private Methods
+
         private static bool SkipAuthorization(AuthorizationContext filterContext)
         {
             return filterContext.ActionDescriptor.GetCustomAttributes(typeof(AllowAnonymousAttribute), true).Any()
@@ -108,7 +123,8 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// A handler called on cache validation, to integrate authorization with caching for securing files on the file system.
+        /// A handler called on cache validation, to integrate authorization with caching for
+        /// securing files on the file system.
         /// </summary>
         /// <param name="context">The http context</param>
         /// <param name="data">the data</param>
@@ -117,5 +133,7 @@ namespace StrixIT.Platform.Web
         {
             validationStatus = this.OnCacheAuthorization((HttpContextBase)new HttpContextWrapper(context));
         }
+
+        #endregion Private Methods
     }
 }

@@ -38,7 +38,13 @@ namespace StrixIT.Platform.Web
 {
     public static class MvcExtensions
     {
+        #region Private Fields
+
         private const string DISPLAY = "display";
+
+        #endregion Private Fields
+
+        #region Private Properties
 
         private static List<string> Scripts
         {
@@ -66,6 +72,10 @@ namespace StrixIT.Platform.Web
             }
         }
 
+        #endregion Private Properties
+
+        #region Public Methods
+
         /// <summary>
         /// Creates a data records wrapper for an enumerable.
         /// </summary>
@@ -87,13 +97,21 @@ namespace StrixIT.Platform.Web
             return JsonConvert.SerializeObject(value, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
 
+        #endregion Public Methods
+
         #region Localized Route
 
         /// <summary>
         /// Maps the specified URL route and sets default route values.
         /// </summary>
         /// <returns>A reference to the mapped route</returns>
-        /// <param name="routes">A collection of routes for the application.</param><param name="name">The name of the route to map.</param><param name="url">The URL pattern for the route.</param><param name="defaults">An object that contains default route values.</param><exception cref="T:System.ArgumentNullException">The <paramref name="routes"/> or <paramref name="url"/> parameter is null.</exception>
+        /// <param name="routes">A collection of routes for the application.</param>
+        /// <param name="name">The name of the route to map.</param>
+        /// <param name="url">The URL pattern for the route.</param>
+        /// <param name="defaults">An object that contains default route values.</param>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="routes"/> or <paramref name="url"/> parameter is null.
+        /// </exception>
         public static Route MapLocalizedRoute(this RouteCollection routes, string name, string url, object defaults)
         {
             return MapLocalizedRoute(routes, name, url, defaults, (object)null);
@@ -102,10 +120,17 @@ namespace StrixIT.Platform.Web
         /// <summary>
         /// Maps the specified URL route and sets default route values and constraints.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
-        /// <param name="routes">A collection of routes for the application.</param><param name="name">The name of the route to map.</param><param name="url">The URL pattern for the route.</param><param name="defaults">An object that contains default route values.</param><param name="constraints">A set of expressions that specify values for the <paramref name="url"/> parameter.</param><exception cref="T:System.ArgumentNullException">The <paramref name="routes"/> or <paramref name="url"/> parameter is null.</exception>
+        /// <returns>A reference to the mapped route.</returns>
+        /// <param name="routes">A collection of routes for the application.</param>
+        /// <param name="name">The name of the route to map.</param>
+        /// <param name="url">The URL pattern for the route.</param>
+        /// <param name="defaults">An object that contains default route values.</param>
+        /// <param name="constraints">
+        /// A set of expressions that specify values for the <paramref name="url"/> parameter.
+        /// </param>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="routes"/> or <paramref name="url"/> parameter is null.
+        /// </exception>
         public static Route MapLocalizedRoute(this RouteCollection routes, string name, string url, object defaults, object constraints)
         {
             return MapLocalizedRoute(routes, name, url, defaults, constraints, (string[])null);
@@ -114,10 +139,14 @@ namespace StrixIT.Platform.Web
         /// <summary>
         /// Maps the specified URL route and sets the namespaces.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
-        /// <param name="routes">A collection of routes for the application.</param><param name="name">The name of the route to map.</param><param name="url">The URL pattern for the route.</param><param name="namespaces">A set of namespaces for the application.</param><exception cref="T:System.ArgumentNullException">The <paramref name="routes"/> or <paramref name="url"/> parameter is null.</exception>
+        /// <returns>A reference to the mapped route.</returns>
+        /// <param name="routes">A collection of routes for the application.</param>
+        /// <param name="name">The name of the route to map.</param>
+        /// <param name="url">The URL pattern for the route.</param>
+        /// <param name="namespaces">A set of namespaces for the application.</param>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="routes"/> or <paramref name="url"/> parameter is null.
+        /// </exception>
         public static Route MapLocalizedRoute(this RouteCollection routes, string name, string url, string[] namespaces)
         {
             return MapLocalizedRoute(routes, name, url, (object)null, (object)null, namespaces);
@@ -126,10 +155,15 @@ namespace StrixIT.Platform.Web
         /// <summary>
         /// Maps the specified URL route and sets default route values and namespaces.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
-        /// <param name="routes">A collection of routes for the application.</param><param name="name">The name of the route to map.</param><param name="url">The URL pattern for the route.</param><param name="defaults">An object that contains default route values.</param><param name="namespaces">A set of namespaces for the application.</param><exception cref="T:System.ArgumentNullException">The <paramref name="routes"/> or <paramref name="url"/> parameter is null.</exception>
+        /// <returns>A reference to the mapped route.</returns>
+        /// <param name="routes">A collection of routes for the application.</param>
+        /// <param name="name">The name of the route to map.</param>
+        /// <param name="url">The URL pattern for the route.</param>
+        /// <param name="defaults">An object that contains default route values.</param>
+        /// <param name="namespaces">A set of namespaces for the application.</param>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="routes"/> or <paramref name="url"/> parameter is null.
+        /// </exception>
         public static Route MapLocalizedRoute(this RouteCollection routes, string name, string url, object defaults, string[] namespaces)
         {
             return MapLocalizedRoute(routes, name, url, defaults, (object)null, namespaces);
@@ -138,10 +172,18 @@ namespace StrixIT.Platform.Web
         /// <summary>
         /// Maps the specified URL route and sets default route values, constraints, and namespaces.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
-        /// <param name="routes">A collection of routes for the application.</param><param name="name">The name of the route to map.</param><param name="url">The URL pattern for the route.</param><param name="defaults">An object that contains default route values.</param><param name="constraints">A set of expressions that specify values for the <paramref name="url"/> parameter.</param><param name="namespaces">A set of namespaces for the application.</param><exception cref="T:System.ArgumentNullException">The <paramref name="routes"/> or <paramref name="url"/> parameter is null.</exception>
+        /// <returns>A reference to the mapped route.</returns>
+        /// <param name="routes">A collection of routes for the application.</param>
+        /// <param name="name">The name of the route to map.</param>
+        /// <param name="url">The URL pattern for the route.</param>
+        /// <param name="defaults">An object that contains default route values.</param>
+        /// <param name="constraints">
+        /// A set of expressions that specify values for the <paramref name="url"/> parameter.
+        /// </param>
+        /// <param name="namespaces">A set of namespaces for the application.</param>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="routes"/> or <paramref name="url"/> parameter is null.
+        /// </exception>
         public static Route MapLocalizedRoute(this RouteCollection routes, string name, string url, object defaults, object constraints, string[] namespaces)
         {
             if (routes == null)
@@ -176,15 +218,16 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Maps the specified URL route and associates it with the area that is specified by the <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property.
+        /// Maps the specified URL route and associates it with the area that is specified by the
+        /// <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
+        /// <returns>A reference to the mapped route.</returns>
         /// <param name="context">The registration context to use</param>
         /// <param name="name">The name of the route.</param>
         /// <param name="url">The URL pattern for the route.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="url"/> parameter is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="url"/> parameter is null.
+        /// </exception>
         /// <returns>The route</returns>
         public static Route MapLocalizedRoute(this AreaRegistrationContext context, string name, string url)
         {
@@ -192,16 +235,18 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Maps the specified URL route and associates it with the area that is specified by the <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the specified route default values.
+        /// Maps the specified URL route and associates it with the area that is specified by the
+        /// <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the
+        /// specified route default values.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
+        /// <returns>A reference to the mapped route.</returns>
         /// <param name="context">The registration context to use</param>
         /// <param name="name">The name of the route.</param>
         /// <param name="url">The URL pattern for the route.</param>
         /// <param name="defaults">An object that contains default route values.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="url"/> parameter is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="url"/> parameter is null.
+        /// </exception>
         /// <returns>The route</returns>
         public static Route MapLocalizedRoute(this AreaRegistrationContext context, string name, string url, object defaults)
         {
@@ -209,17 +254,21 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Maps the specified URL route and associates it with the area that is specified by the <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the specified route default values and constraint.
+        /// Maps the specified URL route and associates it with the area that is specified by the
+        /// <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the
+        /// specified route default values and constraint.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
+        /// <returns>A reference to the mapped route.</returns>
         /// <param name="context">The registration context to use</param>
         /// <param name="name">The name of the route.</param>
         /// <param name="url">The URL pattern for the route.</param>
         /// <param name="defaults">An object that contains default route values.</param>
-        /// <param name="constraints">A set of expressions that specify valid values for a URL parameter.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="url"/> parameter is null.</exception>
+        /// <param name="constraints">
+        /// A set of expressions that specify valid values for a URL parameter.
+        /// </param>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="url"/> parameter is null.
+        /// </exception>
         /// <returns>The route</returns>
         public static Route MapLocalizedRoute(this AreaRegistrationContext context, string name, string url, object defaults, object constraints)
         {
@@ -227,16 +276,18 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Maps the specified URL route and associates it with the area that is specified by the <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the specified namespaces.
+        /// Maps the specified URL route and associates it with the area that is specified by the
+        /// <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the
+        /// specified namespaces.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
+        /// <returns>A reference to the mapped route.</returns>
         /// <param name="context">The registration context to use</param>
         /// <param name="name">The name of the route.</param>
         /// <param name="url">The URL pattern for the route.</param>
         /// <param name="namespaces">An enumerable set of namespaces for the application.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="url"/> parameter is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="url"/> parameter is null.
+        /// </exception>
         /// <returns>The route</returns>
         public static Route MapLocalizedRoute(this AreaRegistrationContext context, string name, string url, string[] namespaces)
         {
@@ -244,17 +295,19 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Maps the specified URL route and associates it with the area that is specified by the <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the specified route default values and namespaces.
+        /// Maps the specified URL route and associates it with the area that is specified by the
+        /// <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the
+        /// specified route default values and namespaces.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
+        /// <returns>A reference to the mapped route.</returns>
         /// <param name="context">The registration context to use</param>
         /// <param name="name">The name of the route.</param>
         /// <param name="url">The URL pattern for the route.</param>
         /// <param name="defaults">An object that contains default route values.</param>
         /// <param name="namespaces">An enumerable set of namespaces for the application.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="url"/> parameter is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="url"/> parameter is null.
+        /// </exception>
         /// <returns>The route</returns>
         public static Route MapLocalizedRoute(this AreaRegistrationContext context, string name, string url, object defaults, string[] namespaces)
         {
@@ -262,18 +315,22 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Maps the specified URL route and associates it with the area that is specified by the <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the specified route default values, constraints, and namespaces.
+        /// Maps the specified URL route and associates it with the area that is specified by the
+        /// <see cref="P:System.Web.Mvc.AreaRegistrationContext.AreaName"/> property, using the
+        /// specified route default values, constraints, and namespaces.
         /// </summary>
-        /// <returns>
-        /// A reference to the mapped route.
-        /// </returns>
+        /// <returns>A reference to the mapped route.</returns>
         /// <param name="context">The registration context to use</param>
         /// <param name="name">The name of the route.</param>
         /// <param name="url">The URL pattern for the route.</param>
         /// <param name="defaults">An object that contains default route values.</param>
-        /// <param name="constraints">A set of expressions that specify valid values for a URL parameter.</param>
+        /// <param name="constraints">
+        /// A set of expressions that specify valid values for a URL parameter.
+        /// </param>
         /// <param name="namespaces">An enumerable set of namespaces for the application.</param>
-        /// <exception cref="T:System.ArgumentNullException">The <paramref name="url"/> parameter is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="url"/> parameter is null.
+        /// </exception>
         /// <returns>The route</returns>
         public static Route MapLocalizedRoute(this AreaRegistrationContext context, string name, string url, object defaults, object constraints, string[] namespaces)
         {
@@ -432,9 +489,31 @@ namespace StrixIT.Platform.Web
 
         #endregion Render Razor templates
 
-        // Code taken from http://blog.falafel.com/loading-javascript-css-resources-nested-asp-net-partial-views/. Adapted to work for partials only.
+        // Code taken from
+        // http://blog.falafel.com/loading-javascript-css-resources-nested-asp-net-partial-views/.
+        // Adapted to work for partials only.
 
         #region Scrips and Styles for Partials
+
+        /// <summary>
+        /// Adds a script to be emitted by the RenderScripts method.
+        /// </summary>
+        /// <param name="html">The HTMLHelper.</param>
+        /// <param name="scriptUrl">The script URL.</param>
+        public static void AddScript(this HtmlHelper html, string scriptUrl)
+        {
+            Scripts.Add(scriptUrl);
+        }
+
+        /// <summary>
+        /// Adds a stylesheet to be emitted by the RenderStyleSheets method.
+        /// </summary>
+        /// <param name="html">The HTMLHelper</param>
+        /// <param name="styleUrl">The stylesheet URL.</param>
+        public static void AddStyleSheet(this HtmlHelper html, string styleUrl)
+        {
+            Styles.Add(styleUrl);
+        }
 
         /// <summary>
         /// Renders the scripts onto the page that were added by the view and partial views.
@@ -468,26 +547,6 @@ namespace StrixIT.Platform.Web
             return new MvcHtmlString(sb.ToString());
         }
 
-        /// <summary>
-        /// Adds a script to be emitted by the RenderScripts method.
-        /// </summary>
-        /// <param name="html">The HTMLHelper.</param>
-        /// <param name="scriptUrl">The script URL.</param>
-        public static void AddScript(this HtmlHelper html, string scriptUrl)
-        {
-            Scripts.Add(scriptUrl);
-        }
-
-        /// <summary>
-        /// Adds a stylesheet to be emitted by the RenderStyleSheets method.
-        /// </summary>
-        /// <param name="html">The HTMLHelper</param>
-        /// <param name="styleUrl">The stylesheet URL.</param>
-        public static void AddStyleSheet(this HtmlHelper html, string styleUrl)
-        {
-            Styles.Add(styleUrl);
-        }
-
         #endregion Scrips and Styles for Partials
 
         #region Content Links
@@ -518,28 +577,27 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Display module content that has child items on a page.
+        /// Display module content on a page.
         /// </summary>
         /// <param name="helper">The html helper to render the content</param>
-        /// <param name="controllerName">The content controller name</param>
-        /// <param name="url">The content url</param>
+        /// <param name="options">The content display options</param>
         /// <returns>The content</returns>
-        public static IHtmlString ContentWithChild(this HtmlHelper helper, string controllerName, string url)
+        public static IHtmlString Content(this HtmlHelper helper, DisplayOptions options)
         {
-            return Content(helper, new DisplayOptions(controllerName, url) { HasChildPages = true });
-        }
+            var controller = GetController(helper, options.Controller, options.Action);
 
-        /// <summary>
-        /// Display module content that has child items on a page.
-        /// </summary>
-        /// <param name="helper">The html helper to render the content</param>
-        /// <param name="moduleName">The content module name</param>
-        /// <param name="controllerName">The content controller name</param>
-        /// <param name="url">The content url</param>
-        /// <returns>The content</returns>
-        public static IHtmlString ContentWithChild(this HtmlHelper helper, string moduleName, string controllerName, string url)
-        {
-            return Content(helper, new DisplayOptions(moduleName, controllerName, null, url, null, null));
+            if (controller != null)
+            {
+                var getContentEvent = new GetContentEvent(helper, options);
+                StrixPlatform.RaiseEvent(getContentEvent);
+
+                if (getContentEvent.Result != null)
+                {
+                    return getContentEvent.Result;
+                }
+            }
+
+            return new HtmlString(options.DefaultText);
         }
 
         /// <summary>
@@ -571,7 +629,9 @@ namespace StrixIT.Platform.Web
         /// <param name="helper">The html helper to render the content</param>
         /// <param name="moduleName">The content module name</param>
         /// <param name="controllerName">The content controller name</param>
-        /// <param name="itemPageUrl">The url of the page on which to show the individual content items</param>
+        /// <param name="itemPageUrl">
+        /// The url of the page on which to show the individual content items
+        /// </param>
         /// <returns>The content list</returns>
         public static IHtmlString ContentList(this HtmlHelper helper, string moduleName, string controllerName, string itemPageUrl)
         {
@@ -579,27 +639,28 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Display module content on a page.
+        /// Display module content that has child items on a page.
         /// </summary>
         /// <param name="helper">The html helper to render the content</param>
-        /// <param name="options">The content display options</param>
+        /// <param name="controllerName">The content controller name</param>
+        /// <param name="url">The content url</param>
         /// <returns>The content</returns>
-        public static IHtmlString Content(this HtmlHelper helper, DisplayOptions options)
+        public static IHtmlString ContentWithChild(this HtmlHelper helper, string controllerName, string url)
         {
-            var controller = GetController(helper, options.Controller, options.Action);
+            return Content(helper, new DisplayOptions(controllerName, url) { HasChildPages = true });
+        }
 
-            if (controller != null)
-            {
-                var getContentEvent = new GetContentEvent(helper, options);
-                StrixPlatform.RaiseEvent(getContentEvent);
-
-                if (getContentEvent.Result != null)
-                {
-                    return getContentEvent.Result;
-                }
-            }
-
-            return new HtmlString(options.DefaultText);
+        /// <summary>
+        /// Display module content that has child items on a page.
+        /// </summary>
+        /// <param name="helper">The html helper to render the content</param>
+        /// <param name="moduleName">The content module name</param>
+        /// <param name="controllerName">The content controller name</param>
+        /// <param name="url">The content url</param>
+        /// <returns>The content</returns>
+        public static IHtmlString ContentWithChild(this HtmlHelper helper, string moduleName, string controllerName, string url)
+        {
+            return Content(helper, new DisplayOptions(moduleName, controllerName, null, url, null, null));
         }
 
         /// <summary>
@@ -620,7 +681,9 @@ namespace StrixIT.Platform.Web
         /// <param name="helper">The html helper to render the content</param>
         /// <param name="controllerName">The name of the controller of the widget</param>
         /// <param name="action">The name of the action of the widget</param>
-        /// <param name="mainUrl">The url of the main content page, if the content uses child pages</param>
+        /// <param name="mainUrl">
+        /// The url of the main content page, if the content uses child pages
+        /// </param>
         /// <returns>The widget content</returns>
         public static IHtmlString Widget(this HtmlHelper helper, string controllerName, string action, string mainUrl)
         {

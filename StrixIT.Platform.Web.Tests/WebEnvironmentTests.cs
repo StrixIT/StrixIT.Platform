@@ -17,28 +17,14 @@ namespace StrixIT.Platform.Web.Tests
     [TestClass]
     public class WebEnvironmentTests
     {
+        #region Private Fields
+
         private Mock<HttpContextBase> _httpContextMock = new Mock<HttpContextBase>();
         private Mock<HttpSessionStateBase> _sessionMock = new Mock<HttpSessionStateBase>();
 
-        [TestMethod]
-        public void GetStringFromSessionWhenStoredInSessionAsSerializedStringShouldReturnString()
-        {
-            var environment = GetEnvironment();
-            var expected = "admin@strixit.com";
-            _sessionMock.Setup(s => s[PlatformConstants.CURRENTUSEREMAIL.ToLower()]).Returns(JsonConvert.SerializeObject(expected));
-            var result = environment.GetFromSession<string>(PlatformConstants.CURRENTUSEREMAIL);
-            Assert.AreEqual(expected, result);
-        }
+        #endregion Private Fields
 
-        [TestMethod]
-        public void GetGuidFromSessionWhenStoredInSessionAsSerializedStringShouldReturnParsedGuid()
-        {
-            var environment = GetEnvironment();
-            var expected = Guid.NewGuid();
-            _sessionMock.Setup(s => s[PlatformConstants.CURRENTGROUPID.ToLower()]).Returns(JsonConvert.SerializeObject(expected));
-            var result = environment.GetFromSession<Guid>(PlatformConstants.CURRENTGROUPID);
-            Assert.AreEqual(expected, result);
-        }
+        #region Public Methods
 
         [TestMethod]
         public void GetDictionaryFromSessionWhenStoredInSessionAsSerializedStringShouldReturnTheDictionary()
@@ -54,6 +40,30 @@ namespace StrixIT.Platform.Web.Tests
             Assert.AreEqual(expected.Last().Value, result.Last().Value);
         }
 
+        [TestMethod]
+        public void GetGuidFromSessionWhenStoredInSessionAsSerializedStringShouldReturnParsedGuid()
+        {
+            var environment = GetEnvironment();
+            var expected = Guid.NewGuid();
+            _sessionMock.Setup(s => s[PlatformConstants.CURRENTGROUPID.ToLower()]).Returns(JsonConvert.SerializeObject(expected));
+            var result = environment.GetFromSession<Guid>(PlatformConstants.CURRENTGROUPID);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GetStringFromSessionWhenStoredInSessionAsSerializedStringShouldReturnString()
+        {
+            var environment = GetEnvironment();
+            var expected = "admin@strixit.com";
+            _sessionMock.Setup(s => s[PlatformConstants.CURRENTUSEREMAIL.ToLower()]).Returns(JsonConvert.SerializeObject(expected));
+            var result = environment.GetFromSession<string>(PlatformConstants.CURRENTUSEREMAIL);
+            Assert.AreEqual(expected, result);
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
         private WebEnvironment GetEnvironment()
         {
             var environment = new WebEnvironment();
@@ -61,5 +71,7 @@ namespace StrixIT.Platform.Web.Tests
             _httpContextMock.Setup(m => m.Session).Returns(_sessionMock.Object);
             return environment;
         }
+
+        #endregion Private Methods
     }
 }

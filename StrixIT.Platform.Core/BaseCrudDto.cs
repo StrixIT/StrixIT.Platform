@@ -29,8 +29,10 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class BaseCrudDto
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseCrudDto" /> class.
+        /// Initializes a new instance of the <see cref="BaseCrudDto"/> class.
         /// </summary>
         /// <param name="dtoType">The entity type the dto is for</param>
         public BaseCrudDto(Type dtoType)
@@ -39,15 +41,14 @@ namespace StrixIT.Platform.Core
             this.InterfaceResourceType = typeof(Resources.DefaultInterface);
         }
 
-        /// <summary>
-        /// Gets or sets the type of the resource file to localize the interface.
-        /// </summary>
-        public Type InterfaceResourceType { get; set; }
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
-        /// Gets or sets the entity type the dto is for.
+        /// Gets or sets a value indicating whether the user can delete this entity.
         /// </summary>
-        public Type EntityType { get; set; }
+        public bool CanDelete { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the user can edit this entity.
@@ -55,8 +56,15 @@ namespace StrixIT.Platform.Core
         public bool CanEdit { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can delete this entity.
+        /// Gets or sets the entity type the dto is for.
         /// </summary>
-        public bool CanDelete { get; set; }
+        public Type EntityType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the resource file to localize the interface.
+        /// </summary>
+        public Type InterfaceResourceType { get; set; }
+
+        #endregion Public Properties
     }
 }

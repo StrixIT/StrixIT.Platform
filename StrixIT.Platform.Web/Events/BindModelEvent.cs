@@ -30,8 +30,10 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class BindModelEvent : IPlatformEvent
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="BindModelEvent" /> class.
+        /// Initializes a new instance of the <see cref="BindModelEvent"/> class.
         /// </summary>
         /// <param name="controllerContext">The controller context for the bind event</param>
         /// <param name="modelBindingContext">The model binding context for the bind event</param>
@@ -41,24 +43,30 @@ namespace StrixIT.Platform.Web
             this.ModelBindingContext = modelBindingContext;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         /// <summary>
-        ///  Gets the controller context for the bind event.
+        /// Gets the controller context for the bind event.
         /// </summary>
         public ControllerContext ControllerContext { get; private set; }
 
         /// <summary>
-        ///  Gets the model binding context for the bind event.
-        /// </summary>
-        public ModelBindingContext ModelBindingContext { get; private set; }
-
-        /// <summary>
-        ///  Gets or sets a value indicating whether the model is bound by the event handler.
+        /// Gets or sets a value indicating whether the model is bound by the event handler.
         /// </summary>
         public bool IsBound { get; set; }
 
         /// <summary>
-        ///  Gets or sets the result value when the event is handled by the event handler.
+        /// Gets the model binding context for the bind event.
+        /// </summary>
+        public ModelBindingContext ModelBindingContext { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the result value when the event is handled by the event handler.
         /// </summary>
         public object Result { get; set; }
+
+        #endregion Public Properties
     }
 }

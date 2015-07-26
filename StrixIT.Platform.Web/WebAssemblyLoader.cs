@@ -27,6 +27,8 @@ namespace StrixIT.Platform.Web
 {
     public class WebAssemblyLoader
     {
+        #region Public Methods
+
         public static void LoadAssemblies()
         {
             ModuleManager.LoadAssemblies();
@@ -36,5 +38,7 @@ namespace StrixIT.Platform.Web
                 BuildManager.AddReferencedAssembly(assembly);
             }
         }
+
+        #endregion Public Methods
     }
 }

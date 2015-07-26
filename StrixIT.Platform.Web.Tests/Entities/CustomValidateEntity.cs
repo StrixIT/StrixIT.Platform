@@ -9,6 +9,8 @@ namespace StrixIT.Platform.Web.Tests
 {
     public class CustomValidateEntity : TestEntity
     {
+        #region Public Constructors
+
         static CustomValidateEntity()
         {
             CustomValidateEntity.AddValidationRule<CustomValidateEntity>(x =>
@@ -23,5 +25,7 @@ namespace StrixIT.Platform.Web.Tests
                 return result;
             });
         }
+
+        #endregion Public Constructors
     }
 }

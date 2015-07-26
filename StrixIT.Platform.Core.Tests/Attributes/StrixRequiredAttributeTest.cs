@@ -11,11 +11,13 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass()]
     public class StrixRequiredAttributeTest
     {
+        #region Public Methods
+
         [TestMethod()]
-        public void IntIsNotValidWhen0()
+        public void DateTimeIsNotValidWhenInitial()
         {
             StrixRequiredAttribute target = new StrixRequiredAttribute();
-            int value = 0;
+            DateTime value = new DateTime();
             bool expected = false;
             bool actual;
             actual = target.IsValid(value);
@@ -23,10 +25,10 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod()]
-        public void IntIsValidWhenGreaterThan0()
+        public void DateTimeIsValidWhenNotInitial()
         {
             StrixRequiredAttribute target = new StrixRequiredAttribute();
-            int value = 1;
+            DateTime value = DateTime.Now;
             bool expected = true;
             bool actual;
             actual = target.IsValid(value);
@@ -56,10 +58,10 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod()]
-        public void DateTimeIsNotValidWhenInitial()
+        public void IntIsNotValidWhen0()
         {
             StrixRequiredAttribute target = new StrixRequiredAttribute();
-            DateTime value = new DateTime();
+            int value = 0;
             bool expected = false;
             bool actual;
             actual = target.IsValid(value);
@@ -67,14 +69,16 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod()]
-        public void DateTimeIsValidWhenNotInitial()
+        public void IntIsValidWhenGreaterThan0()
         {
             StrixRequiredAttribute target = new StrixRequiredAttribute();
-            DateTime value = DateTime.Now;
+            int value = 1;
             bool expected = true;
             bool actual;
             actual = target.IsValid(value);
             Assert.AreEqual(expected, actual);
         }
+
+        #endregion Public Methods
     }
 }

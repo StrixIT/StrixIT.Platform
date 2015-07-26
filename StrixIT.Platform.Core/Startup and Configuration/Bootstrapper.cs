@@ -23,10 +23,13 @@
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// Bootstraps the application by Loading all modules, initializing membership when present and running all initializers.
+    /// Bootstraps the application by Loading all modules, initializing membership when present and
+    /// running all initializers.
     /// </summary>
     public class Bootstrapper
     {
+        #region Public Methods
+
         /// <summary>
         /// Loads all modules, initializes membership when present and runs all initializers.
         /// </summary>
@@ -57,5 +60,7 @@ namespace StrixIT.Platform.Core
 
             StrixPlatform.WriteStartupMessage("Application boostrap finished.");
         }
+
+        #endregion Public Methods
     }
 }

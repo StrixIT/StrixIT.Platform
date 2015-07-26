@@ -34,9 +34,11 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class CustomFields
     {
+        #region Public Methods
+
         /// <summary>
-        /// Gets a list of custom field values, grouped by the specified property (e.g. userid to group the values by user
-        /// in case of profile values).
+        /// Gets a list of custom field values, grouped by the specified property (e.g. userid to
+        /// group the values by user in case of profile values).
         /// </summary>
         /// <typeparam name="TType">The custom field type</typeparam>
         /// <typeparam name="TValue">The custom field value type</typeparam>
@@ -109,5 +111,7 @@ namespace StrixIT.Platform.Core
 
             return customObjects;
         }
+
+        #endregion Public Methods
     }
 }

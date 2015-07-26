@@ -28,10 +28,14 @@ namespace StrixIT.Platform.Core
     /// <typeparam name="T">The type of the event the implementor handles</typeparam>
     public interface IHandlePlatformEvent<T> where T : IPlatformEvent
     {
+        #region Public Methods
+
         /// <summary>
         /// Handles the event.
         /// </summary>
         /// <param name="args">The event to handle</param>
         void Handle(T args);
+
+        #endregion Public Methods
     }
 }

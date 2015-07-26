@@ -34,10 +34,14 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class DataFilter
     {
+        #region Private Fields
+
         /// <summary>
         /// A dictionary containing the registered FilterSortMaps per type.
         /// </summary>
         private static ConcurrentDictionary<Type, List<FilterSortMap>> _mappings = new ConcurrentDictionary<Type, List<FilterSortMap>>();
+
+        #endregion Private Fields
 
         #region Filter Maps
 
@@ -98,6 +102,29 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
+        /// Pages a query.
+        /// </summary>
+        /// <typeparam name="T">The type of the query</typeparam>
+        /// <param name="query">The query</param>
+        /// <param name="options">The page options to use</param>
+        /// <returns>The paged query</returns>
+        public static IQueryable<T> Page<T>(this IQueryable<TargetException> query, FilterOptions options)
+        {
+            return PageQuery(query, options).Cast<T>();
+        }
+
+        /// <summary>
+        /// Pages a query.
+        /// </summary>
+        /// <param name="query">The query</param>
+        /// <param name="options">The page options to use</param>
+        /// <returns>The paged query</returns>
+        public static IQueryable Page(this IQueryable query, FilterOptions options)
+        {
+            return PageQuery(query, options);
+        }
+
+        /// <summary>
         /// Sorts a query
         /// </summary>
         /// <typeparam name="T">The type of the query</typeparam>
@@ -122,47 +149,31 @@ namespace StrixIT.Platform.Core
             return SortQuery(query, options, skipPaging);
         }
 
-        /// <summary>
-        /// Pages a query.
-        /// </summary>
-        /// <typeparam name="T">The type of the query</typeparam>
-        /// <param name="query">The query</param>
-        /// <param name="options">The page options to use</param>
-        /// <returns>The paged query</returns>
-        public static IQueryable<T> Page<T>(this IQueryable<TargetException> query, FilterOptions options)
-        {
-            return PageQuery(query, options).Cast<T>();
-        }
-
-        /// <summary>
-        /// Pages a query.
-        /// </summary>
-        /// <param name="query">The query</param>
-        /// <param name="options">The page options to use</param>
-        /// <returns>The paged query</returns>
-        public static IQueryable Page(this IQueryable query, FilterOptions options)
-        {
-            return PageQuery(query, options);
-        }
-
         #endregion Filter, Sort and Page
 
         #region Private Methods
 
-        private static FilterSortMap GetFilterMap(Type entityType, string fieldName)
+        private static void CheckFilter(FilterOptions options)
         {
-            if (entityType == null)
+            if (options != null && options.Page > 0 && options.Page < 1)
             {
-                throw new ArgumentNullException("entityType");
+                throw new ArgumentException("The page index must be greater than 0.");
             }
 
-            if (fieldName == null)
+            if (options != null && options.Page > 0 && options.PageSize < 0)
             {
-                throw new ArgumentNullException("fieldName");
+                throw new ArgumentException("The page size must be equal to or greater than 0.");
             }
 
-            var mapping = _mappings.Where(ma => ma.Key.IsAssignableFrom(entityType)).SelectMany(ma => ma.Value).FirstOrDefault(ma => ma.FieldToMap.ToLower().Equals(fieldName.ToLower()));
-            return mapping;
+            if (options != null && options.Page > 0)
+            {
+                long upperBound = ((long)options.Page * options.PageSize) + options.PageSize - 1;
+
+                if (upperBound > int.MaxValue)
+                {
+                    throw new ArgumentException("The combination of page index and page size is invalid.");
+                }
+            }
         }
 
         private static IQueryable FilterQuery(IQueryable query, FilterOptions options, bool skipPaging)
@@ -249,46 +260,44 @@ namespace StrixIT.Platform.Core
             return query.Sort(options, skipPaging);
         }
 
-        private static IQueryable SortQuery(IQueryable query, FilterOptions options, bool skipPaging)
+        private static FilterSortMap GetFilterMap(Type entityType, string fieldName)
         {
-            var entityType = query.ElementType;
-
-            // If no filter field is specified, find the default property and sort on that.
-            if (options == null || options.Sort.IsEmpty())
+            if (entityType == null)
             {
-                var property = GetSortProperty(entityType);
-                query = query.OrderBy(property);
-            }
-            else
-            {
-                foreach (var field in options.Sort)
-                {
-                    FilterSortMap map = GetFilterMap(entityType, field.Field);
-
-                    // If there is a sort map for this field, invoke it. Otherwise, use the default.
-                    if (map != null)
-                    {
-                        if (map.SortMap != null)
-                        {
-                            query = map.SortMap(query, field.Dir);
-                            continue;
-                        }
-                    }
-
-                    query = query.OrderBy(string.Format(field.Field + " {0}", field.Dir));
-                }
+                throw new ArgumentNullException("entityType");
             }
 
-            if (!skipPaging)
+            if (fieldName == null)
             {
-                query = Page(query, options);
-            }
-            else
-            {
-                options.Total = query.Count();
+                throw new ArgumentNullException("fieldName");
             }
 
-            return query;
+            var mapping = _mappings.Where(ma => ma.Key.IsAssignableFrom(entityType)).SelectMany(ma => ma.Value).FirstOrDefault(ma => ma.FieldToMap.ToLower().Equals(fieldName.ToLower()));
+            return mapping;
+        }
+
+        private static string GetSortProperty(Type type)
+        {
+            PropertyInfo prop = null;
+
+            prop = type.GetProperties().Where(pr => pr.Name.ToLower().Equals("id")).FirstOrDefault();
+
+            if (prop == null)
+            {
+                prop = type.GetProperties().Where(pr => pr.PropertyType.Equals(typeof(DateTime)) || pr.PropertyType.Equals(typeof(DateTime?))).FirstOrDefault();
+            }
+
+            if (prop == null)
+            {
+                prop = type.GetProperties().FirstOrDefault();
+            }
+
+            if (prop == null)
+            {
+                throw new ArgumentException("The specified type has no properties.");
+            }
+
+            return prop.Name;
         }
 
         private static IQueryable PageQuery(this IQueryable query, FilterOptions options)
@@ -344,51 +353,46 @@ namespace StrixIT.Platform.Core
             }
         }
 
-        private static void CheckFilter(FilterOptions options)
+        private static IQueryable SortQuery(IQueryable query, FilterOptions options, bool skipPaging)
         {
-            if (options != null && options.Page > 0 && options.Page < 1)
+            var entityType = query.ElementType;
+
+            // If no filter field is specified, find the default property and sort on that.
+            if (options == null || options.Sort.IsEmpty())
             {
-                throw new ArgumentException("The page index must be greater than 0.");
+                var property = GetSortProperty(entityType);
+                query = query.OrderBy(property);
             }
-
-            if (options != null && options.Page > 0 && options.PageSize < 0)
+            else
             {
-                throw new ArgumentException("The page size must be equal to or greater than 0.");
-            }
-
-            if (options != null && options.Page > 0)
-            {
-                long upperBound = ((long)options.Page * options.PageSize) + options.PageSize - 1;
-
-                if (upperBound > int.MaxValue)
+                foreach (var field in options.Sort)
                 {
-                    throw new ArgumentException("The combination of page index and page size is invalid.");
+                    FilterSortMap map = GetFilterMap(entityType, field.Field);
+
+                    // If there is a sort map for this field, invoke it. Otherwise, use the default.
+                    if (map != null)
+                    {
+                        if (map.SortMap != null)
+                        {
+                            query = map.SortMap(query, field.Dir);
+                            continue;
+                        }
+                    }
+
+                    query = query.OrderBy(string.Format(field.Field + " {0}", field.Dir));
                 }
             }
-        }
 
-        private static string GetSortProperty(Type type)
-        {
-            PropertyInfo prop = null;
-
-            prop = type.GetProperties().Where(pr => pr.Name.ToLower().Equals("id")).FirstOrDefault();
-
-            if (prop == null)
+            if (!skipPaging)
             {
-                prop = type.GetProperties().Where(pr => pr.PropertyType.Equals(typeof(DateTime)) || pr.PropertyType.Equals(typeof(DateTime?))).FirstOrDefault();
+                query = Page(query, options);
+            }
+            else
+            {
+                options.Total = query.Count();
             }
 
-            if (prop == null)
-            {
-                prop = type.GetProperties().FirstOrDefault();
-            }
-
-            if (prop == null)
-            {
-                throw new ArgumentException("The specified type has no properties.");
-            }
-
-            return prop.Name;
+            return query;
         }
 
         #endregion Private Methods

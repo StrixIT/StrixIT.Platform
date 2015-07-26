@@ -28,15 +28,17 @@ namespace StrixIT.Platform.Core
     /// <typeparam name="TModel">The type of the view model the save action is for</typeparam>
     public class SaveResult<TModel> where TModel : class
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="SaveResult{TModel}" /> class.
+        /// Initializes a new instance of the <see cref="SaveResult{TModel}"/> class.
         /// </summary>
         public SaveResult() : this(false, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SaveResult{TModel}" /> class.
+        /// Initializes a new instance of the <see cref="SaveResult{TModel}"/> class.
         /// </summary>
         /// <param name="success">True if the save was successful, false otherwise</param>
         /// <param name="entity">The saved entity</param>
@@ -46,10 +48,9 @@ namespace StrixIT.Platform.Core
             this.Entity = entity;
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the save was successful;
-        /// </summary>
-        public bool Success { get; set; }
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the saved entity.
@@ -57,13 +58,20 @@ namespace StrixIT.Platform.Core
         public object Entity { get; set; }
 
         /// <summary>
+        /// Gets or sets the save message.
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
         /// Gets the model.
         /// </summary>
         public TModel Model { get { return this.Entity.Map<TModel>(); } }
 
         /// <summary>
-        /// Gets or sets the save message.
+        /// Gets or sets a value indicating whether the save was successful;
         /// </summary>
-        public string Message { get; set; }
+        public bool Success { get; set; }
+
+        #endregion Public Properties
     }
 }

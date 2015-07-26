@@ -29,6 +29,8 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class CoreRegistry : Registry
     {
+        #region Public Constructors
+
         public CoreRegistry()
         {
             this.Scan(x =>
@@ -46,5 +48,7 @@ namespace StrixIT.Platform.Core
 
             For<ISmtpClient>().Use<DefaultSmtpClient>();
         }
+
+        #endregion Public Constructors
     }
 }

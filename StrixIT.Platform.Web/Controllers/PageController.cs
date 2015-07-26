@@ -26,12 +26,15 @@ using System.Web.Mvc;
 namespace StrixIT.Platform.Web
 {
     /// <summary>
-    /// The controller for custom pages that have no controller themselves. This controller is used to allow users to add
-    /// views to the Cms Views folder without having a controller for them. They can just add a .cshtml file, and add widgets
-    /// to it using razor statements without the need to compile the application or use Visual Studio.
+    /// The controller for custom pages that have no controller themselves. This controller is used
+    /// to allow users to add views to the Cms Views folder without having a controller for them.
+    /// They can just add a .cshtml file, and add widgets to it using razor statements without the
+    /// need to compile the application or use Visual Studio.
     /// </summary>
     public class PageController : BaseController
     {
+        #region Public Methods
+
         /// <summary>
         /// Renders a custom page, if the url can be resolved. Otherwise, the 404 page is rendered.
         /// </summary>
@@ -66,5 +69,7 @@ namespace StrixIT.Platform.Web
 
             return this.View("~/" + Web.Helpers.GetVirtualPath(viewPath));
         }
+
+        #endregion Public Methods
     }
 }

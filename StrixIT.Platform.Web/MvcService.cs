@@ -32,31 +32,22 @@ namespace StrixIT.Platform.Web
 {
     public class MvcService : IMvcService
     {
+        #region Private Fields
+
         private HttpContextBase _httpContext;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public MvcService(HttpContextBase httpContext)
         {
             this._httpContext = httpContext;
         }
 
-        public void Initialize()
-        {
-            this.ConfigureViewEngines();
-            this.ConfigureBundles(BundleTable.Bundles);
+        #endregion Public Constructors
 
-            AreaRegistration.RegisterAllAreas();
-
-            this.ConfigureRoutes(RouteTable.Routes);
-
-            this.ConfigureFilters();
-
-            ValueProviderFactories.Factories.Remove(ValueProviderFactories.Factories.OfType<JsonValueProviderFactory>().FirstOrDefault());
-            ValueProviderFactories.Factories.Add(new JsonDotNetValueProviderFactory());
-            ModelBinders.Binders.DefaultBinder = new StrixPlatformBinder();
-            MvcHandler.DisableMvcResponseHeader = true;
-
-            ControllerBuilder.Current.SetControllerFactory(new StructureMapControllerFactory());
-        }
+        #region Public Methods
 
         public void ConfigureRoutes(RouteCollection routes)
         {
@@ -96,26 +87,28 @@ namespace StrixIT.Platform.Web
                 defaults: new { language = culture, controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
 
-        private void ConfigureViewEngines()
+        public void Initialize()
         {
-            ViewEngines.Engines.Clear();
-            var razorEngine = new RazorViewEngine();
-            ViewEngines.Engines.Add(razorEngine);
+            this.ConfigureViewEngines();
+            this.ConfigureBundles(BundleTable.Bundles);
 
-            List<string> viewLocations = new List<string>();
-            List<string> partialViewLocations = new List<string>();
+            AreaRegistration.RegisterAllAreas();
 
-            foreach (string area in Helpers.AreaNames)
-            {
-                viewLocations.Add(string.Format("~/Areas/{0}/Views/Shared/{{0}}.cshtml", area));
-                viewLocations.Add(string.Format("~/Areas/{0}/Views/{{1}}/{{0}}.cshtml", area));
-                partialViewLocations.Add(string.Format("~/Areas/{0}/Views/Shared/{{0}}.cshtml", area));
-            }
+            this.ConfigureRoutes(RouteTable.Routes);
 
-            razorEngine.ViewLocationFormats = razorEngine.ViewLocationFormats.Concat(viewLocations).ToArray();
-            razorEngine.PartialViewLocationFormats = razorEngine.PartialViewLocationFormats.Concat(partialViewLocations).ToArray();
-            razorEngine.AreaPartialViewLocationFormats = razorEngine.AreaPartialViewLocationFormats.Concat(partialViewLocations).ToArray();
+            this.ConfigureFilters();
+
+            ValueProviderFactories.Factories.Remove(ValueProviderFactories.Factories.OfType<JsonValueProviderFactory>().FirstOrDefault());
+            ValueProviderFactories.Factories.Add(new JsonDotNetValueProviderFactory());
+            ModelBinders.Binders.DefaultBinder = new StrixPlatformBinder();
+            MvcHandler.DisableMvcResponseHeader = true;
+
+            ControllerBuilder.Current.SetControllerFactory(new StructureMapControllerFactory());
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private void ConfigureBundles(BundleCollection bundles)
         {
@@ -165,5 +158,28 @@ namespace StrixIT.Platform.Web
             GlobalFilters.Filters.Add(new JsonValidateAntiForgeryTokenAttribute());
             GlobalFilters.Filters.Add(new LinkAuthenticationToSessionAttribute());
         }
+
+        private void ConfigureViewEngines()
+        {
+            ViewEngines.Engines.Clear();
+            var razorEngine = new RazorViewEngine();
+            ViewEngines.Engines.Add(razorEngine);
+
+            List<string> viewLocations = new List<string>();
+            List<string> partialViewLocations = new List<string>();
+
+            foreach (string area in Helpers.AreaNames)
+            {
+                viewLocations.Add(string.Format("~/Areas/{0}/Views/Shared/{{0}}.cshtml", area));
+                viewLocations.Add(string.Format("~/Areas/{0}/Views/{{1}}/{{0}}.cshtml", area));
+                partialViewLocations.Add(string.Format("~/Areas/{0}/Views/Shared/{{0}}.cshtml", area));
+            }
+
+            razorEngine.ViewLocationFormats = razorEngine.ViewLocationFormats.Concat(viewLocations).ToArray();
+            razorEngine.PartialViewLocationFormats = razorEngine.PartialViewLocationFormats.Concat(partialViewLocations).ToArray();
+            razorEngine.AreaPartialViewLocationFormats = razorEngine.AreaPartialViewLocationFormats.Concat(partialViewLocations).ToArray();
+        }
+
+        #endregion Private Methods
     }
 }

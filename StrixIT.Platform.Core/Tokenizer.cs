@@ -32,10 +32,16 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class Tokenizer
     {
+        #region Private Fields
+
         /// <summary>
         /// The tokens registered.
         /// </summary>
         private static ConcurrentDictionary<string, Func<string>> _registeredTokens = new ConcurrentDictionary<string, Func<string>>();
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         /// <summary>
         /// Registers a function to replace a value for a token.
@@ -125,5 +131,7 @@ namespace StrixIT.Platform.Core
 
             return value;
         }
+
+        #endregion Public Methods
     }
 }

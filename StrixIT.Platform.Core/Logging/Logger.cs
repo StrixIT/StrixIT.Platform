@@ -29,8 +29,14 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class Logger
     {
-        private static Type _loggingServiceType;
+        #region Private Fields
+
         private static ILoggingService _loggingService;
+        private static Type _loggingServiceType;
+
+        #endregion Private Fields
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the logging service to use.
@@ -57,6 +63,10 @@ namespace StrixIT.Platform.Core
             }
         }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         /// <summary>
         /// Logs the specified message to the log.
         /// </summary>
@@ -79,6 +89,16 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
+        /// Logs analytics data.
+        /// </summary>
+        /// <param name="entryType">The data type</param>
+        /// <param name="data">The data</param>
+        public static void LogToAnalytics(string entryType, string data)
+        {
+            LoggingService.LogToAnalytics(entryType, data);
+        }
+
+        /// <summary>
         /// Logs an audit message.
         /// </summary>
         /// <param name="entryType">The message type</param>
@@ -88,14 +108,6 @@ namespace StrixIT.Platform.Core
             LoggingService.LogToAudit(entryType, message);
         }
 
-        /// <summary>
-        /// Logs analytics data.
-        /// </summary>
-        /// <param name="entryType">The data type</param>
-        /// <param name="data">The data</param>
-        public static void LogToAnalytics(string entryType, string data)
-        {
-            LoggingService.LogToAnalytics(entryType, data);
-        }
+        #endregion Public Methods
     }
 }

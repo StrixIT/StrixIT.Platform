@@ -10,18 +10,16 @@ namespace StrixIT.Platform.Core.Tests
 {
     public class CompositeKeyEntity : ValidationBase
     {
-        public Guid Id { get; set; }
+        #region Public Properties
 
         public string Culture { get; set; }
-
+        public string Data { get; set; }
+        public Guid Id { get; set; }
+        public PersonalInfo Info { get; set; }
+        public ICollection<CompositeKeyEntity> OtherSiblings { get; set; }
+        public ICollection<CompositeKeyEntity> Siblings { get; set; }
         public int VersionNumber { get; set; }
 
-        public string Data { get; set; }
-
-        public PersonalInfo Info { get; set; }
-
-        public ICollection<CompositeKeyEntity> Siblings { get; set; }
-
-        public ICollection<CompositeKeyEntity> OtherSiblings { get; set; }
+        #endregion Public Properties
     }
 }

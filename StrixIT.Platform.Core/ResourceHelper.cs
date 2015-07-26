@@ -30,6 +30,8 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class ResourceHelper
     {
+        #region Public Methods
+
         /// <summary>
         /// Gets a resource string from a resource.
         /// </summary>
@@ -46,5 +48,7 @@ namespace StrixIT.Platform.Core
             ResourceManager manager = new ResourceManager(resourceType.FullName, resourceType.Assembly);
             return manager.GetString(resourceName);
         }
+
+        #endregion Public Methods
     }
 }

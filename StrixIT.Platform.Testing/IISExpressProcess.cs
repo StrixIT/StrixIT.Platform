@@ -32,15 +32,34 @@ namespace StrixIT.Platform.Testing
     /// </summary>
     public class IISExpressProcess : IDisposable
     {
+        #region Private Fields
+
         private readonly string _pathToSite;
         private Process _iisProcess;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public IISExpressProcess(string pathToSite)
         {
             this._pathToSite = pathToSite;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public int? PortNumber { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+        }
 
         public void Start()
         {
@@ -81,19 +100,9 @@ namespace StrixIT.Platform.Testing
             EndProcess();
         }
 
-        private void CaptureAvailablePortNumber()
-        {
-            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
-            {
-                socket.Bind((EndPoint)new IPEndPoint(IPAddress.Loopback, 0));
-                this.PortNumber = new int?(((IPEndPoint)socket.LocalEndPoint).Port);
-            }
-        }
+        #endregion Public Methods
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-        }
+        #region Protected Methods
 
         protected virtual void Dispose(bool cleanupManaged)
         {
@@ -106,6 +115,19 @@ namespace StrixIT.Platform.Testing
             GC.SuppressFinalize(this);
         }
 
+        #endregion Protected Methods
+
+        #region Private Methods
+
+        private void CaptureAvailablePortNumber()
+        {
+            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                socket.Bind((EndPoint)new IPEndPoint(IPAddress.Loopback, 0));
+                this.PortNumber = new int?(((IPEndPoint)socket.LocalEndPoint).Port);
+            }
+        }
+
         private void EndProcess()
         {
             this._iisProcess.CloseMainWindow();
@@ -113,5 +135,7 @@ namespace StrixIT.Platform.Testing
             this._iisProcess.Dispose();
             this._iisProcess = (Process)null;
         }
+
+        #endregion Private Methods
     }
 }

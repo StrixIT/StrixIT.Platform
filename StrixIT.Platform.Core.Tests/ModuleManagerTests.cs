@@ -11,6 +11,8 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass]
     public class ModuleManagerTests
     {
+        #region Public Methods
+
         [ClassInitialize]
         public static void Init(TestContext context)
         {
@@ -19,11 +21,15 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod]
-        public void GetTypeListShouldReturnAllTypesBasedOnRequestedType()
+        public void CustomAppSettingShouldHaveBeenLoaded()
         {
-            var result = ModuleManager.GetTypeList(typeof(ValidationBase));
-            Assert.IsTrue(result.Any(r => r == typeof(TestEntity)));
-            Assert.AreEqual(8, result.Count);
+            Assert.IsNotNull(ModuleManager.AppSettings["TestModule"]["testSetting"]);
+        }
+
+        [TestMethod]
+        public void CustomConnectionStringShouldHaveBeenLoaded()
+        {
+            Assert.IsNotNull(ModuleManager.ConnectionStrings["CustomConnection"]);
         }
 
         [TestMethod]
@@ -34,15 +40,13 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod]
-        public void CustomConnectionStringShouldHaveBeenLoaded()
+        public void GetTypeListShouldReturnAllTypesBasedOnRequestedType()
         {
-            Assert.IsNotNull(ModuleManager.ConnectionStrings["CustomConnection"]);
+            var result = ModuleManager.GetTypeList(typeof(ValidationBase));
+            Assert.IsTrue(result.Any(r => r == typeof(TestEntity)));
+            Assert.AreEqual(8, result.Count);
         }
 
-        [TestMethod]
-        public void CustomAppSettingShouldHaveBeenLoaded()
-        {
-            Assert.IsNotNull(ModuleManager.AppSettings["TestModule"]["testSetting"]);
-        }
+        #endregion Public Methods
     }
 }

@@ -35,7 +35,13 @@ namespace StrixIT.Platform.Web
 {
     public static class Helpers
     {
+        #region Private Fields
+
         private static string[] _areaNames;
+
+        #endregion Private Fields
+
+        #region Internal Properties
 
         internal static string[] AreaNames
         {
@@ -50,43 +56,9 @@ namespace StrixIT.Platform.Web
             }
         }
 
-        /// <summary>
-        /// HTML encodes a text.
-        /// </summary>
-        /// <param name="text">The text to HTML encode</param>
-        /// <returns>The HTML encoded text</returns>
-        public static string HtmlEncode(string text)
-        {
-            return WebUtility.HtmlEncode(text);
-        }
+        #endregion Internal Properties
 
-        /// <summary>
-        /// HTML decodes a text.
-        /// </summary>
-        /// <param name="text">The text to HTML decode</param>
-        /// <param name="replaceDangerousCharacters">True if dangerous characters should be replaced by html-safe versions, false if not</param>
-        /// <returns>The HTML decoded text</returns>
-        public static string HtmlDecode(string text, bool replaceDangerousCharacters = true)
-        {
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                return text;
-            }
-
-            var decoded = WebUtility.HtmlDecode(text);
-
-            if (replaceDangerousCharacters)
-            {
-                decoded = decoded.Replace("&", "&amp;")
-                                 .Replace("<", "&lt;")
-                                 .Replace(">", "&gt;")
-                                 .Replace("\"", "&quot;")
-                                 .Replace("\'", "&#39;")
-                                 .Replace("/", "&#47;");
-            }
-
-            return decoded;
-        }
+        #region Public Methods
 
         /// <summary>
         /// Gets the virtual path for a physical path.
@@ -119,6 +91,56 @@ namespace StrixIT.Platform.Web
             return virtualPath;
         }
 
+        /// <summary>
+        /// HTML decodes a text.
+        /// </summary>
+        /// <param name="text">The text to HTML decode</param>
+        /// <param name="replaceDangerousCharacters">
+        /// True if dangerous characters should be replaced by html-safe versions, false if not
+        /// </param>
+        /// <returns>The HTML decoded text</returns>
+        public static string HtmlDecode(string text, bool replaceDangerousCharacters = true)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return text;
+            }
+
+            var decoded = WebUtility.HtmlDecode(text);
+
+            if (replaceDangerousCharacters)
+            {
+                decoded = decoded.Replace("&", "&amp;")
+                                 .Replace("<", "&lt;")
+                                 .Replace(">", "&gt;")
+                                 .Replace("\"", "&quot;")
+                                 .Replace("\'", "&#39;")
+                                 .Replace("/", "&#47;");
+            }
+
+            return decoded;
+        }
+
+        /// <summary>
+        /// HTML encodes a text.
+        /// </summary>
+        /// <param name="text">The text to HTML encode</param>
+        /// <returns>The HTML encoded text</returns>
+        public static string HtmlEncode(string text)
+        {
+            return WebUtility.HtmlEncode(text);
+        }
+
+        #endregion Public Methods
+
+        #region Internal Methods
+
+        internal static bool CustomErrorsEnabled(HttpRequestBase request)
+        {
+            var systemWeb = Core.Helpers.GetConfigSectionGroup<SystemWebSectionGroup>("system.web");
+            return systemWeb.CustomErrors.Mode != CustomErrorsMode.Off && !(systemWeb.CustomErrors.Mode == CustomErrorsMode.RemoteOnly && request.IsLocal);
+        }
+
         internal static IDictionary<string, object> GetSessionDictionary(HttpSessionStateBase session)
         {
             var dictionary = new Dictionary<string, object>();
@@ -136,12 +158,6 @@ namespace StrixIT.Platform.Web
             return dictionary;
         }
 
-        internal static bool CustomErrorsEnabled(HttpRequestBase request)
-        {
-            var systemWeb = Core.Helpers.GetConfigSectionGroup<SystemWebSectionGroup>("system.web");
-            return systemWeb.CustomErrors.Mode != CustomErrorsMode.Off && !(systemWeb.CustomErrors.Mode == CustomErrorsMode.RemoteOnly && request.IsLocal);
-        }
-
         internal static void Redirect(HttpResponseBase response, string url)
         {
             string redirectUrl;
@@ -157,5 +173,7 @@ namespace StrixIT.Platform.Web
 
             response.Redirect(redirectUrl);
         }
+
+        #endregion Internal Methods
     }
 }

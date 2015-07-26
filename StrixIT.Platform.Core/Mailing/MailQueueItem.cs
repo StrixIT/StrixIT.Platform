@@ -30,23 +30,27 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class MailQueueItem : ValidationBase
     {
-        public int Id { get; set; }
-
-        [StrixRequired]
-        [StringLength(250)]
-        public string From { get; set; }
-
-        [StrixRequired]
-        public string To { get; set; }
-
-        [StrixRequired]
-        [StringLength(250)]
-        public string Subject { get; set; }
+        #region Public Properties
 
         [StrixRequired]
         public string Body { get; set; }
 
         [StrixRequired]
         public DateTime FirstSendAttempt { get; set; }
+
+        [StrixRequired]
+        [StringLength(250)]
+        public string From { get; set; }
+
+        public int Id { get; set; }
+
+        [StrixRequired]
+        [StringLength(250)]
+        public string Subject { get; set; }
+
+        [StrixRequired]
+        public string To { get; set; }
+
+        #endregion Public Properties
     }
 }

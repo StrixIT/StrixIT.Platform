@@ -32,8 +32,10 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class GetControllerEvent : IPlatformEvent
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetControllerEvent" /> class.
+        /// Initializes a new instance of the <see cref="GetControllerEvent"/> class.
         /// </summary>
         /// <param name="requestContext">The current request context</param>
         /// <param name="controllerType">The type of the controller to get</param>
@@ -47,10 +49,14 @@ namespace StrixIT.Platform.Web
             this.Stage = stage;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
         /// <summary>
-        /// Gets the current request context.
+        /// Gets or sets the controller to use.
         /// </summary>
-        public RequestContext RequestContext { get; private set; }
+        public IController Controller { get; set; }
 
         /// <summary>
         /// Gets the type of the controller to get.
@@ -63,13 +69,15 @@ namespace StrixIT.Platform.Web
         public Func<RequestContext, Type, IController> DefaultControllerFactoryFunc { get; private set; }
 
         /// <summary>
+        /// Gets the current request context.
+        /// </summary>
+        public RequestContext RequestContext { get; private set; }
+
+        /// <summary>
         /// Gets the stage at which controller resolution triggered this event.
         /// </summary>
         public ControllerResolveStage Stage { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the controller to use.
-        /// </summary>
-        public IController Controller { get; set; }
+        #endregion Public Properties
     }
 }

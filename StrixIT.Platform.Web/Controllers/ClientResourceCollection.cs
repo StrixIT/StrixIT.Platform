@@ -27,17 +27,26 @@ using System.Runtime.Serialization;
 namespace StrixIT.Platform.Web
 {
     /// <summary>
-    /// A class to collect resources (strings from resource files and localized enums) to send to the client.
+    /// A class to collect resources (strings from resource files and localized enums) to send to
+    /// the client.
     /// </summary>
     [Serializable]
     public class ClientResourceCollection : Dictionary<string, IDictionary<string, string>>
     {
+        #region Public Constructors
+
         public ClientResourceCollection()
         {
         }
 
+        #endregion Public Constructors
+
+        #region Protected Constructors
+
         protected ClientResourceCollection(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+
+        #endregion Protected Constructors
     }
 }

@@ -31,7 +31,13 @@ namespace StrixIT.Platform.Web
 {
     public class ResourceService : IResourceService
     {
+        #region Private Fields
+
         private const string RESOURCEIDENTIFIER = "client";
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         public ClientResourceCollection GetEnums(string moduleName)
         {
@@ -108,5 +114,7 @@ namespace StrixIT.Platform.Web
 
             return result;
         }
+
+        #endregion Public Methods
     }
 }

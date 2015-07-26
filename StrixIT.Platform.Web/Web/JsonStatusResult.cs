@@ -30,7 +30,13 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class JsonStatusResult : JsonResult
     {
+        #region Private Fields
+
         private dynamic _resultData = new ExpandoObject();
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public JsonStatusResult()
         {
@@ -39,6 +45,10 @@ namespace StrixIT.Platform.Web
             this._resultData.Data = null;
             base.Data = this._resultData;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the result data.
@@ -53,6 +63,23 @@ namespace StrixIT.Platform.Web
             set
             {
                 this._resultData.Data = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the message. If an error occurred on the server while processing the post
+        /// request, an error message is stored here.
+        /// </summary>
+        public string Message
+        {
+            get
+            {
+                return this._resultData.Message;
+            }
+
+            set
+            {
+                this._resultData.Message = value;
             }
         }
 
@@ -72,21 +99,6 @@ namespace StrixIT.Platform.Web
             }
         }
 
-        /// <summary>
-        /// Gets or sets the message. If an error occurred on the server while processing the post request, an error message
-        /// is stored here.
-        /// </summary>
-        public string Message
-        {
-            get
-            {
-                return this._resultData.Message;
-            }
-
-            set
-            {
-                this._resultData.Message = value;
-            }
-        }
+        #endregion Public Properties
     }
 }

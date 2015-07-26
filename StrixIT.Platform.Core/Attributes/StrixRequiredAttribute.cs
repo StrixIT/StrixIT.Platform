@@ -26,12 +26,14 @@ using System.ComponentModel.DataAnnotations;
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// Verifies that a property is not null, that a value type property does not have the default value for its type, and that a string property
-    /// is not empty or whitespace.
+    /// Verifies that a property is not null, that a value type property does not have the default
+    /// value for its type, and that a string property is not empty or whitespace.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class StrixRequiredAttribute : RequiredAttribute
     {
+        #region Public Methods
+
         public override bool IsValid(object value)
         {
             if (value == null)
@@ -60,5 +62,7 @@ namespace StrixIT.Platform.Core
 
             return isValid;
         }
+
+        #endregion Public Methods
     }
 }

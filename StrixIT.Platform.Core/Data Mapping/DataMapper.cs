@@ -38,15 +38,12 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class DataMapper
     {
+        #region Private Fields
+
         /// <summary>
         /// Cached AutoMapper methods retrieved with reflection.
         /// </summary>
         private static ConcurrentDictionary<string, MethodInfo> _autoMapperMethods = new ConcurrentDictionary<string, MethodInfo>();
-
-        /// <summary>
-        /// The mapping configurations registered.
-        /// </summary>
-        private static ConcurrentBag<Tuple<Type, Type, List<object>>> _mappingConfigurations = new ConcurrentBag<Tuple<Type, Type, List<object>>>();
 
         /// <summary>
         /// An action to ignore a member when mapping.
@@ -85,8 +82,8 @@ namespace StrixIT.Platform.Core
             // Create the MapFrom expression.
             var mapParameter = Expression.Parameter(memberConfigExpressionType, "c");
 
-            // I can use MapFrom here because there is only one such method in the current version of AutoMapper. If that changes,
-            // find out how to get one with generic parameters.
+            // I can use MapFrom here because there is only one such method in the current version
+            // of AutoMapper. If that changes, find out how to get one with generic parameters.
             var mapFromInfo = memberConfigExpressionType.GetMethod("MapFrom").MakeGenericMethod(propertyType);
             var mapFromBody = Expression.Call(mapParameter, mapFromInfo, GetPropertySelector(sourceType, name));
             var mapFromLambda = Expression.Lambda(mapFromBody, mapParameter);
@@ -97,42 +94,31 @@ namespace StrixIT.Platform.Core
         };
 
         /// <summary>
+        /// The mapping configurations registered.
+        /// </summary>
+        private static ConcurrentBag<Tuple<Type, Type, List<object>>> _mappingConfigurations = new ConcurrentBag<Tuple<Type, Type, List<object>>>();
+
+        #endregion Private Fields
+
+        #region Public Events
+
+        /// <summary>
         /// The event triggered when a map is created.
         /// </summary>
         public static event EventHandler<CreateMapEventArgs> OnCreateMap;
 
-        /// <summary>
-        /// Registers a new mapping configuration to use for mapping data using automapper.
-        /// </summary>
-        /// <typeparam name="TSource">The source object type</typeparam>
-        /// <typeparam name="TDestination">The destination object type</typeparam>
-        /// <param name="config">The mapping configuration</param>
-        public static void RegisterMapConfig<TSource, TDestination>(MapConfig<TSource, TDestination> config)
-        {
-            if (config == null)
-            {
-                throw new ArgumentNullException("config");
-            }
+        #endregion Public Events
 
-            var sourceType = typeof(TSource);
-            var destinationType = typeof(TDestination);
-            var configurations = _mappingConfigurations.FirstOrDefault(c => c.Item1 == sourceType && c.Item2 == destinationType);
-
-            if (configurations == null)
-            {
-                configurations = new Tuple<Type, Type, List<object>>(sourceType, destinationType, new List<object>());
-                _mappingConfigurations.Add(configurations);
-            }
-
-            configurations.Item3.Add(config);
-        }
+        #region Public Methods
 
         /// <summary>
         /// Creates a new map with Automapper.
         /// </summary>
         /// <typeparam name="TSource">The map source type</typeparam>
         /// <typeparam name="TDestination">The map destination type</typeparam>
-        /// <returns>The mapping configuration created by Automapper, or NULL if the map already exists</returns>
+        /// <returns>
+        /// The mapping configuration created by Automapper, or NULL if the map already exists
+        /// </returns>
         public static IMappingExpression<TSource, TDestination> CreateMap<TSource, TDestination>()
         {
             return CreateMapping(typeof(TSource), typeof(TDestination)) as IMappingExpression<TSource, TDestination>;
@@ -236,37 +222,35 @@ namespace StrixIT.Platform.Core
             return list;
         }
 
-        #region Private Methods
-
-        private static IEnumerable GetMapConfigs(Type sourceType, Type destinationType)
+        /// <summary>
+        /// Registers a new mapping configuration to use for mapping data using automapper.
+        /// </summary>
+        /// <typeparam name="TSource">The source object type</typeparam>
+        /// <typeparam name="TDestination">The destination object type</typeparam>
+        /// <param name="config">The mapping configuration</param>
+        public static void RegisterMapConfig<TSource, TDestination>(MapConfig<TSource, TDestination> config)
         {
-            return _mappingConfigurations.Where(c => c.Item1.IsAssignableFrom(sourceType) && c.Item2.IsAssignableFrom(destinationType)).SelectMany(c => c.Item3);
-        }
-
-        private static void ProcessMappingActions(Type sourceType, Type destinationType, object source, object destination)
-        {
-            foreach (var config in GetMapConfigs(sourceType, destinationType))
+            if (config == null)
             {
-                var action = (dynamic)config.GetPropertyValue("AfterMapAction");
-
-                if (action != null)
-                {
-                    var enumerable = source as IEnumerable;
-
-                    if (enumerable != null)
-                    {
-                        foreach (var item in enumerable)
-                        {
-                            action(item, item);
-                        }
-                    }
-                    else
-                    {
-                        action(source, destination);
-                    }
-                }
+                throw new ArgumentNullException("config");
             }
+
+            var sourceType = typeof(TSource);
+            var destinationType = typeof(TDestination);
+            var configurations = _mappingConfigurations.FirstOrDefault(c => c.Item1 == sourceType && c.Item2 == destinationType);
+
+            if (configurations == null)
+            {
+                configurations = new Tuple<Type, Type, List<object>>(sourceType, destinationType, new List<object>());
+                _mappingConfigurations.Add(configurations);
+            }
+
+            configurations.Item3.Add(config);
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private static object CreateMapping(Type sourceType, Type destinationType)
         {
@@ -310,6 +294,23 @@ namespace StrixIT.Platform.Core
             return null;
         }
 
+        private static MethodInfo GetAutomapperMethod(string name, int numberOfParameters, params Type[] parameters)
+        {
+            if (!_autoMapperMethods.ContainsKey(name))
+            {
+                var typeQuery = Assembly.GetAssembly(typeof(Mapper)).GetTypes().SelectMany(t => t.GetMethods());
+                var info = typeQuery.FirstOrDefault(m => m.Name == name && m.GetGenericArguments().Count() == parameters.Count() && m.GetParameters().Count() == numberOfParameters);
+                _autoMapperMethods.GetOrAdd(name, info);
+            }
+
+            return _autoMapperMethods[name].MakeGenericMethod(parameters);
+        }
+
+        private static IEnumerable GetMapConfigs(Type sourceType, Type destinationType)
+        {
+            return _mappingConfigurations.Where(c => c.Item1.IsAssignableFrom(sourceType) && c.Item2.IsAssignableFrom(destinationType)).SelectMany(c => c.Item3);
+        }
+
         private static string GetPropertyName(LambdaExpression propertySelector)
         {
             var isMemberExpression = propertySelector.Body as MemberExpression != null;
@@ -341,6 +342,31 @@ namespace StrixIT.Platform.Core
             return Expression.Lambda(propertyChain, sourceParameter);
         }
 
+        private static void ProcessMappingActions(Type sourceType, Type destinationType, object source, object destination)
+        {
+            foreach (var config in GetMapConfigs(sourceType, destinationType))
+            {
+                var action = (dynamic)config.GetPropertyValue("AfterMapAction");
+
+                if (action != null)
+                {
+                    var enumerable = source as IEnumerable;
+
+                    if (enumerable != null)
+                    {
+                        foreach (var item in enumerable)
+                        {
+                            action(item, item);
+                        }
+                    }
+                    else
+                    {
+                        action(source, destination);
+                    }
+                }
+            }
+        }
+
         private static IQueryable Project(this IQueryable query, Type typeToProjectTo)
         {
             if (query == null)
@@ -358,18 +384,6 @@ namespace StrixIT.Platform.Core
             var toMethodInfo = projectMethodInvoke.GetType().GetMethod("To", new Type[] { typeof(object) }).MakeGenericMethod(typeToProjectTo);
             var toMethodInvoke = toMethodInfo.Invoke(projectMethodInvoke, new object[] { null }) as IQueryable;
             return toMethodInvoke;
-        }
-
-        private static MethodInfo GetAutomapperMethod(string name, int numberOfParameters, params Type[] parameters)
-        {
-            if (!_autoMapperMethods.ContainsKey(name))
-            {
-                var typeQuery = Assembly.GetAssembly(typeof(Mapper)).GetTypes().SelectMany(t => t.GetMethods());
-                var info = typeQuery.FirstOrDefault(m => m.Name == name && m.GetGenericArguments().Count() == parameters.Count() && m.GetParameters().Count() == numberOfParameters);
-                _autoMapperMethods.GetOrAdd(name, info);
-            }
-
-            return _autoMapperMethods[name].MakeGenericMethod(parameters);
         }
 
         #endregion Private Methods

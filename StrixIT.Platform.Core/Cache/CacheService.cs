@@ -32,9 +32,15 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class CacheService : ICacheService
     {
+        #region Private Fields
+
         private static readonly ObjectCache Cache = MemoryCache.Default;
         private int _absoluteExpiration = 6;
         private int _slidingExpiration = 0;
+
+        #endregion Private Fields
+
+        #region Public Properties
 
         public int AbsoluteExpiration
         {
@@ -61,6 +67,10 @@ namespace StrixIT.Platform.Core
                 this._slidingExpiration = value;
             }
         }
+
+        #endregion Public Properties
+
+        #region Public Indexers
 
         public object this[string key]
         {
@@ -96,15 +106,9 @@ namespace StrixIT.Platform.Core
             }
         }
 
-        public void Delete(string key)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                return;
-            }
+        #endregion Public Indexers
 
-            Cache.Remove(key.ToLower());
-        }
+        #region Public Methods
 
         public void Clear()
         {
@@ -124,5 +128,17 @@ namespace StrixIT.Platform.Core
                 Cache.Remove(keys[i]);
             }
         }
+
+        public void Delete(string key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return;
+            }
+
+            Cache.Remove(key.ToLower());
+        }
+
+        #endregion Public Methods
     }
 }

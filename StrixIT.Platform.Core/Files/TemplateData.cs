@@ -27,15 +27,17 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class TemplateData
     {
+        #region Public Constructors
+
         /// <summary>
-        ///  Initializes a new instance of the <see cref="TemplateData" /> class.
+        /// Initializes a new instance of the <see cref="TemplateData"/> class.
         /// </summary>
         public TemplateData()
         {
         }
 
         /// <summary>
-        ///  Initializes a new instance of the <see cref="TemplateData" /> class.
+        /// Initializes a new instance of the <see cref="TemplateData"/> class.
         /// </summary>
         /// <param name="culture">The template culture</param>
         /// <param name="subject">The template subject</param>
@@ -47,6 +49,15 @@ namespace StrixIT.Platform.Core
             this.Body = body;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the body for the template.
+        /// </summary>
+        public string Body { get; set; }
+
         /// <summary>
         /// Gets or sets the culture for the template.
         /// </summary>
@@ -57,9 +68,6 @@ namespace StrixIT.Platform.Core
         /// </summary>
         public string Subject { get; set; }
 
-        /// <summary>
-        /// Gets or sets the body for the template.
-        /// </summary>
-        public string Body { get; set; }
+        #endregion Public Properties
     }
 }

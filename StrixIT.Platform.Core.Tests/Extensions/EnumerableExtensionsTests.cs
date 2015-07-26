@@ -13,6 +13,25 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass()]
     public class EnumerableExtensionsTests
     {
+        #region Public Methods
+
+        [TestMethod]
+        public void GetFirstShouldReturnFirstMemberOfIEnumerable()
+        {
+            IEnumerable list = new int[] { 1, 2, 3, 4 };
+            var result = list.GetFirst();
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void GetListShouldReturnAllMembersOfIEnumerable()
+        {
+            IEnumerable list = new int[] { 1, 2, 3, 4 };
+            var result = list.GetList() as List<int>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.Count);
+        }
+
         [TestMethod]
         public void TrimAnArrayOfStringsShouldTrimAllMembers()
         {
@@ -20,6 +39,8 @@ namespace StrixIT.Platform.Core.Tests
             var result = EnumerableExtensions.Trim(array);
             Assert.IsTrue(result[0] == "A" && result[1] == "B" && result[2] == "C 1");
         }
+
+        #endregion Public Methods
 
         #region ToLowerCase
 
@@ -48,6 +69,14 @@ namespace StrixIT.Platform.Core.Tests
         #region IsEmpty
 
         [TestMethod]
+        public void IEnumerableIsEmptyShouldReturnFalseWhenItemsPresent()
+        {
+            IEnumerable array = new string[] { "A" };
+            var result = EnumerableExtensions.IsEmpty(array);
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
         public void IEnumerableIsEmptyShouldReturnTrueOnNull()
         {
             IEnumerable array = null;
@@ -63,31 +92,6 @@ namespace StrixIT.Platform.Core.Tests
             Assert.AreEqual(true, result);
         }
 
-        [TestMethod]
-        public void IEnumerableIsEmptyShouldReturnFalseWhenItemsPresent()
-        {
-            IEnumerable array = new string[] { "A" };
-            var result = EnumerableExtensions.IsEmpty(array);
-            Assert.AreEqual(false, result);
-        }
-
         #endregion IsEmpty
-
-        [TestMethod]
-        public void GetFirstShouldReturnFirstMemberOfIEnumerable()
-        {
-            IEnumerable list = new int[] { 1, 2, 3, 4 };
-            var result = list.GetFirst();
-            Assert.AreEqual(1, result);
-        }
-
-        [TestMethod]
-        public void GetListShouldReturnAllMembersOfIEnumerable()
-        {
-            IEnumerable list = new int[] { 1, 2, 3, 4 };
-            var result = list.GetList() as List<int>;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(4, result.Count);
-        }
     }
 }

@@ -30,8 +30,10 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class GetContentEvent : IPlatformEvent
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetContentEvent" /> class.
+        /// Initializes a new instance of the <see cref="GetContentEvent"/> class.
         /// </summary>
         /// <param name="helper">The HtmlHelper used</param>
         /// <param name="options">The display options passed to the content helper</param>
@@ -40,6 +42,10 @@ namespace StrixIT.Platform.Web
             this.Helper = helper;
             this.Options = options;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets the HtmlHelper to use.
@@ -55,5 +61,7 @@ namespace StrixIT.Platform.Web
         /// Gets or sets the custom content result.
         /// </summary>
         public MvcHtmlString Result { get; set; }
+
+        #endregion Public Properties
     }
 }

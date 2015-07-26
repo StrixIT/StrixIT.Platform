@@ -30,10 +30,14 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface ISmtpClient : IDisposable
     {
+        #region Public Methods
+
         /// <summary>
         /// Sends a mail using the smtp client.
         /// </summary>
         /// <param name="message">The mail to send</param>
         void Send(MailMessage message);
+
+        #endregion Public Methods
     }
 }

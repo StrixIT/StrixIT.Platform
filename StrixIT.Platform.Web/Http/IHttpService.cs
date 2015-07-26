@@ -24,10 +24,14 @@ namespace StrixIT.Platform.Web
 {
     public interface IHttpService
     {
+        #region Public Methods
+
         void CompressRequest();
+
+        void SetCultureForRequest();
 
         void SetResponseHeaders();
 
-        void SetCultureForRequest();
+        #endregion Public Methods
     }
 }

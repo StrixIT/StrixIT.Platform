@@ -31,6 +31,8 @@ namespace StrixIT.Platform.Web
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class JsonHandlerAttribute : ActionFilterAttribute
     {
+        #region Public Methods
+
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             if (filterContext == null)
@@ -47,5 +49,7 @@ namespace StrixIT.Platform.Web
 
             base.OnActionExecuted(filterContext);
         }
+
+        #endregion Public Methods
     }
 }

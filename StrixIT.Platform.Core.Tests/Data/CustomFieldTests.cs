@@ -13,57 +13,25 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass]
     public class CustomFieldTests
     {
-        [TestMethod()]
-        public void GetTestFieldsForPropertyShouldReturnFieldsWithAllData()
-        {
-            var id = AdminId;
-            var query = GetCustomFields.AsQueryable().Where(x => x.UserId == id && x.Culture == "en");
-            var result = query.GetCustomFieldsList<TestCustomField, TestCustomFieldValue>("UserId").First();
-            Assert.AreEqual(new DateTime(1980, 8, 26), result.BirthDate);
-            Assert.AreEqual("Leusden", result.City);
-            Assert.AreEqual(5, result.Stars);
-            Assert.AreEqual(false, result.FalseOrTrue);
-        }
-
-        [TestMethod()]
-        public void GetTestFieldsForListShouldReturnListOfFieldsWithAllData()
-        {
-            var id = AdminId;
-            var query = GetCustomFields.AsQueryable();
-            var result = query.GetCustomFieldsList<TestCustomField, TestCustomFieldValue>("UserId");
-            var first = result[0];
-            var second = result[1];
-            Assert.AreEqual(new DateTime(1980, 8, 26), first.BirthDate);
-            Assert.AreEqual("Leusden", first.City);
-            Assert.AreEqual(5, first.Stars);
-            Assert.AreEqual(false, first.FalseOrTrue);
-            Assert.AreEqual(new DateTime(1982, 7, 7), second.BirthDate);
-            Assert.AreEqual("Leusden", second.City);
-            Assert.AreEqual(4, second.Stars);
-            Assert.AreEqual(true, second.FalseOrTrue);
-        }
-
-        private static Guid AdminId
-        {
-            get
-            {
-                return Guid.Parse("BE65198E-C609-4D90-BBB3-805BE0B6B1C2");
-            }
-        }
-
-        private static Guid UserId
-        {
-            get
-            {
-                return Guid.Parse("D632CA83-A3F3-4925-B5B8-8A21D64F3CD7");
-            }
-        }
+        #region Public Properties
 
         public static Guid MainGroupId
         {
             get
             {
                 return Guid.Parse("DF54143F-8A89-4CA9-9B28-4E1C665D24A4");
+            }
+        }
+
+        #endregion Public Properties
+
+        #region Private Properties
+
+        private static Guid AdminId
+        {
+            get
+            {
+                return Guid.Parse("BE65198E-C609-4D90-BBB3-805BE0B6B1C2");
             }
         }
 
@@ -172,5 +140,49 @@ namespace StrixIT.Platform.Core.Tests
                 };
             }
         }
+
+        private static Guid UserId
+        {
+            get
+            {
+                return Guid.Parse("D632CA83-A3F3-4925-B5B8-8A21D64F3CD7");
+            }
+        }
+
+        #endregion Private Properties
+
+        #region Public Methods
+
+        [TestMethod()]
+        public void GetTestFieldsForListShouldReturnListOfFieldsWithAllData()
+        {
+            var id = AdminId;
+            var query = GetCustomFields.AsQueryable();
+            var result = query.GetCustomFieldsList<TestCustomField, TestCustomFieldValue>("UserId");
+            var first = result[0];
+            var second = result[1];
+            Assert.AreEqual(new DateTime(1980, 8, 26), first.BirthDate);
+            Assert.AreEqual("Leusden", first.City);
+            Assert.AreEqual(5, first.Stars);
+            Assert.AreEqual(false, first.FalseOrTrue);
+            Assert.AreEqual(new DateTime(1982, 7, 7), second.BirthDate);
+            Assert.AreEqual("Leusden", second.City);
+            Assert.AreEqual(4, second.Stars);
+            Assert.AreEqual(true, second.FalseOrTrue);
+        }
+
+        [TestMethod()]
+        public void GetTestFieldsForPropertyShouldReturnFieldsWithAllData()
+        {
+            var id = AdminId;
+            var query = GetCustomFields.AsQueryable().Where(x => x.UserId == id && x.Culture == "en");
+            var result = query.GetCustomFieldsList<TestCustomField, TestCustomFieldValue>("UserId").First();
+            Assert.AreEqual(new DateTime(1980, 8, 26), result.BirthDate);
+            Assert.AreEqual("Leusden", result.City);
+            Assert.AreEqual(5, result.Stars);
+            Assert.AreEqual(false, result.FalseOrTrue);
+        }
+
+        #endregion Public Methods
     }
 }

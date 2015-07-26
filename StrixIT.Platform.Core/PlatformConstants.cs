@@ -27,20 +27,23 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class PlatformConstants
     {
+        #region Public Fields
+
         public const string ADMINROLE = "Administrator";
+        public const string CONTRIBUTORROLE = "Contributor";
+        public const string EDITORROLE = "Editor";
         public const string GROUPADMINROLE = "GroupAdministrator";
         public const string USERROLE = "RegisteredUser";
-        public const string EDITORROLE = "Editor";
-        public const string CONTRIBUTORROLE = "Contributor";
-
-        public static readonly string STRUCTUREMAPPRIVATE = "Private";
         public static readonly string CURRENTCULTURE = "CurrentCulture";
-        public static readonly string LANGUAGE = "language";
-        public static readonly string ENTITYFRAMEWORKPROXYTYPE = "System.Data.Entity.DynamicProxies";
-        public static readonly string CURRENTUSEREMAIL = "CurrentUserEmail";
-        public static readonly string CURRENTUSER = "CurrentUser";
         public static readonly string CURRENTGROUPID = "CurrentGroupId";
+        public static readonly string CURRENTUSER = "CurrentUser";
+        public static readonly string CURRENTUSEREMAIL = "CurrentUserEmail";
         public static readonly string CURRENTUSERGROUPS = "CurrentUserGroups";
+        public static readonly string ENTITYFRAMEWORKPROXYTYPE = "System.Data.Entity.DynamicProxies";
+        public static readonly string LANGUAGE = "language";
         public static readonly string PLATFORM = "Platform";
+        public static readonly string STRUCTUREMAPPRIVATE = "Private";
+
+        #endregion Public Fields
     }
 }

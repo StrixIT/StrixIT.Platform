@@ -26,6 +26,8 @@ namespace StrixIT.Platform.Web
 {
     public class AdminAreaRegistration : AreaRegistration
     {
+        #region Public Properties
+
         public override string AreaName
         {
             get
@@ -34,8 +36,14 @@ namespace StrixIT.Platform.Web
             }
         }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public override void RegisterArea(AreaRegistrationContext context)
         {
         }
+
+        #endregion Public Methods
     }
 }

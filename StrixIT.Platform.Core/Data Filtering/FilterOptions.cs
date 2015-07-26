@@ -30,8 +30,10 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class FilterOptions
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="FilterOptions" /> class.
+        /// Initializes a new instance of the <see cref="FilterOptions"/> class.
         /// </summary>
         public FilterOptions()
         {
@@ -40,15 +42,9 @@ namespace StrixIT.Platform.Core
             this.TraverseListPropertyName = "Id";
         }
 
-        /// <summary>
-        /// Gets or sets the size of a page to use for paging. When 0, paging is disabled.
-        /// </summary>
-        public int PageSize { get; set; }
+        #endregion Public Constructors
 
-        /// <summary>
-        /// Gets or sets the number of the current page to use for paging. When 0, paging is disabled.
-        /// </summary>
-        public int Page { get; set; }
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the filter.
@@ -56,25 +52,31 @@ namespace StrixIT.Platform.Core
         public Filter Filter { get; set; }
 
         /// <summary>
-        /// Gets or sets the dictionary of fields to sort on.
-        /// </summary>
-        public IList<SortField> Sort { get; set; }
-
-        /// <summary>
-        /// Gets or sets the value of the total number of records when, sorting and paging is completed. It is set automatically to
-        /// contain the total number of records available that satisfy the filter.
-        /// </summary>
-        public int Total { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to include a traverse list.
         /// </summary>
         public bool IncludeTraverseList { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the id property to use to create the traverse list.
+        /// Gets or sets the number of the current page to use for paging. When 0, paging is disabled.
         /// </summary>
-        public string TraverseListPropertyName { get; set; }
+        public int Page { get; set; }
+
+        /// <summary>
+        /// Gets or sets the size of a page to use for paging. When 0, paging is disabled.
+        /// </summary>
+        public int PageSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dictionary of fields to sort on.
+        /// </summary>
+        public IList<SortField> Sort { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value of the total number of records when, sorting and paging is
+        /// completed. It is set automatically to contain the total number of records available that
+        /// satisfy the filter.
+        /// </summary>
+        public int Total { get; set; }
 
         /// <summary>
         /// Gets or sets the traverse list.
@@ -82,8 +84,17 @@ namespace StrixIT.Platform.Core
         public IList<TraverseList> TraverseList { get; set; }
 
         /// <summary>
-        /// Removes a field from the filter and returns it. This must be used when custom handling of the field is required, before the
-        /// general filter code is executed.
+        /// Gets or sets the name of the id property to use to create the traverse list.
+        /// </summary>
+        public string TraverseListPropertyName { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        /// <summary>
+        /// Removes a field from the filter and returns it. This must be used when custom handling
+        /// of the field is required, before the general filter code is executed.
         /// </summary>
         /// <param name="name">The name of the field to extract</param>
         /// <returns>The filter field</returns>
@@ -104,5 +115,7 @@ namespace StrixIT.Platform.Core
 
             return null;
         }
+
+        #endregion Public Methods
     }
 }

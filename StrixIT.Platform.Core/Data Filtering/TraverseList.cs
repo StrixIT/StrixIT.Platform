@@ -30,10 +30,7 @@ namespace StrixIT.Platform.Core
     [Serializable]
     public class TraverseList
     {
-        /// <summary>
-        /// Gets or sets the id of the entity previous to this one.
-        /// </summary>
-        public object PreviousId { get; set; }
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the id of the current entity.
@@ -44,5 +41,12 @@ namespace StrixIT.Platform.Core
         /// Gets or sets the id of the entity next to this one.
         /// </summary>
         public object NextId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the id of the entity previous to this one.
+        /// </summary>
+        public object PreviousId { get; set; }
+
+        #endregion Public Properties
     }
 }

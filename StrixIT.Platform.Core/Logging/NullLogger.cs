@@ -26,6 +26,8 @@ namespace StrixIT.Platform.Core
 {
     public class NullLogger : ILoggingService
     {
+        #region Public Properties
+
         public string LogScriptErrorUrl
         {
             get
@@ -33,6 +35,10 @@ namespace StrixIT.Platform.Core
                 return null;
             }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public void Log(string message, LogLevel level = LogLevel.Debug)
         {
@@ -44,14 +50,16 @@ namespace StrixIT.Platform.Core
             return;
         }
 
+        public void LogToAnalytics(string entryType, string data)
+        {
+            return;
+        }
+
         public void LogToAudit(string type, string message)
         {
             return;
         }
 
-        public void LogToAnalytics(string entryType, string data)
-        {
-            return;
-        }
+        #endregion Public Methods
     }
 }

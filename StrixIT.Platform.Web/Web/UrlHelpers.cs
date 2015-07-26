@@ -35,6 +35,8 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public static class UrlHelpers
     {
+        #region Public Methods
+
         /// <summary>
         /// Creates a html/url safe string by replacing spaces by '-'and diacritics by basic ascii characters.
         /// </summary>
@@ -46,10 +48,13 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Creates a html/url safe string by replacing spaces by a replacement character and diacritics by basic ascii characters.
+        /// Creates a html/url safe string by replacing spaces by a replacement character and
+        /// diacritics by basic ascii characters.
         /// </summary>
         /// <param name="text">The text</param>
-        /// <param name="replaceChar">The character used to replace spaces. If omitted, '-' will be used.</param>
+        /// <param name="replaceChar">
+        /// The character used to replace spaces. If omitted, '-' will be used.
+        /// </param>
         /// <returns>The encoded text</returns>
         public static string CreateCleanUrl(string text, char? replaceChar)
         {
@@ -66,7 +71,8 @@ namespace StrixIT.Platform.Web
             ResourceManager manager = new ResourceManager(typeof(Core.Resources.Diacritics));
             StringBuilder cleanText = new StringBuilder();
 
-            // Decode the string first to get the original characters, then trim leading and trailing spaces from the path.
+            // Decode the string first to get the original characters, then trim leading and
+            // trailing spaces from the path.
             text = Helpers.HtmlDecode(text, false).Trim();
             text = text.Replace(' ', replaceChar.Value);
 
@@ -126,11 +132,19 @@ namespace StrixIT.Platform.Web
         /// <summary>
         /// Creates a unique url based on the specified name.
         /// </summary>
-        /// <param name="query">The query for the entity type, needed to check the url uniqueness in the data source</param>
+        /// <param name="query">
+        /// The query for the entity type, needed to check the url uniqueness in the data source
+        /// </param>
         /// <param name="name">The name to create an url from</param>
-        /// <param name="idPropertyValue">The id property value of the entity type, needed to ignore the entity itself when checking the uniqueness of the url</param>
+        /// <param name="idPropertyValue">
+        /// The id property value of the entity type, needed to ignore the entity itself when
+        /// checking the uniqueness of the url
+        /// </param>
         /// <param name="urlProperty">The url property of the entity type</param>
-        /// <param name="idProperty">The id property of the entity type, needed to ignore the entity itself when checking the uniqueness of the url</param>
+        /// <param name="idProperty">
+        /// The id property of the entity type, needed to ignore the entity itself when checking the
+        /// uniqueness of the url
+        /// </param>
         /// <returns>The unique url created using the specified name</returns>
         public static string CreateUniqueUrl(IQueryable query, string name, object idPropertyValue, string urlProperty = "Url", string idProperty = "Id")
         {
@@ -141,7 +155,8 @@ namespace StrixIT.Platform.Web
 
             string url = CreateCleanUrl(name);
 
-            // Check whether the full path is unique. If not, append an index or increment the existing one.
+            // Check whether the full path is unique. If not, append an index or increment the
+            // existing one.
             if (url != null)
             {
                 var possibleMatches = query.Where(string.Format("{0}.ToLower().Contains(@0) AND !{1}.Equals(@1)", urlProperty, idProperty), url, idPropertyValue).OrderBy(urlProperty).Select(urlProperty);
@@ -189,5 +204,7 @@ namespace StrixIT.Platform.Web
 
             return url;
         }
+
+        #endregion Public Methods
     }
 }

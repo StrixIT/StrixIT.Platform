@@ -30,15 +30,17 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class CustomField
     {
-        /// <summary>
-        /// Gets or sets the custom field id.
-        /// </summary>
-        public Guid Id { get; set; }
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the custom field type.
         /// </summary>
         public CustomFieldType FieldType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom field id.
+        /// </summary>
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the custom field name.
@@ -52,5 +54,7 @@ namespace StrixIT.Platform.Core
         /// </summary>
         [StringLength(100)]
         public string Section { get; set; }
+
+        #endregion Public Properties
     }
 }

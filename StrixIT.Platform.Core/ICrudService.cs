@@ -25,12 +25,36 @@ using System.Collections;
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// The interface for a standard CRUD service, used with the Base CRUD controller to create a default, easy to use web interface.
+    /// The interface for a standard CRUD service, used with the Base CRUD controller to create a
+    /// default, easy to use web interface.
     /// </summary>
     /// <typeparam name="TKey">The type of the entity key</typeparam>
     /// <typeparam name="TModel">The type of the entity dto</typeparam>
     public interface ICrudService<TKey, TModel> where TKey : struct where TModel : class
     {
+        #region Public Methods
+
+        /// <summary>
+        /// Deletes the object with the specified id.
+        /// </summary>
+        /// <param name="id">The id of the object to delete</param>
+        void Delete(TKey id);
+
+        /// <summary>
+        /// Deletes the object with the specified id.
+        /// </summary>
+        /// <param name="id">The id of the object to delete</param>
+        /// <param name="saveChanges">True if the delete should be persisted, false otherwise</param>
+        void Delete(TKey id, bool saveChanges);
+
+        /// <summary>
+        /// Checks whether an entity with the specified name already exists.
+        /// </summary>
+        /// <param name="name">The name to check for</param>
+        /// <param name="id">The id of the entity to check the name for</param>
+        /// <returns>True if an entity with the name already exists, false otherwise</returns>
+        bool Exists(string name, TKey? id);
+
         /// <summary>
         /// Get a view model for an object by it's id. If the id is NULL, an empty model is returned.
         /// </summary>
@@ -60,25 +84,6 @@ namespace StrixIT.Platform.Core
         /// <returns>The result of the save</returns>
         SaveResult<TModel> Save(TModel model, bool saveChanges);
 
-        /// <summary>
-        /// Deletes the object with the specified id.
-        /// </summary>
-        /// <param name="id">The id of the object to delete</param>
-        void Delete(TKey id);
-
-        /// <summary>
-        /// Deletes the object with the specified id.
-        /// </summary>
-        /// <param name="id">The id of the object to delete</param>
-        /// <param name="saveChanges">True if the delete should be persisted, false otherwise</param>
-        void Delete(TKey id, bool saveChanges);
-
-        /// <summary>
-        /// Checks whether an entity with the specified name already exists.
-        /// </summary>
-        /// <param name="name">The name to check for</param>
-        /// <param name="id">The id of the entity to check the name for</param>
-        /// <returns>True if an entity with the name already exists, false otherwise</returns>
-        bool Exists(string name, TKey? id);
+        #endregion Public Methods
     }
 }

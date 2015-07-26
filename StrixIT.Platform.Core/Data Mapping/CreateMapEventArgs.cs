@@ -30,8 +30,10 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class CreateMapEventArgs : EventArgs
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateMapEventArgs" /> class.
+        /// Initializes a new instance of the <see cref="CreateMapEventArgs"/> class.
         /// </summary>
         /// <param name="sourceType">The source type of the map</param>
         /// <param name="destinationType">The destination type of the map</param>
@@ -42,10 +44,9 @@ namespace StrixIT.Platform.Core
             this.PropertiesToMap = new Dictionary<string, string>();
         }
 
-        /// <summary>
-        /// Gets the source and destination types of the map.
-        /// </summary>
-        public KeyValuePair<Type, Type> Types { get; private set; }
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the list of properties to ignore when creating the new map.
@@ -53,8 +54,16 @@ namespace StrixIT.Platform.Core
         public IList<string> PropertiesToIgnore { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of destination and source properties that should be mapped to each other when the map is created.
+        /// Gets or sets the list of destination and source properties that should be mapped to each
+        /// other when the map is created.
         /// </summary>
         public IDictionary<string, string> PropertiesToMap { get; set; }
+
+        /// <summary>
+        /// Gets the source and destination types of the map.
+        /// </summary>
+        public KeyValuePair<Type, Type> Types { get; private set; }
+
+        #endregion Public Properties
     }
 }

@@ -29,6 +29,8 @@ namespace StrixIT.Platform.Web
     [StrixAuthorization(Permissions = PlatformPermissions.ViewAdminDashboard)]
     public class AdminController : BaseController
     {
+        #region Public Methods
+
         public ActionResult Index()
         {
             var modules = ModuleManager.GetObjectList<IModuleConfiguration>();
@@ -48,5 +50,7 @@ namespace StrixIT.Platform.Web
             ViewBag.Modules = modules.Where(m => m.ModuleLinks.Count > 0).OrderBy(e => e.Name);
             return this.View();
         }
+
+        #endregion Public Methods
     }
 }

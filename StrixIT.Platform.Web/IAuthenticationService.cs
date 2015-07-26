@@ -26,10 +26,14 @@ namespace StrixIT.Platform.Web
 {
     public interface IAuthenticationService
     {
-        LoginUserResult LogOn(string email, string password);
+        #region Public Methods
 
         void LogOff(string email);
 
         void LogOff(string email, IDictionary<string, object> sessionValues);
+
+        LoginUserResult LogOn(string email, string password);
+
+        #endregion Public Methods
     }
 }

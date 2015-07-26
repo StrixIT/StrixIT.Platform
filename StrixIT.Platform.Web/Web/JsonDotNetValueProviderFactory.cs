@@ -37,6 +37,8 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public sealed class JsonDotNetValueProviderFactory : ValueProviderFactory
     {
+        #region Public Methods
+
         public override IValueProvider GetValueProvider(ControllerContext controllerContext)
         {
             if (controllerContext == null)
@@ -84,6 +86,10 @@ namespace StrixIT.Platform.Web
             return new DictionaryValueProvider<object>(backingStore, CultureInfo.CurrentCulture);
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         private static void AddToBackingStore(Dictionary<string, object> backingStore, string prefix, object value)
         {
             IDictionary<string, object> d = value as IDictionary<string, object>;
@@ -119,5 +125,7 @@ namespace StrixIT.Platform.Web
         {
             return string.IsNullOrEmpty(prefix) ? propertyName : prefix + "." + propertyName;
         }
+
+        #endregion Private Methods
     }
 }

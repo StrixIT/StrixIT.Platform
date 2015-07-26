@@ -29,6 +29,16 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface IDataSource
     {
+        #region Public Methods
+
+        /// <summary>
+        /// Deletes one or more entities from the data source. To persist the delete, SaveChanges
+        /// should be called as well.
+        /// </summary>
+        /// <typeparam name="T">The type of the entities to delete</typeparam>
+        /// <param name="entity">The entity or entities to delete</param>
+        void Delete<T>(T entity) where T : class;
+
         /// <summary>
         /// Gets a query for the specified entity type.
         /// </summary>
@@ -37,7 +47,8 @@ namespace StrixIT.Platform.Core
         IQueryable<T> Query<T>() where T : class;
 
         /// <summary>
-        /// Saves one or more entities to the data source. To persist them, SaveChanges should be called as well.
+        /// Saves one or more entities to the data source. To persist them, SaveChanges should be
+        /// called as well.
         /// </summary>
         /// <typeparam name="T">The type of the entities to save</typeparam>
         /// <param name="entity">The entity or entities to save</param>
@@ -45,15 +56,10 @@ namespace StrixIT.Platform.Core
         T Save<T>(T entity) where T : class;
 
         /// <summary>
-        /// Deletes one or more entities from the data source. To persist the delete, SaveChanges should be called as well.
-        /// </summary>
-        /// <typeparam name="T">The type of the entities to delete</typeparam>
-        /// <param name="entity">The entity or entities to delete</param>
-        void Delete<T>(T entity) where T : class;
-
-        /// <summary>
         /// Saves all changes to the data source.
         /// </summary>
         void SaveChanges();
+
+        #endregion Public Methods
     }
 }

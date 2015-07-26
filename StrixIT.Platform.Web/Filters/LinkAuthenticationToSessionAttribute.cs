@@ -28,12 +28,13 @@ using System.Web.Routing;
 namespace StrixIT.Platform.Web
 {
     /// <summary>
-    /// Link the .Net authentication to the session to prevent session fixation.
-    /// Adopted from http://blog.securityps.com/2013/06/session-fixation-forms-authentication.html.
+    /// Link the .Net authentication to the session to prevent session fixation. Adopted from http://blog.securityps.com/2013/06/session-fixation-forms-authentication.html.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class LinkAuthenticationToSessionAttribute : ActionFilterAttribute
     {
+        #region Public Methods
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (filterContext == null)
@@ -45,8 +46,9 @@ namespace StrixIT.Platform.Web
             {
                 var email = (string)filterContext.HttpContext.Session[PlatformConstants.CURRENTUSEREMAIL];
 
-                // If the user is authenticated, compare the email in the session and forms auth cookie. If they don't match, logoff the user,
-                // kill the session and redirect to the login page.
+                // If the user is authenticated, compare the email in the session and forms auth
+                // cookie. If they don't match, logoff the user, kill the session and redirect to
+                // the login page.
                 if (filterContext.HttpContext.User.Identity.IsAuthenticated || email != null)
                 {
                     if (email == null || email != filterContext.HttpContext.User.Identity.Name)
@@ -78,5 +80,7 @@ namespace StrixIT.Platform.Web
 
             base.OnActionExecuting(filterContext);
         }
+
+        #endregion Public Methods
     }
 }

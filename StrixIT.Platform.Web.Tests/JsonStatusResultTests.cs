@@ -10,6 +10,8 @@ namespace StrixIT.Platform.Web.Tests
     [TestClass]
     public class JsonStatusResultTests
     {
+        #region Public Methods
+
         [TestMethod]
         public void CreatingANewJsonStatusResultShouldInitializeResultCorrecty()
         {
@@ -18,5 +20,7 @@ namespace StrixIT.Platform.Web.Tests
             Assert.IsFalse(((dynamic)result.Data).Success);
             Assert.IsNull(((dynamic)result.Message));
         }
+
+        #endregion Public Methods
     }
 }

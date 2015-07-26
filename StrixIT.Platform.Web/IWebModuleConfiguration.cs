@@ -30,14 +30,18 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public interface IWebModuleConfiguration : IModuleConfiguration
     {
-        /// <summary>
-        /// Gets the style bundles this module uses.
-        /// </summary>
-        IList<string> StyleBundles { get; }
+        #region Public Properties
 
         /// <summary>
         /// Gets the script bundles this module uses.
         /// </summary>
         IList<string> ScriptBundles { get; }
+
+        /// <summary>
+        /// Gets the style bundles this module uses.
+        /// </summary>
+        IList<string> StyleBundles { get; }
+
+        #endregion Public Properties
     }
 }

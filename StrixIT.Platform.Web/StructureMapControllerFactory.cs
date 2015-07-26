@@ -33,6 +33,8 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class StructureMapControllerFactory : DefaultControllerFactory
     {
+        #region Protected Methods
+
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
             // Allow hooking in to the controller retrieval process.
@@ -70,5 +72,7 @@ namespace StrixIT.Platform.Web
                 throw;
             }
         }
+
+        #endregion Protected Methods
     }
 }

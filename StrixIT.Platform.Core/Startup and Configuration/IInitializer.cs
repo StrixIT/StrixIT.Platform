@@ -27,9 +27,13 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface IInitializer
     {
+        #region Public Methods
+
         /// <summary>
         /// Initializes the component.
         /// </summary>
         void Initialize();
+
+        #endregion Public Methods
     }
 }

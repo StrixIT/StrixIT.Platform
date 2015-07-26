@@ -9,14 +9,22 @@ namespace StrixIT.Platform.Web.Tests
 {
     public class TestController : Controller
     {
+        #region Public Constructors
+
         public TestController()
         {
             this.ControllerContext = new ControllerContext();
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public bool TryValidate(object model)
         {
             return this.TryValidateModel(model);
         }
+
+        #endregion Public Methods
     }
 }

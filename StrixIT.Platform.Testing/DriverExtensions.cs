@@ -29,15 +29,7 @@ namespace StrixIT.Platform.Testing
     /// </summary>
     public static class DriverExtensions
     {
-        /// <summary>
-        /// Navigate to the specified url
-        /// </summary>
-        /// <param name="driver">The web driver</param>
-        /// <param name="url">The url to navigate to</param>
-        public static void NavigateTo(this RemoteWebDriver driver, string url)
-        {
-            driver.Navigate().GoToUrl(TestManager.BaseUrl + "/" + url);
-        }
+        #region Public Methods
 
         /// <summary>
         /// Check whether the browser is at the specified url.
@@ -58,6 +50,15 @@ namespace StrixIT.Platform.Testing
 
             var currentUrl = driver.Url.EndsWith("/") ? driver.Url.Substring(0, driver.Url.Length - 1) : driver.Url;
             return currentUrl == TestManager.BaseUrl + url;
+        }
+
+        /// <summary>
+        /// Log off.
+        /// </summary>
+        /// <param name="driver">The web drive</param>
+        public static void LogOff(this RemoteWebDriver driver)
+        {
+            driver.NavigateTo("Account/Logoff");
         }
 
         /// <summary>
@@ -85,12 +86,15 @@ namespace StrixIT.Platform.Testing
         }
 
         /// <summary>
-        /// Log off.
+        /// Navigate to the specified url
         /// </summary>
-        /// <param name="driver">The web drive</param>
-        public static void LogOff(this RemoteWebDriver driver)
+        /// <param name="driver">The web driver</param>
+        /// <param name="url">The url to navigate to</param>
+        public static void NavigateTo(this RemoteWebDriver driver, string url)
         {
-            driver.NavigateTo("Account/Logoff");
+            driver.Navigate().GoToUrl(TestManager.BaseUrl + "/" + url);
         }
+
+        #endregion Public Methods
     }
 }

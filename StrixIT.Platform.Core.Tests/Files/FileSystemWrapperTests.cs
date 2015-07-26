@@ -12,11 +12,7 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass()]
     public class FileSystemWrapperTests
     {
-        [TestInitialize]
-        public void Init()
-        {
-            StrixPlatform.CurrentCultureCode = "en";
-        }
+        #region Public Methods
 
         [TestCleanup]
         public void Cleanup()
@@ -50,42 +46,6 @@ namespace StrixIT.Platform.Core.Tests
             wrapper.ProcessDeleteQueue();
             bool result = System.IO.File.Exists(fullPath);
             Assert.IsFalse(result);
-        }
-
-        [TestMethod()]
-        public void SaveImageFromByteArrayShouldSaveImageToDisk()
-        {
-            var wrapper = new FileSystemWrapper();
-            var date = DateTime.Now;
-            string fileName = "Strix_losuiltje_from_bytearray";
-            string fileExtension = "png";
-            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", StrixPlatform.Environment.WorkingDirectory, date.Year, date.Month);
-            string originalFullPath = StrixPlatform.Environment.WorkingDirectory + "\\TestFiles\\Strix_losuiltje_2.png";
-            Stream inputStream = new FileStream(originalFullPath, FileMode.Open);
-            byte[] bytes = new byte[inputStream.Length];
-            inputStream.Read(bytes, 0, (int)inputStream.Length);
-            bool expected = true;
-            bool actual;
-            actual = wrapper.SaveFile(string.Format("{0}\\{1}.{2}", destinationPath, fileName, fileExtension), bytes);
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        public void SaveDocumentFromByteArrayShouldSaveDocumentToDisk()
-        {
-            var wrapper = new FileSystemWrapper();
-            var date = DateTime.Now;
-            string fileName = "test_from_bytearray";
-            string fileExtension = "pdf";
-            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", StrixPlatform.Environment.WorkingDirectory, date.Year, date.Month);
-            string originalFullPath = StrixPlatform.Environment.WorkingDirectory + "\\TestFiles\\test.pdf";
-            Stream inputStream = new FileStream(originalFullPath, FileMode.Open);
-            byte[] bytes = new byte[inputStream.Length];
-            inputStream.Read(bytes, 0, (int)inputStream.Length);
-            bool expected = true;
-            bool actual;
-            actual = wrapper.SaveFile(string.Format("{0}\\{1}.{2}", destinationPath, fileName, fileExtension), bytes);
-            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -142,5 +102,49 @@ namespace StrixIT.Platform.Core.Tests
 <a href=""[[BASEURL]]/Account/SendPasswordLink/[[USERID]]"">Kies uw wachtwoord</a>", result[1].Body);
             Assert.AreEqual("nl", result[1].Culture);
         }
+
+        [TestInitialize]
+        public void Init()
+        {
+            StrixPlatform.CurrentCultureCode = "en";
+        }
+
+        [TestMethod()]
+        public void SaveDocumentFromByteArrayShouldSaveDocumentToDisk()
+        {
+            var wrapper = new FileSystemWrapper();
+            var date = DateTime.Now;
+            string fileName = "test_from_bytearray";
+            string fileExtension = "pdf";
+            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", StrixPlatform.Environment.WorkingDirectory, date.Year, date.Month);
+            string originalFullPath = StrixPlatform.Environment.WorkingDirectory + "\\TestFiles\\test.pdf";
+            Stream inputStream = new FileStream(originalFullPath, FileMode.Open);
+            byte[] bytes = new byte[inputStream.Length];
+            inputStream.Read(bytes, 0, (int)inputStream.Length);
+            bool expected = true;
+            bool actual;
+            actual = wrapper.SaveFile(string.Format("{0}\\{1}.{2}", destinationPath, fileName, fileExtension), bytes);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void SaveImageFromByteArrayShouldSaveImageToDisk()
+        {
+            var wrapper = new FileSystemWrapper();
+            var date = DateTime.Now;
+            string fileName = "Strix_losuiltje_from_bytearray";
+            string fileExtension = "png";
+            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", StrixPlatform.Environment.WorkingDirectory, date.Year, date.Month);
+            string originalFullPath = StrixPlatform.Environment.WorkingDirectory + "\\TestFiles\\Strix_losuiltje_2.png";
+            Stream inputStream = new FileStream(originalFullPath, FileMode.Open);
+            byte[] bytes = new byte[inputStream.Length];
+            inputStream.Read(bytes, 0, (int)inputStream.Length);
+            bool expected = true;
+            bool actual;
+            actual = wrapper.SaveFile(string.Format("{0}\\{1}.{2}", destinationPath, fileName, fileExtension), bytes);
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion Public Methods
     }
 }

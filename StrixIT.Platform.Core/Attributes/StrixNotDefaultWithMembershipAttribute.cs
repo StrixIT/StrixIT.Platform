@@ -26,12 +26,19 @@ using System.ComponentModel.DataAnnotations;
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// Verifies that a value type property does not have the default value for its type when membership is active.
+    /// Verifies that a value type property does not have the default value for its type when
+    /// membership is active.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class StrixNotDefaultWithMembershipAttribute : ValidationAttribute
     {
+        #region Private Fields
+
         private static bool _membershipPresent = DependencyInjector.TryGet<IMembershipService>() != null;
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         public override bool IsValid(object value)
         {
@@ -44,5 +51,7 @@ namespace StrixIT.Platform.Core
 
             return _membershipPresent ? !Helpers.IsDefaultValue(value) : true;
         }
+
+        #endregion Public Methods
     }
 }

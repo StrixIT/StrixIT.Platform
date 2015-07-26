@@ -27,6 +27,8 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface IMailer
     {
+        #region Public Methods
+
         /// <summary>
         /// Sends a mail using the smtp server.
         /// </summary>
@@ -36,5 +38,7 @@ namespace StrixIT.Platform.Core
         /// <param name="body">The mail body</param>
         /// <returns>True if the mail was send successfully, false otherwise</returns>
         bool SendMail(string fromAddress, string toAddress, string subject, string body);
+
+        #endregion Public Methods
     }
 }

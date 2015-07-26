@@ -29,8 +29,14 @@ namespace StrixIT.Platform.Web
 {
     public class AdminRouteConstraint : IRouteConstraint
     {
-        private static string[] _cultureCodes;
+        #region Private Fields
+
         private static string[] _areaNames;
+        private static string[] _cultureCodes;
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
@@ -57,5 +63,7 @@ namespace StrixIT.Platform.Web
 
             return false;
         }
+
+        #endregion Public Methods
     }
 }

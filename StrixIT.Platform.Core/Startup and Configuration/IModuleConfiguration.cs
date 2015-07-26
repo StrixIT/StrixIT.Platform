@@ -29,10 +29,7 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface IModuleConfiguration
     {
-        /// <summary>
-        /// Gets the name of the module.
-        /// </summary>
-        string Name { get; }
+        #region Public Properties
 
         /// <summary>
         /// Gets the links to the content for this module on the admin dashboard.
@@ -43,5 +40,12 @@ namespace StrixIT.Platform.Core
         /// Gets the roles and associated permissions that are defined by this module.
         /// </summary>
         IDictionary<string, IList<string>> ModulePermissions { get; }
+
+        /// <summary>
+        /// Gets the name of the module.
+        /// </summary>
+        string Name { get; }
+
+        #endregion Public Properties
     }
 }

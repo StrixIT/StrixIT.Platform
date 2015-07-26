@@ -29,8 +29,10 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class GeneralEvent : IPlatformEvent
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="GeneralEvent" /> class.
+        /// Initializes a new instance of the <see cref="GeneralEvent"/> class.
         /// </summary>
         /// <param name="eventName">The name of the event</param>
         /// <param name="data">The event data</param>
@@ -40,14 +42,20 @@ namespace StrixIT.Platform.Core
             this.Data = data;
         }
 
-        /// <summary>
-        /// Gets the name of the event.
-        /// </summary>
-        public string EventName { get; private set; }
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets the data of the event.
         /// </summary>
         public IDictionary<string, object> Data { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the event.
+        /// </summary>
+        public string EventName { get; private set; }
+
+        #endregion Public Properties
     }
 }

@@ -39,14 +39,15 @@ namespace StrixIT.Platform.Testing
     /// </summary>
     public class TestManager
     {
-        private static IISRunner _basicHost;
-        private static RemoteWebDriver _driver;
-        private static List<DbContext> _dataContexts = new List<DbContext>();
+        #region Private Fields
 
-        /// <summary>
-        /// Gets the base url of the site during the integration test run.
-        /// </summary>
-        public static string BaseUrl { get; private set; }
+        private static IISRunner _basicHost;
+        private static List<DbContext> _dataContexts = new List<DbContext>();
+        private static RemoteWebDriver _driver;
+
+        #endregion Private Fields
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the email to use by default when authenticating.
@@ -57,6 +58,11 @@ namespace StrixIT.Platform.Testing
         /// Gets or sets the password to use by default when authenticating.
         /// </summary>
         public static string AuthenticationPassword { get; set; }
+
+        /// <summary>
+        /// Gets the base url of the site during the integration test run.
+        /// </summary>
+        public static string BaseUrl { get; private set; }
 
         /// <summary>
         /// Gets the Selenium Web Driver active for the integration tests.
@@ -70,8 +76,8 @@ namespace StrixIT.Platform.Testing
         }
 
         /// <summary>
-        /// Gets a read-only collection of data contexts involved in the integration tests. When the tests are done, the databases that
-        /// back these contexts are dropped.
+        /// Gets a read-only collection of data contexts involved in the integration tests. When the
+        /// tests are done, the databases that back these contexts are dropped.
         /// </summary>
         public static ReadOnlyCollection<DbContext> DataContexts
         {
@@ -81,21 +87,14 @@ namespace StrixIT.Platform.Testing
             }
         }
 
-        /// <summary>
-        /// Adds a data context to the list of contexts for which the databases are dropped when the tests are done.
-        /// </summary>
-        /// <param name="context">The data context to add</param>
-        public static void UseDataContext(DbContext context)
-        {
-            if (!_dataContexts.Any(c => c.GetType().Equals(context.GetType())))
-            {
-                _dataContexts.Add(context);
-            }
-        }
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
-        /// Setup an integration test run for the web project specified by building the target project using the
-        /// specified configuration, launching IIS Express and starting the web driver for the requested browser.
+        /// Setup an integration test run for the web project specified by building the target
+        /// project using the specified configuration, launching IIS Express and starting the web
+        /// driver for the requested browser.
         /// </summary>
         /// <param name="projectName">The test project name</param>
         /// <param name="browser">The browser to use</param>
@@ -150,6 +149,23 @@ namespace StrixIT.Platform.Testing
             }
         }
 
+        /// <summary>
+        /// Adds a data context to the list of contexts for which the databases are dropped when the
+        /// tests are done.
+        /// </summary>
+        /// <param name="context">The data context to add</param>
+        public static void UseDataContext(DbContext context)
+        {
+            if (!_dataContexts.Any(c => c.GetType().Equals(context.GetType())))
+            {
+                _dataContexts.Add(context);
+            }
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
         private static string GetProjectDirectory(string projectName)
         {
             DirectoryInfo directoryInfo;
@@ -164,5 +180,7 @@ namespace StrixIT.Platform.Testing
 
             return Path.Combine(directoryInfo.FullName, projectName);
         }
+
+        #endregion Private Methods
     }
 }

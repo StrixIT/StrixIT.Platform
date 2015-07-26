@@ -34,19 +34,42 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public static class StrixPlatform
     {
-        private static Type _userContextType;
-
-        private static IEnvironment _environment;
-        private static IUserContext _userContext;
-
-        private static IList<CultureData> _cultures;
-        private static string _defaultCultureCode;
-        private static string _currentCulture;
+        #region Private Fields
 
         private static Guid _applicationId;
+        private static IList<CultureData> _cultures;
+        private static string _currentCulture;
+        private static string _defaultCultureCode;
+        private static IEnvironment _environment;
         private static Guid _mainGroupId;
-
         private static IList<string> _startupMessages = new List<string>();
+        private static IUserContext _userContext;
+        private static Type _userContextType;
+
+        #endregion Private Fields
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the application id.
+        /// </summary>
+        public static Guid ApplicationId
+        {
+            get
+            {
+                if (_applicationId == Guid.Empty)
+                {
+                    var membershipService = DependencyInjector.TryGet<IMembershipService>();
+                    _applicationId = membershipService != null ? membershipService.ApplicationId : Guid.Empty;
+                }
+
+                return _applicationId;
+            }
+            set
+            {
+                _applicationId = value;
+            }
+        }
 
         /// <summary>
         /// Gets the platform configuration.
@@ -60,64 +83,28 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Gets or sets the current environment.
+        /// Gets all available culture codes, names and native names for the application.
         /// </summary>
-        public static IEnvironment Environment
+        /// <returns>The culture data</returns>
+        public static IList<CultureData> Cultures
         {
             get
             {
-                if (_environment == null)
+                if (_cultures == null)
                 {
-                    _environment = Helpers.GetImplementationOrDefault<IEnvironment, DefaultEnvironment>();
-                }
+                    var list = new List<CultureData>();
+                    var codes = Configuration.Cultures;
 
-                return _environment;
-            }
-            set
-            {
-                _environment = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the current user.
-        /// </summary>
-        public static IUserContext User
-        {
-            get
-            {
-                if (_userContext == null)
-                {
-                    if (_userContextType == null)
+                    foreach (var code in codes.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Trim())
                     {
-                        _userContextType = Helpers.GetInjectedOrDefaultType<IUserContext, NullUserContext>();
+                        var culture = CultureInfo.GetCultureInfo(code);
+                        list.Add(new CultureData { Code = code, Name = culture.Name, NativeName = culture.NativeName });
                     }
 
-                    return DependencyInjector.Get(_userContextType) as IUserContext;
+                    _cultures = list;
                 }
 
-                return _userContext;
-            }
-            set
-            {
-                _userContext = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets the default culture code for the application.
-        /// </summary>
-        public static string DefaultCultureCode
-        {
-            get
-            {
-                if (_defaultCultureCode == null)
-                {
-                    var list = Cultures;
-                    _defaultCultureCode = list.Count > 0 ? list.First().Code : null;
-                }
-
-                return _defaultCultureCode;
+                return _cultures;
             }
         }
 
@@ -149,49 +136,39 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Gets all available culture codes, names and native names for the application.
+        /// Gets the default culture code for the application.
         /// </summary>
-        /// <returns>The culture data</returns>
-        public static IList<CultureData> Cultures
+        public static string DefaultCultureCode
         {
             get
             {
-                if (_cultures == null)
+                if (_defaultCultureCode == null)
                 {
-                    var list = new List<CultureData>();
-                    var codes = Configuration.Cultures;
-
-                    foreach (var code in codes.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Trim())
-                    {
-                        var culture = CultureInfo.GetCultureInfo(code);
-                        list.Add(new CultureData { Code = code, Name = culture.Name, NativeName = culture.NativeName });
-                    }
-
-                    _cultures = list;
+                    var list = Cultures;
+                    _defaultCultureCode = list.Count > 0 ? list.First().Code : null;
                 }
 
-                return _cultures;
+                return _defaultCultureCode;
             }
         }
 
         /// <summary>
-        /// Gets or sets the application id.
+        /// Gets or sets the current environment.
         /// </summary>
-        public static Guid ApplicationId
+        public static IEnvironment Environment
         {
             get
             {
-                if (_applicationId == Guid.Empty)
+                if (_environment == null)
                 {
-                    var membershipService = DependencyInjector.TryGet<IMembershipService>();
-                    _applicationId = membershipService != null ? membershipService.ApplicationId : Guid.Empty;
+                    _environment = Helpers.GetImplementationOrDefault<IEnvironment, DefaultEnvironment>();
                 }
 
-                return _applicationId;
+                return _environment;
             }
             set
             {
-                _applicationId = value;
+                _environment = value;
             }
         }
 
@@ -228,17 +205,33 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Logs a startup message.
+        /// Gets or sets the current user.
         /// </summary>
-        /// <param name="message">The message to log</param>
-        /// <param name="level">The level of the message</param>
-        public static void WriteStartupMessage(string message, LogLevel level = LogLevel.Debug)
+        public static IUserContext User
         {
-            string fullPattern = DateTimeFormatInfo.CurrentInfo.FullDateTimePattern;
-            fullPattern = Regex.Replace(fullPattern, "(:ss|:s)", "$1.fff");
-            message = string.Format("At: {0}. Level: {1}. Message: {2}", DateTime.Now.ToString(fullPattern), level, message);
-            _startupMessages.Add(message);
+            get
+            {
+                if (_userContext == null)
+                {
+                    if (_userContextType == null)
+                    {
+                        _userContextType = Helpers.GetInjectedOrDefaultType<IUserContext, NullUserContext>();
+                    }
+
+                    return DependencyInjector.Get(_userContextType) as IUserContext;
+                }
+
+                return _userContext;
+            }
+            set
+            {
+                _userContext = value;
+            }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Raises an event for the platform.
@@ -252,5 +245,20 @@ namespace StrixIT.Platform.Core
                 handler.Handle(args);
             }
         }
+
+        /// <summary>
+        /// Logs a startup message.
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        /// <param name="level">The level of the message</param>
+        public static void WriteStartupMessage(string message, LogLevel level = LogLevel.Debug)
+        {
+            string fullPattern = DateTimeFormatInfo.CurrentInfo.FullDateTimePattern;
+            fullPattern = Regex.Replace(fullPattern, "(:ss|:s)", "$1.fff");
+            message = string.Format("At: {0}. Level: {1}. Message: {2}", DateTime.Now.ToString(fullPattern), level, message);
+            _startupMessages.Add(message);
+        }
+
+        #endregion Public Methods
     }
 }

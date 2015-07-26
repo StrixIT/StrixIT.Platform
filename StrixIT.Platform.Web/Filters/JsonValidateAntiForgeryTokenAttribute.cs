@@ -34,14 +34,16 @@ namespace StrixIT.Platform.Web
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class JsonValidateAntiForgeryTokenAttribute : AuthorizeAttribute
     {
+        #region Public Methods
+
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             var request = filterContext.HttpContext.Request;
 
             if (request.IsAuthenticated && request.HttpMethod != WebRequestMethods.Http.Get)
             {
-                // Ajax POSTs and normal form posts have to be treated differently when it comes
-                // to validating the AntiForgeryToken
+                // Ajax POSTs and normal form posts have to be treated differently when it comes to
+                // validating the AntiForgeryToken
                 if (request.IsAjaxRequest())
                 {
                     HttpCookie antiForgeryCookie = null;
@@ -63,5 +65,7 @@ namespace StrixIT.Platform.Web
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

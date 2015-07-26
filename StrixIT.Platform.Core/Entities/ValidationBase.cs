@@ -34,20 +34,26 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public abstract class ValidationBase : IValidationBase
     {
+        #region Private Fields
+
         /// <summary>
         /// The custom validation rules
         /// </summary>
         private static ConcurrentDictionary<Type, List<Func<ValidationBase, ValidationResult>>> _customValidationRules = new ConcurrentDictionary<Type, List<Func<ValidationBase, ValidationResult>>>();
 
         /// <summary>
+        /// True if the entity is currently validating, false otherwise.
+        /// </summary>
+        private bool _isValidating = false;
+
+        /// <summary>
         /// The list of all validation results from the last validation run.
         /// </summary>
         private List<ValidationResult> _validationResults = new List<ValidationResult>();
 
-        /// <summary>
-        /// True if the entity is currently validating, false otherwise.
-        /// </summary>
-        private bool _isValidating = false;
+        #endregion Private Fields
+
+        #region Public Properties
 
         /// <summary>
         /// Gets a value indicating whether the entity is valid.
@@ -60,6 +66,10 @@ namespace StrixIT.Platform.Core
                 return this.Validate(null).Count() == 0;
             }
         }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Adds the validation rule.
@@ -80,7 +90,8 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Validates the entity using the specified validation context. Override this method to add custom validation rules.
+        /// Validates the entity using the specified validation context. Override this method to add
+        /// custom validation rules.
         /// </summary>
         /// <param name="validationContext">The context to use for validation</param>
         /// <returns>The list of validation errors, or an empty list if the entity is valid</returns>
@@ -111,5 +122,7 @@ namespace StrixIT.Platform.Core
 
             return this._validationResults;
         }
+
+        #endregion Public Methods
     }
 }

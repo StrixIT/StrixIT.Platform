@@ -11,18 +11,13 @@ namespace StrixIT.Platform.Core.UnitTests.Resources
     [TestClass]
     public class ResourceTests
     {
+        #region Public Methods
+
         [ClassInitialize]
         public static void Init(TestContext context)
         {
             StrixPlatform.Environment = new DefaultEnvironment();
             ModuleManager.LoadAssemblies();
-        }
-
-        [TestInitialize]
-        public void Init()
-        {
-            StrixPlatform.CurrentCultureCode = "en";
-            StrixPlatform.Environment = new DefaultEnvironment();
         }
 
         [TestCleanup]
@@ -55,5 +50,14 @@ namespace StrixIT.Platform.Core.UnitTests.Resources
             Assert.AreEqual("Nieuws", result["cms"]["news"]);
             Assert.AreEqual("Commentaar", result["cms"]["comment"]);
         }
+
+        [TestInitialize]
+        public void Init()
+        {
+            StrixPlatform.CurrentCultureCode = "en";
+            StrixPlatform.Environment = new DefaultEnvironment();
+        }
+
+        #endregion Public Methods
     }
 }

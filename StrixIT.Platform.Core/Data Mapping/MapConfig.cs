@@ -33,14 +33,25 @@ namespace StrixIT.Platform.Core
     /// <typeparam name="TDestination">The destination type for the mapping</typeparam>
     public class MapConfig<TSource, TDestination>
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapConfig{TSource, TDestination}" /> class.
+        /// Initializes a new instance of the <see cref="MapConfig{TSource, TDestination}"/> class.
         /// </summary>
         public MapConfig()
         {
             this.MembersToIgnore = new List<Expression<Func<TDestination, object>>>();
             this.MembersToMap = new Dictionary<Expression<Func<TDestination, object>>, Expression<Func<TSource, object>>>();
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the action to invoke when the mapping is done.
+        /// </summary>
+        public Action<object, object> AfterMapAction { get; set; }
 
         /// <summary>
         /// Gets or sets the expression to specify which members to ignore when mapping.
@@ -52,9 +63,6 @@ namespace StrixIT.Platform.Core
         /// </summary>
         public IDictionary<Expression<Func<TDestination, object>>, Expression<Func<TSource, object>>> MembersToMap { get; set; }
 
-        /// <summary>
-        /// Gets or sets the action to invoke when the mapping is done.
-        /// </summary>
-        public Action<object, object> AfterMapAction { get; set; }
+        #endregion Public Properties
     }
 }

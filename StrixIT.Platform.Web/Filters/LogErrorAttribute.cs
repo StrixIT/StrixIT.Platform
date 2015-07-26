@@ -32,6 +32,8 @@ namespace StrixIT.Platform.Web
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class LogErrorAttribute : HandleErrorAttribute
     {
+        #region Public Methods
+
         public override void OnException(ExceptionContext filterContext)
         {
             if (filterContext == null)
@@ -59,5 +61,7 @@ namespace StrixIT.Platform.Web
                 }
             }
         }
+
+        #endregion Public Methods
     }
 }

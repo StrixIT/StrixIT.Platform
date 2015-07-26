@@ -27,8 +27,10 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class DisplayOptions
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="DisplayOptions" /> class.
+        /// Initializes a new instance of the <see cref="DisplayOptions"/> class.
         /// </summary>
         /// <param name="controller">The content controller</param>
         public DisplayOptions(string controller) : this(null, controller, null, null, null, null)
@@ -36,7 +38,7 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DisplayOptions" /> class.
+        /// Initializes a new instance of the <see cref="DisplayOptions"/> class.
         /// </summary>
         /// <param name="controller">The content controller</param>
         /// <param name="url">The content url</param>
@@ -45,7 +47,7 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DisplayOptions" /> class.
+        /// Initializes a new instance of the <see cref="DisplayOptions"/> class.
         /// </summary>
         /// <param name="controller">The content controller</param>
         /// <param name="action">The content action</param>
@@ -55,7 +57,7 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DisplayOptions" /> class.
+        /// Initializes a new instance of the <see cref="DisplayOptions"/> class.
         /// </summary>
         /// <param name="module">The content module</param>
         /// <param name="controller">The content controller</param>
@@ -73,15 +75,9 @@ namespace StrixIT.Platform.Web
             this.DefaultText = string.IsNullOrWhiteSpace(defaultText) ? string.Format(Resources.Interface.NoContentFound, string.Join("/", controller, action, url)) : defaultText;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the module to display content for.
-        /// </summary>
-        public string Module { get; set; }
+        #endregion Public Constructors
 
-        /// <summary>
-        /// Gets or sets the name of the content controller.
-        /// </summary>
-        public string Controller { get; set; }
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the name of the content action.
@@ -89,14 +85,14 @@ namespace StrixIT.Platform.Web
         public string Action { get; set; }
 
         /// <summary>
-        /// Gets or sets the url for which to display the content.
+        /// Gets or sets the name of the content controller.
         /// </summary>
-        public string Url { get; set; }
+        public string Controller { get; set; }
 
         /// <summary>
-        /// Gets or sets the url for the content item page.
+        /// Gets or sets the default text to show if the content controller cannot be found.
         /// </summary>
-        public string ItemPageUrl { get; set; }
+        public string DefaultText { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this content item has child pages.
@@ -104,8 +100,20 @@ namespace StrixIT.Platform.Web
         public bool HasChildPages { get; set; }
 
         /// <summary>
-        /// Gets or sets the default text to show if the content controller cannot be found.
+        /// Gets or sets the url for the content item page.
         /// </summary>
-        public string DefaultText { get; set; }
+        public string ItemPageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the module to display content for.
+        /// </summary>
+        public string Module { get; set; }
+
+        /// <summary>
+        /// Gets or sets the url for which to display the content.
+        /// </summary>
+        public string Url { get; set; }
+
+        #endregion Public Properties
     }
 }

@@ -11,6 +11,8 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass()]
     public class FilterSortPageOptionsTest
     {
+        #region Public Methods
+
         [TestMethod()]
         public void ExtractFieldShouldReturnTheFieldAndRemoveItFromTheFilter()
         {
@@ -21,5 +23,7 @@ namespace StrixIT.Platform.Core.Tests
             Assert.AreEqual("Test", actual.Value);
             Assert.AreEqual(1, target.Filter.Filters.Count);
         }
+
+        #endregion Public Methods
     }
 }

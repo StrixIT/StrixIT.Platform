@@ -14,6 +14,8 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass]
     public class EntityFrameworkDataSourceTests
     {
+        #region Public Methods
+
         [ClassInitialize]
         public static void Init(TestContext context)
         {
@@ -34,70 +36,6 @@ namespace StrixIT.Platform.Core.Tests
             var source = new TestDataSource("CustomConnection");
             Assert.IsNotNull(source);
             Assert.IsTrue(source.Database.Connection.ConnectionString.Contains("ToolsTestCustomConnection"));
-        }
-
-        [TestMethod]
-        public void EFDataSourceShouldSaveNewIntEntity()
-        {
-            var source = new TestDataSource();
-            var entity = TestEntityFactory.GetEntity();
-            var result = source.Save(entity);
-            source.SaveChanges();
-            source.Delete(result);
-            source.SaveChanges();
-            Assert.IsNotNull(result);
-            Assert.AreNotEqual(0, entity.Id);
-        }
-
-        [TestMethod]
-        public void EFDataSourceShouldSaveNewGuidEntityAndSetItsKey()
-        {
-            var source = new TestDataSource();
-            var entity = new GuidEntity { Name = "Test" };
-            var result = source.Save(entity);
-            Assert.IsNotNull(result);
-            Assert.AreNotEqual(Guid.Empty, entity.Id);
-        }
-
-        [TestMethod]
-        public void EFDataSourceShouldSaveNewCompositeKeyEntityAndNotSetItsGuidKey()
-        {
-            var source = new TestDataSource();
-            var entity = new CompositeKeyEntity();
-            var result = source.Save(entity);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(Guid.Empty, entity.Id);
-        }
-
-        [TestMethod]
-        public void EFDataSourceShouldSaveAListOfIntEntities()
-        {
-            var source = new TestDataSource();
-            var entities = TestEntityFactory.GetEntityList();
-            var result = source.Save(entities);
-            source.SaveChanges();
-            source.Delete(entities);
-            source.SaveChanges();
-            Assert.AreEqual(6, result.Count);
-
-            foreach (var item in result)
-            {
-                Assert.AreNotEqual(0, item.Id);
-            }
-        }
-
-        [TestMethod]
-        public void EFDataSourceShouldDeleteEntity()
-        {
-            var source = new TestDataSource();
-            var entity = TestEntityFactory.GetEntity();
-            source.Save(entity);
-            source.SaveChanges();
-            var id = entity.Id;
-            source.Delete(entity);
-            entity = source.Set<TestEntity>().Find(new object[] { id });
-            Assert.AreEqual(System.Data.Entity.EntityState.Deleted, source.Entry(entity).State);
-            source.SaveChanges();
         }
 
         [TestMethod]
@@ -140,6 +78,70 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod]
+        public void EFDataSourceShouldDeleteEntity()
+        {
+            var source = new TestDataSource();
+            var entity = TestEntityFactory.GetEntity();
+            source.Save(entity);
+            source.SaveChanges();
+            var id = entity.Id;
+            source.Delete(entity);
+            entity = source.Set<TestEntity>().Find(new object[] { id });
+            Assert.AreEqual(System.Data.Entity.EntityState.Deleted, source.Entry(entity).State);
+            source.SaveChanges();
+        }
+
+        [TestMethod]
+        public void EFDataSourceShouldSaveAListOfIntEntities()
+        {
+            var source = new TestDataSource();
+            var entities = TestEntityFactory.GetEntityList();
+            var result = source.Save(entities);
+            source.SaveChanges();
+            source.Delete(entities);
+            source.SaveChanges();
+            Assert.AreEqual(6, result.Count);
+
+            foreach (var item in result)
+            {
+                Assert.AreNotEqual(0, item.Id);
+            }
+        }
+
+        [TestMethod]
+        public void EFDataSourceShouldSaveNewCompositeKeyEntityAndNotSetItsGuidKey()
+        {
+            var source = new TestDataSource();
+            var entity = new CompositeKeyEntity();
+            var result = source.Save(entity);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(Guid.Empty, entity.Id);
+        }
+
+        [TestMethod]
+        public void EFDataSourceShouldSaveNewGuidEntityAndSetItsKey()
+        {
+            var source = new TestDataSource();
+            var entity = new GuidEntity { Name = "Test" };
+            var result = source.Save(entity);
+            Assert.IsNotNull(result);
+            Assert.AreNotEqual(Guid.Empty, entity.Id);
+        }
+
+        [TestMethod]
+        public void EFDataSourceShouldSaveNewIntEntity()
+        {
+            var source = new TestDataSource();
+            var entity = TestEntityFactory.GetEntity();
+            var result = source.Save(entity);
+            source.SaveChanges();
+            source.Delete(result);
+            source.SaveChanges();
+            Assert.IsNotNull(result);
+            Assert.AreNotEqual(0, entity.Id);
+        }
+
+        [TestMethod]
         public void QueryWithRelationsShouldReturnEntitiesWithRelations()
         {
             var source = new TestDataSource();
@@ -167,5 +169,7 @@ namespace StrixIT.Platform.Core.Tests
             newSource.Delete(result);
             newSource.SaveChanges();
         }
+
+        #endregion Public Methods
     }
 }

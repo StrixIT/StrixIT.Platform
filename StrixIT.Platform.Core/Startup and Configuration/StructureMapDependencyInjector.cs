@@ -30,8 +30,14 @@ namespace StrixIT.Platform.Core
 {
     public class StructureMapDependencyInjector : IDependencyInjector
     {
-        private static bool _initialized = false;
+        #region Private Fields
+
         private static IContainer _container;
+        private static bool _initialized = false;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public StructureMapDependencyInjector()
         {
@@ -52,14 +58,13 @@ namespace StrixIT.Platform.Core
             }
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public T Get<T>()
         {
             return _container.GetInstance<T>();
-        }
-
-        public T TryGet<T>()
-        {
-            return _container.TryGetInstance<T>();
         }
 
         public object Get(Type dependencyType)
@@ -67,19 +72,9 @@ namespace StrixIT.Platform.Core
             return _container.GetInstance(dependencyType);
         }
 
-        public object TryGet(Type dependencyType)
-        {
-            return _container.TryGetInstance(dependencyType);
-        }
-
         public T Get<T>(string key)
         {
             return _container.GetInstance<T>(key);
-        }
-
-        public T TryGet<T>(string key)
-        {
-            return _container.TryGetInstance<T>(key);
         }
 
         public IEnumerable<T> GetAll<T>()
@@ -91,5 +86,22 @@ namespace StrixIT.Platform.Core
         {
             return _container.GetAllInstances(dependencyType);
         }
+
+        public T TryGet<T>()
+        {
+            return _container.TryGetInstance<T>();
+        }
+
+        public object TryGet(Type dependencyType)
+        {
+            return _container.TryGetInstance(dependencyType);
+        }
+
+        public T TryGet<T>(string key)
+        {
+            return _container.TryGetInstance<T>(key);
+        }
+
+        #endregion Public Methods
     }
 }

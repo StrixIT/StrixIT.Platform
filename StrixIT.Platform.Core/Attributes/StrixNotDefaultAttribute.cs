@@ -31,6 +31,8 @@ namespace StrixIT.Platform.Core
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class StrixNotDefaultAttribute : ValidationAttribute
     {
+        #region Public Methods
+
         public override bool IsValid(object value)
         {
             bool result = true;
@@ -42,5 +44,7 @@ namespace StrixIT.Platform.Core
 
             return !Helpers.IsDefaultValue(value);
         }
+
+        #endregion Public Methods
     }
 }

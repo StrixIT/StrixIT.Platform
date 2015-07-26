@@ -10,10 +10,12 @@ namespace StrixIT.Platform.Core.Tests
     [ComplexType]
     public class PersonalInfo
     {
-        public string Name { get; set; }
-
-        public string Description { get; set; }
+        #region Public Properties
 
         public Address Address { get; set; }
+        public string Description { get; set; }
+        public string Name { get; set; }
+
+        #endregion Public Properties
     }
 }

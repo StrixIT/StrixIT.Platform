@@ -11,6 +11,28 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass()]
     public class EntityTest
     {
+        #region Public Methods
+
+        [TestMethod()]
+        public void EntityWithCustomValidationRulesMetMustBeValid()
+        {
+            CustomValidateEntity entity = new CustomValidateEntity();
+            entity.Number = 1;
+            entity.Name = "TestEntity";
+            bool result = entity.IsValid;
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod()]
+        public void EntityWithCustomValidationRulesNotMetMustBeInvalid()
+        {
+            CustomValidateEntity entity = new CustomValidateEntity();
+            entity.Number = 1;
+            entity.Name = "Just another entity";
+            bool result = entity.IsValid;
+            Assert.IsFalse(result);
+        }
+
         [TestMethod()]
         public void EntityWithoutPropertyRequirementsMustBeInvalid()
         {
@@ -31,16 +53,6 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod()]
-        public void EntityWithCustomValidationRulesNotMetMustBeInvalid()
-        {
-            CustomValidateEntity entity = new CustomValidateEntity();
-            entity.Number = 1;
-            entity.Name = "Just another entity";
-            bool result = entity.IsValid;
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod()]
         public void EntityWithPropertyRequirementsNotMetButCustomValidationRulesMetMustBeInvalid()
         {
             CustomValidateEntity entity = new CustomValidateEntity();
@@ -49,14 +61,6 @@ namespace StrixIT.Platform.Core.Tests
             Assert.IsFalse(result);
         }
 
-        [TestMethod()]
-        public void EntityWithCustomValidationRulesMetMustBeValid()
-        {
-            CustomValidateEntity entity = new CustomValidateEntity();
-            entity.Number = 1;
-            entity.Name = "TestEntity";
-            bool result = entity.IsValid;
-            Assert.IsTrue(result);
-        }
+        #endregion Public Methods
     }
 }

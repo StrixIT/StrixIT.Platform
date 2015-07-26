@@ -11,15 +11,7 @@ namespace StrixIT.Platform.Web.Tests
     [TestClass()]
     public class EntityTest
     {
-        [TestMethod()]
-        public void UsingTryValidateModelOnAnEntityWithoutPropertyRequirementsMustBeInvalid()
-        {
-            TestController controller = new TestController();
-            var entity = new TestEntity();
-            bool result = controller.TryValidate(entity);
-            Assert.IsFalse(result);
-            Assert.AreEqual(1, entity.Validate(null).Count());
-        }
+        #region Public Methods
 
         [TestMethod()]
         public void UsingTryValidateModelOnAnEntityWithBothCustomValidationRulesAndBasicRulesInvalidShouldReturnBothErrorMessages()
@@ -55,6 +47,16 @@ namespace StrixIT.Platform.Web.Tests
         }
 
         [TestMethod()]
+        public void UsingTryValidateModelOnAnEntityWithoutPropertyRequirementsMustBeInvalid()
+        {
+            TestController controller = new TestController();
+            var entity = new TestEntity();
+            bool result = controller.TryValidate(entity);
+            Assert.IsFalse(result);
+            Assert.AreEqual(1, entity.Validate(null).Count());
+        }
+
+        [TestMethod()]
         public void UsingTryValidateModelOnAnEntityWithPropertyRequirementsNotMetButCustomValidationRulesMetMustBeInvalid()
         {
             TestController controller = new TestController();
@@ -64,5 +66,7 @@ namespace StrixIT.Platform.Web.Tests
             Assert.IsFalse(result);
             Assert.AreEqual(1, entity.Validate(null).Count());
         }
+
+        #endregion Public Methods
     }
 }

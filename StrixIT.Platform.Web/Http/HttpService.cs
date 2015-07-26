@@ -30,12 +30,22 @@ namespace StrixIT.Platform.Web
 {
     public class HttpService : IHttpService
     {
+        #region Private Fields
+
         private HttpContextBase _httpContext;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public HttpService(HttpContextBase context)
         {
             this._httpContext = context;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public void CompressRequest()
         {
@@ -44,26 +54,6 @@ namespace StrixIT.Platform.Web
                 this._httpContext.Response.Filter = new GZipStream(this._httpContext.Response.Filter, CompressionMode.Compress);
                 this._httpContext.Response.AppendHeader("Content-encoding", "gzip");
                 this._httpContext.Response.Cache.VaryByHeaders["Accept-encoding"] = true;
-            }
-        }
-
-        public void SetResponseHeaders()
-        {
-            var response = this._httpContext.Response;
-            response.Headers.Remove("Server");
-            response.Headers.Remove("X-AspNetMvc-Version");
-            response.Headers.Remove("X-AspNet-Version");
-
-            if (response.Headers[WebConstants.IFRAMEMODEHEADER] == null)
-            {
-                if (response.ContentType.ToLower() == "text/html")
-                {
-                    response.Headers.Add(WebConstants.IFRAMEMODEHEADER, "SAMEORIGIN");
-                }
-                else
-                {
-                    response.Headers.Add(WebConstants.IFRAMEMODEHEADER, "DENY");
-                }
             }
         }
 
@@ -105,5 +95,27 @@ namespace StrixIT.Platform.Web
                 }
             }
         }
+
+        public void SetResponseHeaders()
+        {
+            var response = this._httpContext.Response;
+            response.Headers.Remove("Server");
+            response.Headers.Remove("X-AspNetMvc-Version");
+            response.Headers.Remove("X-AspNet-Version");
+
+            if (response.Headers[WebConstants.IFRAMEMODEHEADER] == null)
+            {
+                if (response.ContentType.ToLower() == "text/html")
+                {
+                    response.Headers.Add(WebConstants.IFRAMEMODEHEADER, "SAMEORIGIN");
+                }
+                else
+                {
+                    response.Headers.Add(WebConstants.IFRAMEMODEHEADER, "DENY");
+                }
+            }
+        }
+
+        #endregion Public Methods
     }
 }

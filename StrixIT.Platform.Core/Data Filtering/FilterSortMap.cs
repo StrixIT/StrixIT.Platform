@@ -30,20 +30,25 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class FilterSortMap
     {
+        #region Public Properties
+
         /// <summary>
         /// Gets or sets the name of the field that this custom map is for
         /// </summary>
         public string FieldToMap { get; set; }
 
         /// <summary>
-        /// Gets or sets the func to use for filtering on this field. Its parameters are the filter method and the filter value.
+        /// Gets or sets the func to use for filtering on this field. Its parameters are the filter
+        /// method and the filter value.
         /// </summary>
         public Func<FilterFieldOperator, string, string> FilterMap { get; set; }
 
         /// <summary>
-        /// Gets or sets the func to use for filtering on this field. The string value indicates whether to sort ascending
-        /// (Asc) or descending (Desc).
+        /// Gets or sets the func to use for filtering on this field. The string value indicates
+        /// whether to sort ascending (Asc) or descending (Desc).
         /// </summary>
         public Func<IQueryable, string, IQueryable> SortMap { get; set; }
+
+        #endregion Public Properties
     }
 }

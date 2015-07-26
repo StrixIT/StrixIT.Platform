@@ -26,14 +26,22 @@ namespace StrixIT.Platform.Core
 {
     public class DefaultSmtpClient : SmtpClient, ISmtpClient
     {
+        #region Public Methods
+
         public new void Send(MailMessage message)
         {
             base.Send(message);
         }
 
+        #endregion Public Methods
+
+        #region Protected Methods
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
         }
+
+        #endregion Protected Methods
     }
 }

@@ -25,20 +25,27 @@ using System;
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// An attribute to mark a property as an image property. This will have the platform create a thumbnail for it.
+    /// An attribute to mark a property as an image property. This will have the platform create a
+    /// thumbnail for it.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class ImageAttribute : Attribute
     {
-        private int _width;
-        private string _widthProperty;
+        #region Private Fields
+
         private int _height;
         private string _heightProperty;
         private string _idProperty;
         private bool _keepAspectRatio = true;
+        private int _width;
+        private string _widthProperty;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageAttribute" /> class.
+        /// Initializes a new instance of the <see cref="ImageAttribute"/> class.
         /// </summary>
         /// <param name="width">The width of the image</param>
         /// <param name="height">The height of the image</param>
@@ -47,7 +54,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageAttribute" /> class.
+        /// Initializes a new instance of the <see cref="ImageAttribute"/> class.
         /// </summary>
         /// <param name="width">The width of the image</param>
         /// <param name="height">The height of the image</param>
@@ -57,7 +64,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageAttribute" /> class.
+        /// Initializes a new instance of the <see cref="ImageAttribute"/> class.
         /// </summary>
         /// <param name="width">The width of the image</param>
         /// <param name="height">The height of the image</param>
@@ -72,7 +79,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageAttribute" /> class.
+        /// Initializes a new instance of the <see cref="ImageAttribute"/> class.
         /// </summary>
         /// <param name="widthProperty">The property that returns the width of the image</param>
         /// <param name="heightProperty">The property that returns the height of the image</param>
@@ -81,7 +88,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageAttribute" /> class.
+        /// Initializes a new instance of the <see cref="ImageAttribute"/> class.
         /// </summary>
         /// <param name="widthProperty">The property that returns the width of the image</param>
         /// <param name="heightProperty">The property that returns the height of the image</param>
@@ -91,7 +98,7 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageAttribute" /> class.
+        /// Initializes a new instance of the <see cref="ImageAttribute"/> class.
         /// </summary>
         /// <param name="widthProperty">The property that returns the width of the image</param>
         /// <param name="heightProperty">The property that returns the height of the image</param>
@@ -105,16 +112,9 @@ namespace StrixIT.Platform.Core
             this._idProperty = idProperty;
         }
 
-        /// <summary>
-        /// Gets the width of the image.
-        /// </summary>
-        public int Width
-        {
-            get
-            {
-                return this._width;
-            }
-        }
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets the height of the image.
@@ -124,17 +124,6 @@ namespace StrixIT.Platform.Core
             get
             {
                 return this._height;
-            }
-        }
-
-        /// <summary>
-        /// Gets the property that returns the width of the image.
-        /// </summary>
-        public string WidthProperty
-        {
-            get
-            {
-                return this._widthProperty;
             }
         }
 
@@ -170,5 +159,29 @@ namespace StrixIT.Platform.Core
                 return this._keepAspectRatio;
             }
         }
+
+        /// <summary>
+        /// Gets the width of the image.
+        /// </summary>
+        public int Width
+        {
+            get
+            {
+                return this._width;
+            }
+        }
+
+        /// <summary>
+        /// Gets the property that returns the width of the image.
+        /// </summary>
+        public string WidthProperty
+        {
+            get
+            {
+                return this._widthProperty;
+            }
+        }
+
+        #endregion Public Properties
     }
 }

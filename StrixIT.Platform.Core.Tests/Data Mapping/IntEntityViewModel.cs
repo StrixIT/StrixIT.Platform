@@ -9,11 +9,15 @@ namespace StrixIT.Platform.Core.Tests
 {
     public class IntEntityViewModel
     {
-        public int Id { get; set; }
+        #region Public Properties
+
+        public DateTime? Date { get; set; }
         public string EntityName { get; set; }
+        public int Id { get; set; }
         public int Order { get; set; }
         public bool Required { get; set; }
-        public DateTime? Date { get; set; }
         public string ViewModelOnly { get; set; }
+
+        #endregion Public Properties
     }
 }

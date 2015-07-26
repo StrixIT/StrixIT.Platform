@@ -39,19 +39,29 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public abstract class EntityFrameworkDataSource : DbContext, IDataSource
     {
+        #region Private Fields
+
         /// <summary>
         /// A store to cache all key property names for entity types.
         /// </summary>
         private static ConcurrentDictionary<Type, string[]> _keyPropertyNames = new ConcurrentDictionary<Type, string[]>();
 
+        #endregion Private Fields
+
+        #region Protected Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="EntityFrameworkDataSource" /> class.
+        /// Initializes a new instance of the <see cref="EntityFrameworkDataSource"/> class.
         /// </summary>
-        /// <param name="connectionStringName">The name of the connection string to use. This name can be located in any of the configuration files loaded
-        /// by the <see cref="ConfigurationLoader" />class</param>
+        /// <param name="connectionStringName">
+        /// The name of the connection string to use. This name can be located in any of the
+        /// configuration files loaded by the <see cref="ConfigurationLoader"/> class
+        /// </param>
         protected EntityFrameworkDataSource(string connectionStringName) : base(GetConnection(connectionStringName))
         {
         }
+
+        #endregion Protected Constructors
 
         #region Query
 
@@ -72,7 +82,8 @@ namespace StrixIT.Platform.Core
         #region Save
 
         /// <summary>
-        /// Saves one or more entities to the data source. To persist them, SaveChanges should be called as well.
+        /// Saves one or more entities to the data source. To persist them, SaveChanges should be
+        /// called as well.
         /// </summary>
         /// <typeparam name="T">The type of the entities to save</typeparam>
         /// <param name="entity">The entity or entities to save</param>
@@ -84,8 +95,9 @@ namespace StrixIT.Platform.Core
                 throw new ArgumentNullException("entity");
             }
 
-            // Allow for deleting either one entity or a collection of entities. Create a list if only one is passed, and create
-            // the lists to hold the entities that need to be added and the result entities.
+            // Allow for deleting either one entity or a collection of entities. Create a list if
+            // only one is passed, and create the lists to hold the entities that need to be added
+            // and the result entities.
             Type entityType = ObjectContext.GetObjectType(entity.GetType());
             IEnumerable list;
             IEnumerable resultList;
@@ -126,8 +138,8 @@ namespace StrixIT.Platform.Core
                         continue;
                     }
 
-                    // Try to find the item in memory, else get it from the database. This cannot be done more
-                    // efficiently, as a find is required for each object.
+                    // Try to find the item in memory, else get it from the database. This cannot be
+                    // done more efficiently, as a find is required for each object.
                     var existingEntity = this.GetExistingObject(item);
 
                     if (existingEntity == null)
@@ -169,7 +181,8 @@ namespace StrixIT.Platform.Core
         #region Delete
 
         /// <summary>
-        /// Deletes one or more entities from the data source. To persist the delete, SaveChanges should be called as well.
+        /// Deletes one or more entities from the data source. To persist the delete, SaveChanges
+        /// should be called as well.
         /// </summary>
         /// <typeparam name="T">The type of the entities to delete</typeparam>
         /// <param name="entity">The entity or entities to delete</param>
@@ -224,20 +237,12 @@ namespace StrixIT.Platform.Core
         #region Protected Methods
 
         /// <summary>
-        /// Override this method to add additional security conditions to all queries.
-        /// </summary>
-        /// <param name="query">The query to secure</param>
-        /// <returns>The secured query</returns>
-        protected virtual IQueryable SecureQuery(IQueryable query)
-        {
-            return query;
-        }
-
-        /// <summary>
         /// Override this method to add additional security conditions to updating and deleting entities.
         /// </summary>
         /// <param name="entityType">The type of the entities</param>
-        /// <param name="entityKeyValues">A list with an array of key values for all entities to check access for</param>
+        /// <param name="entityKeyValues">
+        /// A list with an array of key values for all entities to check access for
+        /// </param>
         /// <returns>True if access to the entities is allowed, false otherwise</returns>
         protected virtual bool CheckEntityAccessAllowed(Type entityType, IList<object[]> entityKeyValues)
         {
@@ -306,6 +311,16 @@ namespace StrixIT.Platform.Core
             return keyValues;
         }
 
+        /// <summary>
+        /// Override this method to add additional security conditions to all queries.
+        /// </summary>
+        /// <param name="query">The query to secure</param>
+        /// <returns>The secured query</returns>
+        protected virtual IQueryable SecureQuery(IQueryable query)
+        {
+            return query;
+        }
+
         #endregion Protected Methods
 
         #region Private Methods
@@ -320,6 +335,40 @@ namespace StrixIT.Platform.Core
             }
 
             return connection.ConnectionString;
+        }
+
+        /// <summary>
+        /// Gets the existing object with the key values of the passed object, if it exists.
+        /// </summary>
+        /// <param name="entity">The object with the key values to get the existing object for</param>
+        /// <returns>The existing object, or NULL</returns>
+        private object GetExistingObject(object entity)
+        {
+            var type = ObjectContext.GetObjectType(entity.GetType());
+            var keyValues = this.GetKeyValues(type, new object[] { entity }).First();
+
+            // If there are any Guid keys that have not been set, there is no existing entity yet
+            // and no get needs to be attempted.
+            if (keyValues.Any(v => v.GetType() == typeof(Guid) && v.Equals(Guid.Empty)))
+            {
+                return null;
+            }
+
+            // If there is only one key property and it is an integer, return null to prevent
+            // returning an arbitrary object with an initial key value.
+            if (keyValues.Length == 1)
+            {
+                var keyType = keyValues.First().GetType();
+                var converter = TypeDescriptor.GetConverter(keyType);
+
+                if (converter.CanConvertTo(typeof(long)) && converter.ConvertTo(keyValues.First(), typeof(long)).Equals((long)0))
+                {
+                    return null;
+                }
+            }
+
+            // Try to find an existing object with the entity key values.
+            return this.Set(type).Find(keyValues.ToArray());
         }
 
         /// <summary>
@@ -341,39 +390,6 @@ namespace StrixIT.Platform.Core
                     entity.SetPropertyValue(name, Guid.NewGuid());
                 }
             }
-        }
-
-        /// <summary>
-        /// Gets the existing object with the key values of the passed object, if it exists.
-        /// </summary>
-        /// <param name="entity">The object with the key values to get the existing object for</param>
-        /// <returns>The existing object, or NULL</returns>
-        private object GetExistingObject(object entity)
-        {
-            var type = ObjectContext.GetObjectType(entity.GetType());
-            var keyValues = this.GetKeyValues(type, new object[] { entity }).First();
-
-            // If there are any Guid keys that have not been set, there is no existing entity yet and no get needs to be attempted.
-            if (keyValues.Any(v => v.GetType() == typeof(Guid) && v.Equals(Guid.Empty)))
-            {
-                return null;
-            }
-
-            // If there is only one key property and it is an integer, return null to prevent returning
-            // an arbitrary object with an initial key value.
-            if (keyValues.Length == 1)
-            {
-                var keyType = keyValues.First().GetType();
-                var converter = TypeDescriptor.GetConverter(keyType);
-
-                if (converter.CanConvertTo(typeof(long)) && converter.ConvertTo(keyValues.First(), typeof(long)).Equals((long)0))
-                {
-                    return null;
-                }
-            }
-
-            // Try to find an existing object with the entity key values.
-            return this.Set(type).Find(keyValues.ToArray());
         }
 
         #endregion Private Methods

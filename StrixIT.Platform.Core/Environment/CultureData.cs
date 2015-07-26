@@ -27,6 +27,8 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class CultureData
     {
+        #region Public Properties
+
         /// <summary>
         /// Gets or sets the culture code.
         /// </summary>
@@ -41,5 +43,7 @@ namespace StrixIT.Platform.Core
         /// Gets or sets the culture native name.
         /// </summary>
         public string NativeName { get; set; }
+
+        #endregion Public Properties
     }
 }

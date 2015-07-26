@@ -27,24 +27,29 @@ namespace StrixIT.Platform.Web
 {
     public class HomeController : BaseController
     {
-        private static bool _startup = true;
+        #region Private Fields
+
         private static object _lockObject = new object();
+        private static bool _startup = true;
         private IResourceService _resourceService;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public HomeController(IResourceService resourceService)
         {
             this._resourceService = resourceService;
         }
 
-        public ActionResult Index()
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public ActionResult Error()
         {
-            this.WriteMessagesOnStartup();
-
-            if (StrixPlatform.Configuration.SecureHomeController && !this.HttpContext.Request.IsAuthenticated)
-            {
-                return this.RedirectToAction("Login", "Account", new { area = "Membership", culture = StrixPlatform.CurrentCultureCode });
-            }
-
+            Response.StatusCode = 200;
+            Response.TrySkipIisCustomErrors = true;
             return this.View();
         }
 
@@ -60,12 +65,21 @@ namespace StrixIT.Platform.Web
             return this.Json(this._resourceService.GetResx(moduleName));
         }
 
-        public ActionResult Error()
+        public ActionResult Index()
         {
-            Response.StatusCode = 200;
-            Response.TrySkipIisCustomErrors = true;
+            this.WriteMessagesOnStartup();
+
+            if (StrixPlatform.Configuration.SecureHomeController && !this.HttpContext.Request.IsAuthenticated)
+            {
+                return this.RedirectToAction("Login", "Account", new { area = "Membership", culture = StrixPlatform.CurrentCultureCode });
+            }
+
             return this.View();
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private void WriteMessagesOnStartup()
         {
@@ -87,5 +101,7 @@ namespace StrixIT.Platform.Web
                 }
             }
         }
+
+        #endregion Private Methods
     }
 }

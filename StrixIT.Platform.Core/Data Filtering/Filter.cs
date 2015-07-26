@@ -29,8 +29,10 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class Filter
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Filter" /> class.
+        /// Initializes a new instance of the <see cref="Filter"/> class.
         /// </summary>
         public Filter()
         {
@@ -38,14 +40,20 @@ namespace StrixIT.Platform.Core
             this.Filters = new List<FilterField>();
         }
 
-        /// <summary>
-        /// Gets or sets the filter logic (And or Or).
-        /// </summary>
-        public FilterType Logic { get; set; }
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the filters to use.
         /// </summary>
         public IList<FilterField> Filters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the filter logic (And or Or).
+        /// </summary>
+        public FilterType Logic { get; set; }
+
+        #endregion Public Properties
     }
 }

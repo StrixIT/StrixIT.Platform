@@ -29,6 +29,8 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class PlatformConfigurationSection : ConfigurationSection
     {
+        #region Public Properties
+
         /// <summary>
         /// Gets the application name.
         /// </summary>
@@ -54,18 +56,6 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Gets the dependency white list prefix.
-        /// </summary>
-        [ConfigurationProperty("dependencyWhitelist", IsRequired = false, DefaultValue = "StrixIT")]
-        public string DependencyWhitelist
-        {
-            get
-            {
-                return this["dependencyWhitelist"] as string;
-            }
-        }
-
-        /// <summary>
         /// Gets the dependency injector type.
         /// </summary>
         [ConfigurationProperty("dependencyInjector", IsRequired = false, DefaultValue = "StrixIT.Platform.Core, StructureMapDependencyInjector")]
@@ -78,7 +68,20 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Gets a value indicating whether the home controller of the application should be accessible only by authenticated users.
+        /// Gets the dependency white list prefix.
+        /// </summary>
+        [ConfigurationProperty("dependencyWhitelist", IsRequired = false, DefaultValue = "StrixIT")]
+        public string DependencyWhitelist
+        {
+            get
+            {
+                return this["dependencyWhitelist"] as string;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the home controller of the application should be
+        /// accessible only by authenticated users.
         /// </summary>
         [ConfigurationProperty("secureHomeController", IsRequired = false, DefaultValue = false)]
         public bool SecureHomeController
@@ -88,5 +91,7 @@ namespace StrixIT.Platform.Core
                 return (bool)this["secureHomeController"];
             }
         }
+
+        #endregion Public Properties
     }
 }

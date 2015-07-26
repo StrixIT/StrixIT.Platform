@@ -26,13 +26,19 @@ using System.ComponentModel.DataAnnotations;
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// Verifies that a property is not null, that a value type property does not have the default value for its type, and that a string property
-    /// is not empty or whitespace when membership is active.
+    /// Verifies that a property is not null, that a value type property does not have the default
+    /// value for its type, and that a string property is not empty or whitespace when membership is active.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class StrixRequiredWithMembershipAttribute : RequiredAttribute
     {
+        #region Private Fields
+
         private static bool _membershipPresent = DependencyInjector.TryGet<IMembershipService>() != null;
+
+        #endregion Private Fields
+
+        #region Public Methods
 
         public override bool IsValid(object value)
         {
@@ -67,5 +73,7 @@ namespace StrixIT.Platform.Core
 
             return isValid;
         }
+
+        #endregion Public Methods
     }
 }

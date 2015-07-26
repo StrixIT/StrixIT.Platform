@@ -29,10 +29,16 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public interface ILoggingService
     {
+        #region Public Properties
+
         /// <summary>
         /// Gets the url at which to log script errors for web applications.
         /// </summary>
         string LogScriptErrorUrl { get; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Logs the specified message to the log.
@@ -50,17 +56,19 @@ namespace StrixIT.Platform.Core
         void Log(string message, Exception exception, LogLevel level = LogLevel.Debug);
 
         /// <summary>
+        /// Logs analytics data.
+        /// </summary>
+        /// <param name="entryType">The data type</param>
+        /// <param name="data">The data</param>
+        void LogToAnalytics(string entryType, string data);
+
+        /// <summary>
         /// Logs an audit message.
         /// </summary>
         /// <param name="entryType">The message type</param>
         /// <param name="message">The message</param>
         void LogToAudit(string entryType, string message);
 
-        /// <summary>
-        /// Logs analytics data.
-        /// </summary>
-        /// <param name="entryType">The data type</param>
-        /// <param name="data">The data</param>
-        void LogToAnalytics(string entryType, string data);
+        #endregion Public Methods
     }
 }

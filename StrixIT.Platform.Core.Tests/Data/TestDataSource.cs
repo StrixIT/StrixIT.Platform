@@ -9,9 +9,7 @@ namespace StrixIT.Platform.Core.Tests
 {
     public class TestDataSource : EntityFrameworkDataSource
     {
-        public DbSet<TestEntity> IntEntities { get; set; }
-        public DbSet<GuidEntity> GuidEntities { get; set; }
-        public DbSet<CompositeKeyEntity> CompositeKeyEntities { get; set; }
+        #region Public Constructors
 
         public TestDataSource()
             : this("TestConnection")
@@ -24,6 +22,18 @@ namespace StrixIT.Platform.Core.Tests
             Database.SetInitializer<TestDataSource>(new TestDataSourceInitializer());
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public DbSet<CompositeKeyEntity> CompositeKeyEntities { get; set; }
+        public DbSet<GuidEntity> GuidEntities { get; set; }
+        public DbSet<TestEntity> IntEntities { get; set; }
+
+        #endregion Public Properties
+
+        #region Protected Methods
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CompositeKeyEntity>().HasKey(c => new { c.Id, c.Culture, c.VersionNumber });
@@ -32,5 +42,7 @@ namespace StrixIT.Platform.Core.Tests
             modelBuilder.Entity<CompositeKeyEntity>().HasMany(e => e.Siblings).WithMany(e => e.OtherSiblings);
             base.OnModelCreating(modelBuilder);
         }
+
+        #endregion Protected Methods
     }
 }

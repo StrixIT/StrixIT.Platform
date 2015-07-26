@@ -10,16 +10,7 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass()]
     public class StrixNotDefaultAttributeTest
     {
-        [TestMethod()]
-        public void NullableIntIsValidWhenNull()
-        {
-            StrixNotDefaultAttribute target = new StrixNotDefaultAttribute();
-            int? value = null;
-            bool expected = true;
-            bool actual;
-            actual = target.IsValid(value);
-            Assert.AreEqual(expected, actual);
-        }
+        #region Public Methods
 
         [TestMethod()]
         public void NullableIntIsNotValidWhen0()
@@ -42,5 +33,18 @@ namespace StrixIT.Platform.Core.Tests
             actual = target.IsValid(value);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void NullableIntIsValidWhenNull()
+        {
+            StrixNotDefaultAttribute target = new StrixNotDefaultAttribute();
+            int? value = null;
+            bool expected = true;
+            bool actual;
+            actual = target.IsValid(value);
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion Public Methods
     }
 }

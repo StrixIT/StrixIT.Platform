@@ -27,14 +27,18 @@ namespace StrixIT.Platform.Core
     /// </summary>
     public class SortField
     {
-        /// <summary>
-        /// Gets or sets the name of the property to sort on.
-        /// </summary>
-        public string Field { get; set; }
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the direction for the sort (Asc or Desc).
         /// </summary>
         public string Dir { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the property to sort on.
+        /// </summary>
+        public string Field { get; set; }
+
+        #endregion Public Properties
     }
 }

@@ -11,6 +11,8 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass]
     public class TokenizerTests
     {
+        #region Public Methods
+
         [TestMethod]
         public void TokenizeSimpleStringShouldReplaceAllTokens()
         {
@@ -25,18 +27,14 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod]
-        public void TokenizeStringWithTokenizedTokensShouldReplaceAllTokens()
+        public void TokenizeSimpleStringWithoutSupplyingAllTokensShouldReplaceSuppliedTokensAndLeaveOthers()
         {
-            string name = "This name is [[STATUS]]";
-            string number = "2";
-            string status = "Great";
+            string name = "Test";
             string value = "This is [[NAME]] a tokenized string with [[NUMBER]] tokens.";
             var tokens = new Dictionary<string, string>();
             tokens.Add("[[NAME]]", name);
-            tokens.Add("[[NUMBER]]", number);
-            tokens.Add("[[STATUS]]", status);
             var result = Tokenizer.ReplaceTokens(value, tokens);
-            Assert.AreEqual("This is This name is Great a tokenized string with 2 tokens.", result);
+            Assert.AreEqual("This is Test a tokenized string with [[NUMBER]] tokens.", result);
         }
 
         [TestMethod]
@@ -54,14 +52,20 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod]
-        public void TokenizeSimpleStringWithoutSupplyingAllTokensShouldReplaceSuppliedTokensAndLeaveOthers()
+        public void TokenizeStringWithTokenizedTokensShouldReplaceAllTokens()
         {
-            string name = "Test";
+            string name = "This name is [[STATUS]]";
+            string number = "2";
+            string status = "Great";
             string value = "This is [[NAME]] a tokenized string with [[NUMBER]] tokens.";
             var tokens = new Dictionary<string, string>();
             tokens.Add("[[NAME]]", name);
+            tokens.Add("[[NUMBER]]", number);
+            tokens.Add("[[STATUS]]", status);
             var result = Tokenizer.ReplaceTokens(value, tokens);
-            Assert.AreEqual("This is Test a tokenized string with [[NUMBER]] tokens.", result);
+            Assert.AreEqual("This is This name is Great a tokenized string with 2 tokens.", result);
         }
+
+        #endregion Public Methods
     }
 }

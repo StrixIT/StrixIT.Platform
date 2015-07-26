@@ -34,29 +34,17 @@ namespace StrixIT.Platform.Web
 {
     public class StrixWebApplication : HttpApplication
     {
+        #region Private Fields
+
         private static FileSystemWatcher _fileWatcher;
         private static bool _isRestarting = false;
 
-        protected void Application_Start(object sender, EventArgs e)
+        #endregion Private Fields
+
+        #region Protected Methods
+
+        protected void Application_AuthorizeRequest()
         {
-            DependencyResolver.SetResolver(new StructureMapDependencyResolver());
-
-            SetupFileWatcher();
-            Bootstrapper.Run();
-
-            StrixPlatform.WriteStartupMessage("Web application start. Initialize Mvc.");
-            var mvcService = DependencyInjector.Get<IMvcService>();
-            mvcService.Initialize();
-
-            StrixPlatform.WriteStartupMessage("Run all web initializers");
-
-            foreach (var initializer in DependencyInjector.GetAll<IWebInitializer>())
-            {
-                StrixPlatform.WriteStartupMessage(string.Format("Start web initializer {0}.", initializer.GetType().Name));
-                initializer.WebInitialize();
-            }
-
-            StrixPlatform.WriteStartupMessage("Web application startup finished.");
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -65,24 +53,9 @@ namespace StrixIT.Platform.Web
             httpService.CompressRequest();
         }
 
-        protected void Application_PostAcquireRequestState(object sender, EventArgs e)
+        protected void Application_End(object sender, EventArgs e)
         {
-            var httpService = DependencyInjector.Get<IHttpService>();
-            httpService.SetCultureForRequest();
-        }
-
-        protected void Application_AuthorizeRequest()
-        {
-        }
-
-        protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
-        {
-        }
-
-        protected void Application_PreSendRequestHeaders(object source, EventArgs e)
-        {
-            var httpService = DependencyInjector.Get<IHttpService>();
-            httpService.SetResponseHeaders();
+            TearDownFileWatcher();
         }
 
         protected void Application_Error(object sender, EventArgs e)
@@ -109,6 +82,44 @@ namespace StrixIT.Platform.Web
             }
         }
 
+        protected void Application_PostAcquireRequestState(object sender, EventArgs e)
+        {
+            var httpService = DependencyInjector.Get<IHttpService>();
+            httpService.SetCultureForRequest();
+        }
+
+        protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
+        {
+        }
+
+        protected void Application_PreSendRequestHeaders(object source, EventArgs e)
+        {
+            var httpService = DependencyInjector.Get<IHttpService>();
+            httpService.SetResponseHeaders();
+        }
+
+        protected void Application_Start(object sender, EventArgs e)
+        {
+            DependencyResolver.SetResolver(new StructureMapDependencyResolver());
+
+            SetupFileWatcher();
+            Bootstrapper.Run();
+
+            StrixPlatform.WriteStartupMessage("Web application start. Initialize Mvc.");
+            var mvcService = DependencyInjector.Get<IMvcService>();
+            mvcService.Initialize();
+
+            StrixPlatform.WriteStartupMessage("Run all web initializers");
+
+            foreach (var initializer in DependencyInjector.GetAll<IWebInitializer>())
+            {
+                StrixPlatform.WriteStartupMessage(string.Format("Start web initializer {0}.", initializer.GetType().Name));
+                initializer.WebInitialize();
+            }
+
+            StrixPlatform.WriteStartupMessage("Web application startup finished.");
+        }
+
         protected void Session_End(object sender, EventArgs e)
         {
             var authenticationService = DependencyInjector.TryGet<IAuthenticationService>();
@@ -122,26 +133,9 @@ namespace StrixIT.Platform.Web
             }
         }
 
-        protected void Application_End(object sender, EventArgs e)
-        {
-            TearDownFileWatcher();
-        }
+        #endregion Protected Methods
 
-        private static void SetupFileWatcher()
-        {
-            _fileWatcher = new FileSystemWatcher(Path.Combine(StrixPlatform.Environment.WorkingDirectory, "Areas"));
-            _fileWatcher.IncludeSubdirectories = true;
-            _fileWatcher.Created += new FileSystemEventHandler(RestartApp);
-            _fileWatcher.Deleted += new FileSystemEventHandler(RestartApp);
-            _fileWatcher.Changed += new FileSystemEventHandler(RestartApp);
-            _fileWatcher.Renamed += new RenamedEventHandler(RestartApp);
-            _fileWatcher.EnableRaisingEvents = true;
-        }
-
-        private static void TearDownFileWatcher()
-        {
-            _fileWatcher.Dispose();
-        }
+        #region Private Methods
 
         private static void RestartApp(object source, FileSystemEventArgs e)
         {
@@ -168,18 +162,20 @@ namespace StrixIT.Platform.Web
             }
         }
 
-        private static bool TryWriteWebConfig()
+        private static void SetupFileWatcher()
         {
-            try
-            {
-                // In medium trust, "UnloadAppDomain" is not supported. Touch web.config to force an AppDomain restart.
-                File.SetLastWriteTimeUtc(HostingEnvironment.MapPath("~/web.config"), DateTime.UtcNow);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            _fileWatcher = new FileSystemWatcher(Path.Combine(StrixPlatform.Environment.WorkingDirectory, "Areas"));
+            _fileWatcher.IncludeSubdirectories = true;
+            _fileWatcher.Created += new FileSystemEventHandler(RestartApp);
+            _fileWatcher.Deleted += new FileSystemEventHandler(RestartApp);
+            _fileWatcher.Changed += new FileSystemEventHandler(RestartApp);
+            _fileWatcher.Renamed += new RenamedEventHandler(RestartApp);
+            _fileWatcher.EnableRaisingEvents = true;
+        }
+
+        private static void TearDownFileWatcher()
+        {
+            _fileWatcher.Dispose();
         }
 
         private static bool TryWriteBinFolder()
@@ -205,5 +201,22 @@ namespace StrixIT.Platform.Web
                 return false;
             }
         }
+
+        private static bool TryWriteWebConfig()
+        {
+            try
+            {
+                // In medium trust, "UnloadAppDomain" is not supported. Touch web.config to force an
+                // AppDomain restart.
+                File.SetLastWriteTimeUtc(HostingEnvironment.MapPath("~/web.config"), DateTime.UtcNow);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion Private Methods
     }
 }

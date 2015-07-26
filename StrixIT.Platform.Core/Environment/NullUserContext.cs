@@ -27,13 +27,7 @@ namespace StrixIT.Platform.Core
 {
     public class NullUserContext : IUserContext
     {
-        public string Name
-        {
-            get
-            {
-                return null;
-            }
-        }
+        #region Public Properties
 
         public string CurrentCulture
         {
@@ -48,14 +42,6 @@ namespace StrixIT.Platform.Core
             get
             {
                 return null;
-            }
-        }
-
-        public Guid Id
-        {
-            get
-            {
-                return Guid.Empty;
             }
         }
 
@@ -95,6 +81,14 @@ namespace StrixIT.Platform.Core
             }
         }
 
+        public Guid Id
+        {
+            get
+            {
+                return Guid.Empty;
+            }
+        }
+
         public bool IsAdministrator
         {
             get
@@ -110,6 +104,18 @@ namespace StrixIT.Platform.Core
                 return true;
             }
         }
+
+        public string Name
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public bool HasPermission(string permission)
         {
@@ -130,5 +136,7 @@ namespace StrixIT.Platform.Core
         {
             return true;
         }
+
+        #endregion Public Methods
     }
 }

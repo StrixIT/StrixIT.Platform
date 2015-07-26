@@ -12,90 +12,17 @@ namespace StrixIT.Platform.Core.Tests.Tools
     [TestClass]
     public class DataFilterTest
     {
+        #region Public Methods
+
         [ClassInitialize]
         public static void Init(TestContext context)
         {
             DataFilter.RegisterFilterMap<TestEntity>(new FilterSortMap { FieldToMap = "Test", FilterMap = (x, y) => { return "Test"; }, SortMap = (x, y) => { return x; } });
         }
 
+        #endregion Public Methods
+
         #region Process types
-
-        [TestMethod()]
-        public void FilterShouldCorrectlyProcessStringEquals()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Equals, "Name", "Rutger"));
-            int expected = 1;
-            query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, filter.Total);
-        }
-
-        [TestMethod()]
-        public void FilterShouldCorrectlyProcessStringContains()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Contains, "Name", "G"));
-            int expected = 3;
-            query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, filter.Total);
-        }
-
-        [TestMethod()]
-        public void FilterShouldCorrectlyProcessStringStartsWith()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.StartsWith, "Name", "S"));
-            int expected = 3;
-            query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, filter.Total);
-        }
-
-        [TestMethod()]
-        public void FilterShouldCorrectlyProcessStringEndsWith()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.EndsWith, "Name", "E"));
-            int expected = 1;
-            query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, filter.Total);
-        }
-
-        [TestMethod()]
-        public void FilterShouldCorrectlyProcessInt()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Equals, "Number", "10"));
-            int expected = 1;
-            query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, filter.Total);
-        }
-
-        [TestMethod()]
-        public void FilterShouldCorrectlyProcessDouble()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Equals, "Value", "7.5"));
-            int expected = 1;
-            query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, filter.Total);
-        }
-
-        [TestMethod()]
-        public void FilterShouldCorrectlyProcessPrice()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Equals, "Price", "7.70"));
-            int expected = 1;
-            query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, filter.Total);
-        }
 
         [TestMethod()]
         public void FilterShouldCorrectlyProcessBool()
@@ -119,53 +46,86 @@ namespace StrixIT.Platform.Core.Tests.Tools
             Assert.AreEqual(expected, filter.Total);
         }
 
+        [TestMethod()]
+        public void FilterShouldCorrectlyProcessDouble()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Equals, "Value", "7.5"));
+            int expected = 1;
+            query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, filter.Total);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlyProcessInt()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Equals, "Number", "10"));
+            int expected = 1;
+            query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, filter.Total);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlyProcessPrice()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Equals, "Price", "7.70"));
+            int expected = 1;
+            query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, filter.Total);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlyProcessStringContains()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Contains, "Name", "G"));
+            int expected = 3;
+            query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, filter.Total);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlyProcessStringEndsWith()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.EndsWith, "Name", "E"));
+            int expected = 1;
+            query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, filter.Total);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlyProcessStringEquals()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.Equals, "Name", "Rutger"));
+            int expected = 1;
+            query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, filter.Total);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlyProcessStringStartsWith()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Filter.Filters.Add(new FilterField(FilterFieldOperator.StartsWith, "Name", "S"));
+            int expected = 3;
+            query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, filter.Total);
+        }
+
         #endregion Process types
 
         #region Sort by types
-
-        [TestMethod()]
-        public void FilterShouldCorrectlySortByString()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Sort.Add(new SortField { Field = "Name", Dir = "asc" });
-            var expected = "Dagmar";
-            query = query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, query.First().Name);
-        }
-
-        [TestMethod()]
-        public void FilterShouldCorrectlySortByInt()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Sort.Add(new SortField { Field = "Number", Dir = "desc" });
-            var expected = 30;
-            query = query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, query.First().Number);
-        }
-
-        [TestMethod()]
-        public void FilterShouldCorrectlySortByDouble()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Sort.Add(new SortField { Field = "Value", Dir = "desc" });
-            var expected = 15;
-            query = query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, query.First().Value);
-        }
-
-        [TestMethod()]
-        public void FilterShouldCorrectlySortByDecimal()
-        {
-            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
-            FilterOptions filter = new FilterOptions();
-            filter.Sort.Add(new SortField { Field = "Price", Dir = "desc" });
-            var expected = 7.70m;
-            query = query.Filter<TestEntity>(filter);
-            Assert.AreEqual(expected, query.First().Price);
-        }
 
         [TestMethod()]
         public void FilterShouldCorrectlySortByBool()
@@ -187,6 +147,50 @@ namespace StrixIT.Platform.Core.Tests.Tools
             var expected = DateTime.Now.Date;
             query = query.Filter<TestEntity>(filter);
             Assert.AreEqual(expected, query.First().Date);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlySortByDecimal()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Sort.Add(new SortField { Field = "Price", Dir = "desc" });
+            var expected = 7.70m;
+            query = query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, query.First().Price);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlySortByDouble()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Sort.Add(new SortField { Field = "Value", Dir = "desc" });
+            var expected = 15;
+            query = query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, query.First().Value);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlySortByInt()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Sort.Add(new SortField { Field = "Number", Dir = "desc" });
+            var expected = 30;
+            query = query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, query.First().Number);
+        }
+
+        [TestMethod()]
+        public void FilterShouldCorrectlySortByString()
+        {
+            var query = TestEntityFactory.GetEntityList().AsQueryable<TestEntity>();
+            FilterOptions filter = new FilterOptions();
+            filter.Sort.Add(new SortField { Field = "Name", Dir = "asc" });
+            var expected = "Dagmar";
+            query = query.Filter<TestEntity>(filter);
+            Assert.AreEqual(expected, query.First().Name);
         }
 
         #endregion Sort by types

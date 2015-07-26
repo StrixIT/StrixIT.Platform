@@ -9,8 +9,12 @@ namespace StrixIT.Platform.Core.Tests
 {
     public class TestDataSourceInitializer : DropCreateDatabaseAlways<TestDataSource>
     {
+        #region Protected Methods
+
         protected override void Seed(TestDataSource context)
         {
         }
+
+        #endregion Protected Methods
     }
 }

@@ -27,6 +27,8 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public interface IResourceService
     {
+        #region Public Methods
+
         /// <summary>
         /// Gets the names and localized names for the enumerations that are part of the specified module.
         /// </summary>
@@ -40,5 +42,7 @@ namespace StrixIT.Platform.Web
         /// <param name="moduleName">The name of the module to get the resource strings for</param>
         /// <returns>A collection of names and localized names for the module resource strings</returns>
         ClientResourceCollection GetResx(string moduleName);
+
+        #endregion Public Methods
     }
 }

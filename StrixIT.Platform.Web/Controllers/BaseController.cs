@@ -30,8 +30,10 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class BaseController : Controller
     {
+        #region Protected Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseController" /> class.
+        /// Initializes a new instance of the <see cref="BaseController"/> class.
         /// </summary>
         protected BaseController()
         {
@@ -45,9 +47,13 @@ namespace StrixIT.Platform.Web
             }
         }
 
+        #endregion Protected Constructors
+
+        #region Protected Methods
+
         /// <summary>
-        /// Gets the view result for the requested view or the template in case of a non-ajax request. This is needed to support refreshing the browser at
-        /// any point in a SPA.
+        /// Gets the view result for the requested view or the template in case of a non-ajax
+        /// request. This is needed to support refreshing the browser at any point in a SPA.
         /// </summary>
         /// <param name="view">The view to get</param>
         /// <param name="model">The model for the view</param>
@@ -63,8 +69,8 @@ namespace StrixIT.Platform.Web
         }
 
         /// <summary>
-        /// Gets the view result for the requested view or the template in case of a non-ajax request. This is needed to support refreshing the browser at
-        /// any point in a SPA.
+        /// Gets the view result for the requested view or the template in case of a non-ajax
+        /// request. This is needed to support refreshing the browser at any point in a SPA.
         /// </summary>
         /// <param name="viewName">The name of the view to get</param>
         /// <param name="masterName">The name of the master for the view</param>
@@ -80,9 +86,15 @@ namespace StrixIT.Platform.Web
             return base.View(viewName, masterName, model);
         }
 
+        #endregion Protected Methods
+
+        #region Private Methods
+
         private bool IsTemplate()
         {
             return !this.ControllerContext.HttpContext.Request.IsAjaxRequest() && !ControllerContext.IsChildAction && this.ControllerContext.HttpContext.Request.Url.AbsolutePath.ToLower().Contains("/admin/");
         }
+
+        #endregion Private Methods
     }
 }

@@ -26,20 +26,22 @@ using System.ComponentModel.DataAnnotations;
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// A class to look up group names in the Cms when querying, as these are stored in another database
-    /// which makes it impossible to join them in a query.
+    /// A class to look up group names in the Cms when querying, as these are stored in another
+    /// database which makes it impossible to join them in a query.
     /// </summary>
     public class GroupData : ValidationBase
     {
+        #region Public Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupData" /> class.
+        /// Initializes a new instance of the <see cref="GroupData"/> class.
         /// </summary>
         public GroupData()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupData" /> class.
+        /// Initializes a new instance of the <see cref="GroupData"/> class.
         /// </summary>
         /// <param name="groupId">The group id</param>
         /// <param name="groupName">The group name</param>
@@ -48,6 +50,10 @@ namespace StrixIT.Platform.Core
             this.Id = groupId;
             this.Name = groupName;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the id of the group.
@@ -61,5 +67,7 @@ namespace StrixIT.Platform.Core
         [StrixRequiredWithMembershipAttribute]
         [StringLength(250)]
         public string Name { get; set; }
+
+        #endregion Public Properties
     }
 }

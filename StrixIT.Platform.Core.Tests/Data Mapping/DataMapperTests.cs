@@ -13,21 +13,13 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass()]
     public class DataMapperTests
     {
+        #region Private Fields
+
         private static bool _initialized = false;
 
-        [TestMethod]
-        public void MapIntEntityToIntEntityViewModelWithPredefinedMapShouldMapAllProperties()
-        {
-            Init();
-            IntEntity entity = new IntEntity() { Id = 1, Name = "Test", Number = 10, IsRequired = true, StartDate = new DateTime(2012, 5, 16) };
-            IntEntityViewModel model = entity.Map<IntEntityViewModel>();
-            bool result = entity.Id == model.Id
-                            && entity.Name == model.EntityName
-                            && entity.Number == model.Order
-                            && entity.IsRequired == model.Required
-                            && entity.StartDate == model.Date;
-            Assert.IsTrue(result);
-        }
+        #endregion Private Fields
+
+        #region Public Methods
 
         [TestMethod]
         public void MapIntEntityToIntEntityViewModelWithPredefinedMapAndExistingModelShouldMapAllPropertiesButKeepValuesOfPropertiesThatDoNotExistInTheSource()
@@ -46,30 +38,17 @@ namespace StrixIT.Platform.Core.Tests
         }
 
         [TestMethod]
-        public void MapOnNullEntityShouldReturnDefaultForType()
+        public void MapIntEntityToIntEntityViewModelWithPredefinedMapShouldMapAllProperties()
         {
             Init();
-            IntEntity entity = null;
+            IntEntity entity = new IntEntity() { Id = 1, Name = "Test", Number = 10, IsRequired = true, StartDate = new DateTime(2012, 5, 16) };
             IntEntityViewModel model = entity.Map<IntEntityViewModel>();
-            Assert.IsNull(model);
-        }
-
-        [TestMethod]
-        public void MapOnNullEntityListShouldReturnNull()
-        {
-            Init();
-            List<IntEntity> entities = null;
-            var models = entities.Map<IntEntityViewModel>();
-            Assert.AreEqual(models.Count(), 0);
-        }
-
-        [TestMethod]
-        public void MapOnEmptyEntityListShouldReturnEmptyModelList()
-        {
-            Init();
-            List<IntEntity> entities = new List<IntEntity>();
-            var models = entities.Map<IntEntityViewModel>();
-            Assert.IsTrue(models.Count() == 0);
+            bool result = entity.Id == model.Id
+                            && entity.Name == model.EntityName
+                            && entity.Number == model.Order
+                            && entity.IsRequired == model.Required
+                            && entity.StartDate == model.Date;
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
@@ -85,16 +64,36 @@ namespace StrixIT.Platform.Core.Tests
             Assert.AreEqual(3, modelList.Cast<IntEntityViewModel>().Length());
         }
 
-        #region Project
-
-        [TestMethod()]
-        public void MapShouldReturnListWithProjectedTypePropertiesOnlyUsingIQueryableOnMemoryCollection()
+        [TestMethod]
+        public void MapOnEmptyEntityListShouldReturnEmptyModelList()
         {
-            var result = TestEntityFactory.GetEntityList().AsQueryable().Map<IntEntityViewModel>();
-            Assert.AreEqual(6, result.Count());
-            Assert.IsTrue(result.All(r => r.Id > 0));
-            Assert.IsTrue(result.All(r => r.Date.HasValue));
+            Init();
+            List<IntEntity> entities = new List<IntEntity>();
+            var models = entities.Map<IntEntityViewModel>();
+            Assert.IsTrue(models.Count() == 0);
         }
+
+        [TestMethod]
+        public void MapOnNullEntityListShouldReturnNull()
+        {
+            Init();
+            List<IntEntity> entities = null;
+            var models = entities.Map<IntEntityViewModel>();
+            Assert.AreEqual(models.Count(), 0);
+        }
+
+        [TestMethod]
+        public void MapOnNullEntityShouldReturnDefaultForType()
+        {
+            Init();
+            IntEntity entity = null;
+            IntEntityViewModel model = entity.Map<IntEntityViewModel>();
+            Assert.IsNull(model);
+        }
+
+        #endregion Public Methods
+
+        #region Project
 
         [TestMethod()]
         public void MapShouldReturnListWithExistingPropertiesOnlyUsingIQueryableOnDatabase()
@@ -136,7 +135,18 @@ namespace StrixIT.Platform.Core.Tests
             Assert.IsTrue(result.All(r => r.NotAvailable == null));
         }
 
+        [TestMethod()]
+        public void MapShouldReturnListWithProjectedTypePropertiesOnlyUsingIQueryableOnMemoryCollection()
+        {
+            var result = TestEntityFactory.GetEntityList().AsQueryable().Map<IntEntityViewModel>();
+            Assert.AreEqual(6, result.Count());
+            Assert.IsTrue(result.All(r => r.Id > 0));
+            Assert.IsTrue(result.All(r => r.Date.HasValue));
+        }
+
         #endregion Project
+
+        #region Private Methods
 
         private void Init()
         {
@@ -161,5 +171,7 @@ namespace StrixIT.Platform.Core.Tests
                 DataMapper.RegisterMapConfig(testConfig);
             }
         }
+
+        #endregion Private Methods
     }
 }

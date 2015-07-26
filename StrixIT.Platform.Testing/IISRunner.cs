@@ -33,31 +33,58 @@ namespace StrixIT.Platform.Testing
     /// </summary>
     public class IISRunner : IDisposable
     {
+        #region Private Fields
+
         private IISExpressProcess _iisExpressProcess;
-        private string _publishDir;
         private string _intermediateDir;
+        private string _publishDir;
 
-        public string ProjectPath { get; set; }
+        #endregion Private Fields
 
-        public string Configuration { get; set; }
-
-        public string Platform { get; set; }
-
-        public bool CleanupPublishedFiles { get; set; }
+        #region Public Properties
 
         public string ApplicationHostConfigurationFile { get; set; }
-
-        public string ProjectName { get; private set; }
-
+        public bool CleanupPublishedFiles { get; set; }
+        public string Configuration { get; set; }
         public string MSBuildOverride { get; set; }
-
-        public string SolutionPath { get; set; }
-
+        public string OutputPath { get; set; }
+        public string Platform { get; set; }
         public int? PortNumber { get; set; }
-
+        public string ProjectName { get; private set; }
+        public string ProjectPath { get; set; }
+        public string SolutionPath { get; set; }
         public string TemporaryDirectoryName { get; set; }
 
-        public string OutputPath { get; set; }
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+        }
+
+        public void Shutdown()
+        {
+            if (this._iisExpressProcess == null)
+            {
+                return;
+            }
+
+            this._iisExpressProcess.Stop();
+
+            if (this.CleanupPublishedFiles && Directory.Exists(this._publishDir))
+            {
+                this.SafelyRemoveDirectory(this._publishDir);
+            }
+
+            if (!this.CleanupPublishedFiles || !Directory.Exists(this._intermediateDir))
+            {
+                return;
+            }
+
+            this.SafelyRemoveDirectory(this._intermediateDir);
+        }
 
         public string Startup()
         {
@@ -111,34 +138,40 @@ namespace StrixIT.Platform.Testing
             return this.StartIISExpress();
         }
 
-        public void Shutdown()
+        #endregion Public Methods
+
+        #region Protected Methods
+
+        protected virtual void Dispose(bool cleanupManaged)
         {
             if (this._iisExpressProcess == null)
             {
                 return;
             }
 
-            this._iisExpressProcess.Stop();
-
-            if (this.CleanupPublishedFiles && Directory.Exists(this._publishDir))
-            {
-                this.SafelyRemoveDirectory(this._publishDir);
-            }
-
-            if (!this.CleanupPublishedFiles || !Directory.Exists(this._intermediateDir))
-            {
-                return;
-            }
-
-            this.SafelyRemoveDirectory(this._intermediateDir);
+            _iisExpressProcess.Dispose();
+            GC.SuppressFinalize(this);
         }
 
-        private string StartIISExpress()
+        #endregion Protected Methods
+
+        #region Private Methods
+
+        private string GetPathToBuildToolsFile(string fileName)
         {
-            this._iisExpressProcess = new IISExpressProcess(this._publishDir);
-            this._iisExpressProcess.PortNumber = this.PortNumber;
-            this._iisExpressProcess.Start();
-            return "http://localhost:" + (object)this._iisExpressProcess.PortNumber;
+            string str = ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40);
+
+            if (str != null)
+            {
+                str = Path.Combine(str, fileName);
+
+                if (!File.Exists(str))
+                {
+                    str = (string)null;
+                }
+            }
+
+            return str;
         }
 
         private void PublishSite(Dictionary<string, string> properties)
@@ -189,37 +222,14 @@ namespace StrixIT.Platform.Testing
             }
         }
 
-        private string GetPathToBuildToolsFile(string fileName)
+        private string StartIISExpress()
         {
-            string str = ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40);
-
-            if (str != null)
-            {
-                str = Path.Combine(str, fileName);
-
-                if (!File.Exists(str))
-                {
-                    str = (string)null;
-                }
-            }
-
-            return str;
+            this._iisExpressProcess = new IISExpressProcess(this._publishDir);
+            this._iisExpressProcess.PortNumber = this.PortNumber;
+            this._iisExpressProcess.Start();
+            return "http://localhost:" + (object)this._iisExpressProcess.PortNumber;
         }
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-        }
-
-        protected virtual void Dispose(bool cleanupManaged)
-        {
-            if (this._iisExpressProcess == null)
-            {
-                return;
-            }
-
-            _iisExpressProcess.Dispose();
-            GC.SuppressFinalize(this);
-        }
+        #endregion Private Methods
     }
 }

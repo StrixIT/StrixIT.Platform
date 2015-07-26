@@ -30,9 +30,13 @@ namespace StrixIT.Platform.Core
     [AttributeUsage(AttributeTargets.Enum)]
     public sealed class ClientEnumAttribute : Attribute
     {
+        #region Public Properties
+
         /// <summary>
         /// Gets or sets the type of the resource to use to localize the enum.
         /// </summary>
         public Type ResourceType { get; set; }
+
+        #endregion Public Properties
     }
 }

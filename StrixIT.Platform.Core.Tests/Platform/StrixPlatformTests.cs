@@ -11,6 +11,15 @@ namespace StrixIT.Platform.Core.Tests
     [TestClass]
     public class StrixPlatformTests
     {
+        #region Public Methods
+
+        [TestMethod]
+        public void PlatformShouldReturnFirstConfiguredCultureAsDefault()
+        {
+            var result = StrixPlatform.DefaultCultureCode;
+            Assert.AreEqual("en", result);
+        }
+
         [TestMethod]
         public void PlatformShouldReturnListOfCultures()
         {
@@ -19,11 +28,6 @@ namespace StrixIT.Platform.Core.Tests
             Assert.IsTrue(list.Any(c => c.Code == "nl" && c.NativeName == "Nederlands"));
         }
 
-        [TestMethod]
-        public void PlatformShouldReturnFirstConfiguredCultureAsDefault()
-        {
-            var result = StrixPlatform.DefaultCultureCode;
-            Assert.AreEqual("en", result);
-        }
+        #endregion Public Methods
     }
 }

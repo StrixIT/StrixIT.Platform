@@ -10,7 +10,11 @@ namespace StrixIT.Platform.Core.Tests
     [ComplexType]
     public class Address
     {
-        public string Street { get; set; }
+        #region Public Properties
+
         public string City { get; set; }
+        public string Street { get; set; }
+
+        #endregion Public Properties
     }
 }

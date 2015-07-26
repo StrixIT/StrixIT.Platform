@@ -30,10 +30,12 @@ namespace StrixIT.Platform.Core
     /// <typeparam name="T">The custom field type for this value class</typeparam>
     public abstract class CustomFieldValue<T> where T : CustomField
     {
+        #region Public Properties
+
         /// <summary>
-        /// Gets or sets the value id.
+        /// Gets or sets the custom field for this custom field value.
         /// </summary>
-        public long Id { get; set; }
+        public T CustomField { get; set; }
 
         /// <summary>
         /// Gets or sets the custom field id for this custom field value.
@@ -42,9 +44,9 @@ namespace StrixIT.Platform.Core
         public Guid CustomFieldId { get; set; }
 
         /// <summary>
-        /// Gets or sets the custom field for this custom field value.
+        /// Gets or sets the value id.
         /// </summary>
-        public T CustomField { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets or sets the custom field number value.
@@ -55,5 +57,7 @@ namespace StrixIT.Platform.Core
         /// Gets or sets the custom field string value.
         /// </summary>
         public string StringValue { get; set; }
+
+        #endregion Public Properties
     }
 }

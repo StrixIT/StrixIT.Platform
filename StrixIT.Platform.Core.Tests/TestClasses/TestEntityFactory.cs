@@ -10,6 +10,8 @@ namespace StrixIT.Platform.Core.Tests
 {
     public static class TestEntityFactory
     {
+        #region Public Methods
+
         public static TestEntity GetEntity()
         {
             var entity = new TestEntity();
@@ -87,5 +89,7 @@ namespace StrixIT.Platform.Core.Tests
 
             return list;
         }
+
+        #endregion Public Methods
     }
 }
