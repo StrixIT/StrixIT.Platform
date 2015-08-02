@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace StrixIT.Platform.Core.Tests
 {
     [Serializable]
-    public class TestEntity : ValidationBase
+    public class TestEntity
     {
         #region Public Properties
 

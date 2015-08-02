@@ -7,7 +7,7 @@ using System;
 
 namespace StrixIT.Platform.Core.Tests
 {
-    public class GuidEntity : ValidationBase
+    public class GuidEntity
     {
         #region Public Properties
 

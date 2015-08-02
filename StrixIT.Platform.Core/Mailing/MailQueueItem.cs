@@ -28,7 +28,7 @@ namespace StrixIT.Platform.Core
     /// <summary>
     /// A class to resend mails later when the first attempt fails.
     /// </summary>
-    public class MailQueueItem : ValidationBase
+    public class MailQueueItem
     {
         #region Public Properties
 

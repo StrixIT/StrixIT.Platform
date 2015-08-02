@@ -25,6 +25,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Core.Objects;
@@ -93,6 +94,11 @@ namespace StrixIT.Platform.Core
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
+            }
+
+            if (!entity.Validate())
+            {
+                throw new ValidationException();
             }
 
             // Allow for deleting either one entity or a collection of entities. Create a list if

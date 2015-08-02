@@ -6,6 +6,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 
@@ -139,6 +140,15 @@ namespace StrixIT.Platform.Core.Tests
             source.SaveChanges();
             Assert.IsNotNull(result);
             Assert.AreNotEqual(0, entity.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void EFDataSourceShouldThrowValidationExceptionWhenTryingToSaveAnInvalidEntity()
+        {
+            var source = new TestDataSource();
+            var entity = new TestEntity();
+            var result = source.Save(entity);
         }
 
         [TestMethod]

@@ -93,7 +93,6 @@
     <Compile Include="Data\TestCustomFieldValue.cs" />
     <Compile Include="Data\TestDataSource.cs" />
     <Compile Include="Data\TestDataSourceInitializer.cs" />
-    <Compile Include="Entities\CustomValidateEntity.cs" />
     <Compile Include="Entities\EntityTests.cs" />
     <Compile Include="Extensions\DateTimeExtensionTests.cs" />
     <Compile Include="Extensions\EnumerableExtensionsTests.cs" />

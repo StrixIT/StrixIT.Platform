@@ -29,7 +29,7 @@ namespace StrixIT.Platform.Core
     /// A class to look up user names in the Cms when querying, as these are stored in another
     /// database which makes it impossible to join them in a query.
     /// </summary>
-    public class UserData : ValidationBase
+    public class UserData
     {
         #region Public Constructors
 

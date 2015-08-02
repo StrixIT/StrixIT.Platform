@@ -14,30 +14,10 @@ namespace StrixIT.Platform.Core.Tests
         #region Public Methods
 
         [TestMethod()]
-        public void EntityWithCustomValidationRulesMetMustBeValid()
-        {
-            CustomValidateEntity entity = new CustomValidateEntity();
-            entity.Number = 1;
-            entity.Name = "TestEntity";
-            bool result = entity.IsValid;
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod()]
-        public void EntityWithCustomValidationRulesNotMetMustBeInvalid()
-        {
-            CustomValidateEntity entity = new CustomValidateEntity();
-            entity.Number = 1;
-            entity.Name = "Just another entity";
-            bool result = entity.IsValid;
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod()]
         public void EntityWithoutPropertyRequirementsMustBeInvalid()
         {
             var entity = new TestEntity();
-            bool result = entity.IsValid;
+            bool result = entity.Validate();
             Assert.IsFalse(result);
         }
 
@@ -48,17 +28,8 @@ namespace StrixIT.Platform.Core.Tests
             entity.Name = "Test";
             entity.Number = 10;
             entity.Date = DateTime.Now;
-            bool result = entity.IsValid;
+            bool result = entity.Validate();
             Assert.IsTrue(result);
-        }
-
-        [TestMethod()]
-        public void EntityWithPropertyRequirementsNotMetButCustomValidationRulesMetMustBeInvalid()
-        {
-            CustomValidateEntity entity = new CustomValidateEntity();
-            entity.Name = "TestEntity";
-            bool result = entity.IsValid;
-            Assert.IsFalse(result);
         }
 
         #endregion Public Methods

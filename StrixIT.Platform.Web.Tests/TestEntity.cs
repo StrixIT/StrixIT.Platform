@@ -5,11 +5,12 @@
 //------------------------------------------------------------------------------
 using StrixIT.Platform.Core;
 using System;
+using System.Collections.Generic;
 
 namespace StrixIT.Platform.Web.Tests
 {
     [Serializable]
-    public class TestEntity : ValidationBase
+    public class TestEntity
     {
         #region Public Properties
 
@@ -21,6 +22,11 @@ namespace StrixIT.Platform.Web.Tests
 
         public bool IsActive { get; set; }
         public string Name { get; set; }
+
+        public string NotInDb
+        {
+            get { return "NotInDb"; }
+        }
 
         [StrixRequired]
         public long Number { get; set; }

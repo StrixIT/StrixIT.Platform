@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace StrixIT.Platform.Core.Tests
 {
-    public class CompositeKeyEntity : ValidationBase
+    public class CompositeKeyEntity
     {
         #region Public Properties
 
