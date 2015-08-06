@@ -43,8 +43,6 @@ namespace StrixIT.Platform.Core
         private static IEnvironment _environment;
         private static Guid _mainGroupId;
         private static IList<string> _startupMessages = new List<string>();
-        private static IUserContext _userContext;
-        private static Type _userContextType;
 
         #endregion Private Fields
 
@@ -201,31 +199,6 @@ namespace StrixIT.Platform.Core
             get
             {
                 return _startupMessages;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the current user.
-        /// </summary>
-        public static IUserContext User
-        {
-            get
-            {
-                if (_userContext == null)
-                {
-                    if (_userContextType == null)
-                    {
-                        _userContextType = Helpers.GetInjectedOrDefaultType<IUserContext, NullUserContext>();
-                    }
-
-                    return DependencyInjector.Get(_userContextType) as IUserContext;
-                }
-
-                return _userContext;
-            }
-            set
-            {
-                _userContext = value;
             }
         }
 

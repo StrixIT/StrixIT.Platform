@@ -21,6 +21,7 @@
 #endregion Apache License
 
 using StructureMap.Configuration.DSL;
+using System.Linq;
 
 namespace StrixIT.Platform.Core
 {
@@ -45,6 +46,11 @@ namespace StrixIT.Platform.Core
                 x.ConnectImplementationsToTypesClosing(typeof(IHandlePlatformEvent<>));
                 x.WithDefaultConventions();
             });
+
+            if (!ModuleManager.GetTypeList(typeof(IUserContext)).Where(t => !t.IsInterface && !t.Equals(typeof(NullUserContext))).Any())
+            {
+                For<IUserContext>().Use<NullUserContext>();
+            }
 
             For<ISmtpClient>().Use<DefaultSmtpClient>();
         }

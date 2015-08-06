@@ -123,6 +123,7 @@
     <Compile Include="WebRegistry.cs" />
     <Compile Include="Web\AdminAreaRegistration.cs" />
     <Compile Include="Web\AdminRouteConstraint.cs" />
+    <Compile Include="Web\BaseView.cs" />
     <Compile Include="Web\ConfirmationConfig.cs" />
     <Compile Include="Web\DataRecords.cs" />
     <Compile Include="Web\DisplayOptions.cs" />

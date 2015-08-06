@@ -74,7 +74,7 @@ namespace StrixIT.Platform.Core
         /// Gets the field filter name. This is the name of the angular filter to run when
         /// displaying the field.
         /// </summary>
-        public string FilterName { get; private set; }
+        public string FilterName { get; set; }
 
         /// <summary>
         /// Gets the name of the field.

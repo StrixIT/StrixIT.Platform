@@ -77,18 +77,20 @@ namespace StrixIT.Platform.Web
                 throw new ArgumentNullException("httpContext");
             }
 
+            var user = DependencyInjector.TryGet<IUserContext>();
+
             // Use permissions when configured.
-            if (!string.IsNullOrWhiteSpace(this.Permissions))
+            if (user != null && !string.IsNullOrWhiteSpace(this.Permissions))
             {
                 var allowedPermissions = this.Permissions.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Trim();
-                return StrixPlatform.User.HasPermission(allowedPermissions);
+                return user.HasPermission(allowedPermissions);
             }
 
             // Use roles when configured.
-            if (!string.IsNullOrWhiteSpace(this.Roles))
+            if (user != null && !string.IsNullOrWhiteSpace(this.Roles))
             {
                 var allowedRoles = this.Roles.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Trim();
-                return StrixPlatform.User.IsInRoles(allowedRoles);
+                return user.IsInRoles(allowedRoles);
             }
 
             return base.AuthorizeCore(httpContext);
