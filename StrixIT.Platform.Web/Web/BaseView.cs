@@ -7,6 +7,7 @@ namespace StrixIT.Platform.Web
     {
         #region Private Fields
 
+        private IConfiguration _config;
         private IUserContext _user;
 
         #endregion Private Fields
@@ -16,11 +17,20 @@ namespace StrixIT.Platform.Web
         public BasePage()
         {
             _user = DependencyInjector.TryGet<IUserContext>();
+            _config = DependencyInjector.Get<IConfiguration>();
         }
 
         #endregion Public Constructors
 
         #region Public Properties
+
+        public IConfiguration Configuration
+        {
+            get
+            {
+                return _config;
+            }
+        }
 
         public new IUserContext User
         {

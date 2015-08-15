@@ -32,7 +32,6 @@ namespace StrixIT.Platform.Core
         #region Private Fields
 
         private static ILoggingService _loggingService;
-        private static Type _loggingServiceType;
 
         #endregion Private Fields
 
@@ -47,12 +46,7 @@ namespace StrixIT.Platform.Core
             {
                 if (_loggingService == null)
                 {
-                    if (_loggingServiceType == null)
-                    {
-                        _loggingServiceType = Helpers.GetInjectedOrDefaultType<ILoggingService, NullLogger>();
-                    }
-
-                    return DependencyInjector.Get(_loggingServiceType) as ILoggingService;
+                    _loggingService = DependencyInjector.TryGet<ILoggingService>();
                 }
 
                 return _loggingService;
@@ -74,7 +68,12 @@ namespace StrixIT.Platform.Core
         /// <param name="level">The level</param>
         public static void Log(string message, LogLevel level = LogLevel.Debug)
         {
-            LoggingService.Log(message, level);
+            var service = LoggingService;
+
+            if (service != null)
+            {
+                service.Log(message, level);
+            }
         }
 
         /// <summary>
@@ -85,7 +84,12 @@ namespace StrixIT.Platform.Core
         /// <param name="level">The level</param>
         public static void Log(string message, Exception exception, LogLevel level = LogLevel.Debug)
         {
-            LoggingService.Log(message, exception, level);
+            var service = LoggingService;
+
+            if (service != null)
+            {
+                service.Log(message, exception, level);
+            }
         }
 
         /// <summary>
@@ -95,7 +99,12 @@ namespace StrixIT.Platform.Core
         /// <param name="data">The data</param>
         public static void LogToAnalytics(string entryType, string data)
         {
-            LoggingService.LogToAnalytics(entryType, data);
+            var service = LoggingService;
+
+            if (service != null)
+            {
+                service.LogToAnalytics(entryType, data);
+            }
         }
 
         /// <summary>
@@ -105,7 +114,12 @@ namespace StrixIT.Platform.Core
         /// <param name="message">The message</param>
         public static void LogToAudit(string entryType, string message)
         {
-            LoggingService.LogToAudit(entryType, message);
+            var service = LoggingService;
+
+            if (service != null)
+            {
+                service.LogToAudit(entryType, message);
+            }
         }
 
         #endregion Public Methods

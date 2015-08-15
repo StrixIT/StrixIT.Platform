@@ -180,7 +180,7 @@ namespace StrixIT.Platform.Core
                 return input;
             }
 
-            return new CultureInfo(StrixPlatform.CurrentCultureCode).TextInfo.ToTitleCase(input);
+            return input.Substring(0, 1).ToUpper() + input.Substring(1);
         }
 
         #endregion Public Methods

@@ -35,30 +35,26 @@ namespace StrixIT.Platform.Core
         /// </summary>
         public static void Run()
         {
-            StrixPlatform.WriteStartupMessage("Application bootstrap start. Load assemblies if still required.");
-            ModuleManager.LoadAssemblies();
-
-            StrixPlatform.WriteStartupMessage("Load module configurations.");
-            ModuleManager.LoadConfigurations();
+            Logger.Log("Application bootstrap start.");
 
             // Initialize membership data
             var membershipService = DependencyInjector.TryGet<IMembershipService>();
 
             if (membershipService != null)
             {
-                StrixPlatform.WriteStartupMessage("Initialize membership");
+                Logger.Log("Initialize membership");
                 membershipService.Initialize();
             }
 
-            StrixPlatform.WriteStartupMessage("Run all application initializers");
+            Logger.Log("Run all application initializers");
 
             foreach (var initializer in DependencyInjector.GetAll<IInitializer>())
             {
-                StrixPlatform.WriteStartupMessage(string.Format("Start initializer {0}.", initializer.GetType().Name));
+                Logger.Log(string.Format("Start initializer {0}.", initializer.GetType().Name));
                 initializer.Initialize();
             }
 
-            StrixPlatform.WriteStartupMessage("Application boostrap finished.");
+            Logger.Log("Application boostrap finished.");
         }
 
         #endregion Public Methods

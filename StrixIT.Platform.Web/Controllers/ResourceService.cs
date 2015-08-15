@@ -43,7 +43,7 @@ namespace StrixIT.Platform.Web
         {
             moduleName = moduleName.ToLower();
             var result = new ClientResourceCollection();
-            var loadedEnumTypes = ModuleManager.LoadedAssemblies.SelectMany(a =>
+            var loadedEnumTypes = DependencyInjector.GetLoadedAssemblies().SelectMany(a =>
             {
                 var assemblyName = a.FullName.Split(',').First().Split('.').Last().ToLower();
                 return a.GetTypes().Where(t => typeof(Enum).IsAssignableFrom(t) && t.HasAttribute(typeof(ClientEnumAttribute)) && moduleName == assemblyName);
@@ -70,7 +70,7 @@ namespace StrixIT.Platform.Web
         public ClientResourceCollection GetResx(string moduleName)
         {
             moduleName = moduleName.ToLower();
-            var resourceTypes = ModuleManager.LoadedAssemblies.Where(a =>
+            var resourceTypes = DependencyInjector.GetLoadedAssemblies().Where(a =>
             {
                 var assemblyName = a.FullName.Split(',').First().Split('.').Last().ToLower();
                 return moduleName == assemblyName;

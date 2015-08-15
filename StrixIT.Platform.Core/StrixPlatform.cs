@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -70,17 +69,6 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Gets the platform configuration.
-        /// </summary>
-        public static PlatformConfigurationSection Configuration
-        {
-            get
-            {
-                return ConfigurationManager.GetSection("strixPlatform") as PlatformConfigurationSection;
-            }
-        }
-
-        /// <summary>
         /// Gets all available culture codes, names and native names for the application.
         /// </summary>
         /// <returns>The culture data</returns>
@@ -91,7 +79,7 @@ namespace StrixIT.Platform.Core
                 if (_cultures == null)
                 {
                     var list = new List<CultureData>();
-                    var codes = Configuration.Cultures;
+                    var codes = DependencyInjector.Get<IConfiguration>().GetConfiguration<PlatformConfiguration>().Cultures;
 
                     foreach (var code in codes.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Trim())
                     {
@@ -159,7 +147,7 @@ namespace StrixIT.Platform.Core
             {
                 if (_environment == null)
                 {
-                    _environment = Helpers.GetImplementationOrDefault<IEnvironment, DefaultEnvironment>();
+                    _environment = new DefaultEnvironment();
                 }
 
                 return _environment;

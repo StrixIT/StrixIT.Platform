@@ -13,6 +13,7 @@ namespace StrixIT.Platform.Core.Tests
     {
         #region Public Methods
 
+        [Ignore]
         [TestMethod]
         public void PlatformShouldReturnFirstConfiguredCultureAsDefault()
         {
@@ -20,6 +21,7 @@ namespace StrixIT.Platform.Core.Tests
             Assert.AreEqual("en", result);
         }
 
+        [Ignore]
         [TestMethod]
         public void PlatformShouldReturnListOfCultures()
         {

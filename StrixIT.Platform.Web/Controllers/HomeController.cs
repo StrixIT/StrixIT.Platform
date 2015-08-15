@@ -31,15 +31,17 @@ namespace StrixIT.Platform.Web
 
         private static object _lockObject = new object();
         private static bool _startup = true;
+        private IConfiguration _config;
         private IResourceService _resourceService;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public HomeController(IResourceService resourceService)
+        public HomeController(IResourceService resourceService, IConfiguration config)
         {
-            this._resourceService = resourceService;
+            _resourceService = resourceService;
+            _config = config;
         }
 
         #endregion Public Constructors
@@ -50,31 +52,31 @@ namespace StrixIT.Platform.Web
         {
             Response.StatusCode = 200;
             Response.TrySkipIisCustomErrors = true;
-            return this.View();
+            return View();
         }
 
         [HttpPost]
         public JsonResult GetEnumerations(string moduleName)
         {
-            return this.Json(this._resourceService.GetEnums(moduleName));
+            return Json(_resourceService.GetEnums(moduleName));
         }
 
         [HttpPost]
         public JsonResult GetResources(string moduleName)
         {
-            return this.Json(this._resourceService.GetResx(moduleName));
+            return Json(_resourceService.GetResx(moduleName));
         }
 
         public ActionResult Index()
         {
-            this.WriteMessagesOnStartup();
+            WriteMessagesOnStartup();
 
-            if (StrixPlatform.Configuration.SecureHomeController && !this.HttpContext.Request.IsAuthenticated)
+            if (_config.GetConfiguration<PlatformConfiguration>().SecureHomeController && !HttpContext.Request.IsAuthenticated)
             {
-                return this.RedirectToAction("Login", "Account", new { area = "Membership", culture = StrixPlatform.CurrentCultureCode });
+                return RedirectToAction("Login", "Account", new { area = "Membership", culture = StrixPlatform.CurrentCultureCode });
             }
 
-            return this.View();
+            return View();
         }
 
         #endregion Public Methods

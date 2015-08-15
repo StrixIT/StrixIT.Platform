@@ -49,7 +49,7 @@ namespace StrixIT.Platform.Web
             {
                 if (_areaNames == null)
                 {
-                    _areaNames = ModuleManager.GetTypeList(typeof(AreaRegistration)).Select(a => a.Name.Replace("AreaRegistration", string.Empty).ToLower()).ToArray();
+                    _areaNames = DependencyInjector.GetTypeList(typeof(AreaRegistration)).Select(a => a.Name.Replace("AreaRegistration", string.Empty).ToLower()).ToArray();
                 }
 
                 return _areaNames;
@@ -137,7 +137,8 @@ namespace StrixIT.Platform.Web
 
         internal static bool CustomErrorsEnabled(HttpRequestBase request)
         {
-            var systemWeb = Core.Helpers.GetConfigSectionGroup<SystemWebSectionGroup>("system.web");
+            var config = DependencyInjector.Get<IConfiguration>();
+            var systemWeb = config.GetConfigSectionGroup("system.web");
             return systemWeb.CustomErrors.Mode != CustomErrorsMode.Off && !(systemWeb.CustomErrors.Mode == CustomErrorsMode.RemoteOnly && request.IsLocal);
         }
 

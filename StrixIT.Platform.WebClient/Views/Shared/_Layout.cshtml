@@ -19,9 +19,10 @@
 @{
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
     var showLanguagePicker = StrixPlatform.Cultures.Count > 1;
-    var moduleConfigs = ModuleManager.GetObjectList<IModuleConfiguration>();
-    var webModuleConfigs = ModuleManager.GetObjectList<IWebModuleConfiguration>();
+    var moduleConfigs = DependencyInjector.GetAll<IModuleConfiguration>();
+    var webModuleConfigs = DependencyInjector.GetAll<IWebModuleConfiguration>();
     var hasModuleLinks = moduleConfigs.Any(m => m.ModuleLinks.Any());
+    var appName = Configuration.GetConfiguration<PlatformConfiguration>().ApplicationName;
 }
 @section css
 {
@@ -38,7 +39,7 @@
 <div ng-app="strixSite">
     <header>
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
-            <a href="@Url.Action(MvcConstants.INDEX, "Home", new { area = string.Empty }, null)" class="navbar-brand" title="@Interface.StrixCms">@StrixPlatform.Configuration.ApplicationName</a>
+            <a href="@Url.Action(MvcConstants.INDEX, "Home", new { area = string.Empty }, null)" class="navbar-brand" title="@Interface.StrixCms">@appName</a>
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink(Interface.Home, MvcConstants.INDEX, "Home", new { area = string.Empty, language = StrixPlatform.CurrentCultureCode }, null)</li>
                 @if (hasModuleLinks && User.HasPermission(PlatformPermissions.ViewAdminDashboard))

@@ -98,28 +98,6 @@ namespace StrixIT.Platform.Web
             httpService.SetResponseHeaders();
         }
 
-        protected void Application_Start(object sender, EventArgs e)
-        {
-            DependencyResolver.SetResolver(new StructureMapDependencyResolver());
-
-            SetupFileWatcher();
-            Bootstrapper.Run();
-
-            StrixPlatform.WriteStartupMessage("Web application start. Initialize Mvc.");
-            var mvcService = DependencyInjector.Get<IMvcService>();
-            mvcService.Initialize();
-
-            StrixPlatform.WriteStartupMessage("Run all web initializers");
-
-            foreach (var initializer in DependencyInjector.GetAll<IWebInitializer>())
-            {
-                StrixPlatform.WriteStartupMessage(string.Format("Start web initializer {0}.", initializer.GetType().Name));
-                initializer.WebInitialize();
-            }
-
-            StrixPlatform.WriteStartupMessage("Web application startup finished.");
-        }
-
         protected void Session_End(object sender, EventArgs e)
         {
             var authenticationService = DependencyInjector.TryGet<IAuthenticationService>();
@@ -136,6 +114,17 @@ namespace StrixIT.Platform.Web
         #endregion Protected Methods
 
         #region Private Methods
+
+        protected void SetupFileWatcher()
+        {
+            _fileWatcher = new FileSystemWatcher(Path.Combine(StrixPlatform.Environment.WorkingDirectory, "Areas"));
+            _fileWatcher.IncludeSubdirectories = true;
+            _fileWatcher.Created += new FileSystemEventHandler(RestartApp);
+            _fileWatcher.Deleted += new FileSystemEventHandler(RestartApp);
+            _fileWatcher.Changed += new FileSystemEventHandler(RestartApp);
+            _fileWatcher.Renamed += new RenamedEventHandler(RestartApp);
+            _fileWatcher.EnableRaisingEvents = true;
+        }
 
         private static void RestartApp(object source, FileSystemEventArgs e)
         {
@@ -160,17 +149,6 @@ namespace StrixIT.Platform.Web
                 bool success = TryWriteBinFolder() || TryWriteWebConfig();
                 _isRestarting = true;
             }
-        }
-
-        private static void SetupFileWatcher()
-        {
-            _fileWatcher = new FileSystemWatcher(Path.Combine(StrixPlatform.Environment.WorkingDirectory, "Areas"));
-            _fileWatcher.IncludeSubdirectories = true;
-            _fileWatcher.Created += new FileSystemEventHandler(RestartApp);
-            _fileWatcher.Deleted += new FileSystemEventHandler(RestartApp);
-            _fileWatcher.Changed += new FileSystemEventHandler(RestartApp);
-            _fileWatcher.Renamed += new RenamedEventHandler(RestartApp);
-            _fileWatcher.EnableRaisingEvents = true;
         }
 
         private static void TearDownFileWatcher()

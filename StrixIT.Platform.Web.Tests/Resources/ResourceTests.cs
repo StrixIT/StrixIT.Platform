@@ -4,6 +4,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using StrixIT.Platform.Web;
 
 namespace StrixIT.Platform.Core.UnitTests.Resources
@@ -17,7 +18,6 @@ namespace StrixIT.Platform.Core.UnitTests.Resources
         public static void Init(TestContext context)
         {
             StrixPlatform.Environment = new DefaultEnvironment();
-            ModuleManager.LoadAssemblies();
         }
 
         [TestCleanup]
@@ -30,7 +30,7 @@ namespace StrixIT.Platform.Core.UnitTests.Resources
         [TestMethod]
         public void GetResourcesForEnShouldReturnResourceStringsForEn()
         {
-            var controller = new HomeController(new ResourceService());
+            var controller = new HomeController(new ResourceService(), new Mock<IConfiguration>().Object);
             var result = (ClientResourceCollection)controller.GetResources("tests").Data;
             Assert.AreEqual("User", result["membership"]["user"]);
             Assert.AreEqual("Permission", result["membership"]["permission"]);
@@ -42,7 +42,7 @@ namespace StrixIT.Platform.Core.UnitTests.Resources
         public void GetResourcesForNlShouldReturnResourceStringsForNl()
         {
             StrixPlatform.CurrentCultureCode = "nl";
-            var controller = new HomeController(new ResourceService());
+            var controller = new HomeController(new ResourceService(), new Mock<IConfiguration>().Object);
             var result = (ClientResourceCollection)controller.GetResources("tests").Data;
             StrixPlatform.CurrentCultureCode = null;
             Assert.AreEqual("Gebruiker", result["membership"]["user"]);

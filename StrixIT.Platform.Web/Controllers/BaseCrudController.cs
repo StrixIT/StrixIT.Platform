@@ -35,7 +35,7 @@ namespace StrixIT.Platform.Web
     /// <typeparam name="TModel">The type of the view model of the entity</typeparam>
     public abstract class BaseCrudController<TKey, TModel> : BaseController
         where TKey : struct
-        where TModel : class
+        where TModel : class, IViewModel
     {
         #region Protected Fields
 

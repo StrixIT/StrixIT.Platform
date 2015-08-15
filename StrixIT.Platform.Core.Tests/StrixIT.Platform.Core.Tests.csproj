@@ -38,29 +38,12 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServerCompact">
-      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -77,28 +60,12 @@
   <ItemGroup>
     <Compile Include="Attributes\StrixNotDefaultAttributeTest.cs" />
     <Compile Include="Attributes\StrixRequiredAttributeTest.cs" />
-    <Compile Include="Cache\CacheProviderTests.cs" />
     <Compile Include="Data Filtering\DataFilterTest.cs" />
     <Compile Include="Data Filtering\FilterSortPageOptionsTest.cs" />
-    <Compile Include="Data Mapping\DataMapperTests.cs" />
-    <Compile Include="Data Mapping\IntEntity.cs" />
-    <Compile Include="Data Mapping\IntEntityViewModel.cs" />
-    <Compile Include="Data\Address.cs" />
-    <Compile Include="Data\CompositeKeyEntity.cs" />
-    <Compile Include="Data\CustomFieldTests.cs" />
-    <Compile Include="Data\EntityFrameworkDataSourceTests.cs" />
-    <Compile Include="Data\GuidEntity.cs" />
-    <Compile Include="Data\PersonalInfo.cs" />
-    <Compile Include="Data\TestCustomField.cs" />
-    <Compile Include="Data\TestCustomFieldValue.cs" />
-    <Compile Include="Data\TestDataSource.cs" />
-    <Compile Include="Data\TestDataSourceInitializer.cs" />
     <Compile Include="Entities\EntityTests.cs" />
     <Compile Include="Extensions\DateTimeExtensionTests.cs" />
     <Compile Include="Extensions\EnumerableExtensionsTests.cs" />
     <Compile Include="Extensions\ObjectExtensionsTest.cs" />
-    <Compile Include="Files\FileSystemWrapperTests.cs" />
-    <Compile Include="ModuleManagerTests.cs" />
     <Compile Include="Platform\StrixPlatformTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestClasses\TestEntity.cs" />
@@ -108,24 +75,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Areas\TestModule\Web.config" />
     <None Include="packages.config" />
-    <None Include="TestFiles\test.pdf" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestResults\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\StrixIT.Platform.Core\StrixIT.Platform.Core.csproj">
       <Project>{9d822ae8-e26c-4e35-b1ca-a8e8fb6147cc}</Project>
       <Name>StrixIT.Platform.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TestFiles\AccountInformationMail.html" />
-    <Content Include="TestFiles\AccountInformationMail_nl.html" />
-    <Content Include="TestFiles\Strix_losuiltje.png" />
-    <Content Include="TestFiles\Strix_losuiltje_2.png" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

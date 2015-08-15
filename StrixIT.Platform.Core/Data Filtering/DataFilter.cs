@@ -224,7 +224,7 @@ namespace StrixIT.Platform.Core
                         }
 
                         var typedValue = Helpers.GetTypedValue(filterField.Value, fieldType);
-                        var propertyName = filterField.Field.Substring(0, 1).ToTitleCase() + filterField.Field.Substring(1);
+                        var propertyName = filterField.Field.ToTitleCase();
                         string nullableValue = Nullable.GetUnderlyingType(entityType.GetProperty(propertyName).PropertyType) != null ? ".Value" : string.Empty;
                         string toLower = string.Empty;
 

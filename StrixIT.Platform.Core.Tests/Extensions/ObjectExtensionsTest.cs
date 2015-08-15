@@ -177,8 +177,8 @@ namespace StrixIT.Platform.Core.Tests
         [TestMethod()]
         public void ToTitleCaseShouldTitleCaseAString()
         {
-            var text = "test results";
-            Assert.AreEqual("Test Results", text.ToTitleCase());
+            var text = "testResults";
+            Assert.AreEqual("TestResults", text.ToTitleCase());
         }
 
         #endregion Public Methods

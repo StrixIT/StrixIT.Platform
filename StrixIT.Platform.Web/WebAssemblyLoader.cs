@@ -31,9 +31,7 @@ namespace StrixIT.Platform.Web
 
         public static void LoadAssemblies()
         {
-            ModuleManager.LoadAssemblies();
-
-            foreach (var assembly in ModuleManager.LoadedAssemblies)
+            foreach (var assembly in DependencyInjector.GetLoadedAssemblies())
             {
                 BuildManager.AddReferencedAssembly(assembly);
             }

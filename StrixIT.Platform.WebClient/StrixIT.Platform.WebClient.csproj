@@ -66,18 +66,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\StrixIT.Platform.Core.dll</HintPath>
     </Reference>
+    <Reference Include="StrixIT.Platform.Framework">
+      <HintPath>Libraries\StrixIT.Platform.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="StrixIT.Platform.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\StrixIT.Platform.Web.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
+    <Reference Include="StructureMap, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap.Net4">
-      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.Net4.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.Web">
-      <HintPath>..\packages\structuremap.web.3.1.5.154\lib\net40\StructureMap.Web.dll</HintPath>
+    <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\StructureMap.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -123,6 +125,8 @@
     <Content Include="Libraries\StrixIT.Platform.Core.dll" />
     <Content Include="Libraries\StrixIT.Platform.Testing.dll" />
     <Content Include="Libraries\StrixIT.Platform.Web.dll" />
+    <Content Include="Libraries\StructureMap.dll" />
+    <Content Include="Libraries\StructureMap.Web.dll" />
     <Content Include="packages.config" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\Alerts.cshtml" />

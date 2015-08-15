@@ -33,7 +33,7 @@ namespace StrixIT.Platform.Web
 
         public ActionResult Index()
         {
-            var modules = ModuleManager.GetObjectList<IModuleConfiguration>();
+            var modules = DependencyInjector.GetAll<IModuleConfiguration>();
 
             if (!modules.Any(m => m.ModuleLinks.Any()))
             {

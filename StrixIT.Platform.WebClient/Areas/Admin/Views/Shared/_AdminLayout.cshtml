@@ -22,7 +22,7 @@
     var showLanguagePicker = StrixPlatform.Cultures.Count > 1;
     var action = Url.Action(MvcConstants.INDEX, "Home", new { area = string.Empty, language = StrixPlatform.CurrentCultureCode }, null);
     var adminLink = string.Format("{0}admin", action != "/" ? action + "/" : action).ToLower();
-    var moduleConfigs = ModuleManager.GetObjectList<IWebModuleConfiguration>();
+    var moduleConfigs = DependencyInjector.GetObjectList<IWebModuleConfiguration>();
 }
 @section css
 {

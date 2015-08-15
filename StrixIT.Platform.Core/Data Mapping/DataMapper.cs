@@ -26,7 +26,6 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -216,7 +215,7 @@ namespace StrixIT.Platform.Core
                 return Helpers.CreateGenericList(destinationType);
             }
 
-            var query = Project(enumerable.AsQueryable(), destinationType).AsNoTracking();
+            var query = Project(enumerable.AsQueryable(), destinationType);
             var list = typeof(Enumerable).GetMethod("ToList").MakeGenericMethod(new Type[] { destinationType }).Invoke(null, new object[] { query }) as IEnumerable;
             ProcessMappingActions(query.ElementType, destinationType, list, null);
             return list;

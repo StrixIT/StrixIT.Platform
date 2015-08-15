@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E5A6AC95-B803-4CF5-B4F0-6DD08845ADBC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StrixIT.Platform.Framework</RootNamespace>
+    <AssemblyName>StrixIT.Platform.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Net4, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.web.3.1.5.154\lib\net40\StructureMap.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Caching" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cache\CacheService.cs" />
+    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Configuration\StrixConfigurationException.cs" />
+    <Compile Include="DataAccess\CustomFields\CustomField.cs" />
+    <Compile Include="DataAccess\CustomFields\CustomFields.cs" />
+    <Compile Include="DataAccess\CustomFields\CustomFieldType.cs" />
+    <Compile Include="DataAccess\CustomFields\CustomFieldValue.cs" />
+    <Compile Include="DataAccess\EntityFrameworkDataSource.cs" />
+    <Compile Include="DependencyInjection\PlatformServiceConfiguration.cs" />
+    <Compile Include="DependencyInjection\StructureMapDependencyInjector.cs" />
+    <Compile Include="FileSystem\FileSystemWrapper.cs" />
+    <Compile Include="Mailing\DefaultSmtpClient.cs" />
+    <Compile Include="Mailing\Mailer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StrixIT.Platform.Core\StrixIT.Platform.Core.csproj">
+      <Project>{9d822ae8-e26c-4e35-b1ca-a8e8fb6147cc}</Project>
+      <Name>StrixIT.Platform.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y /E /F /I "$(TargetPath)" "c:\builds\Platform\Binaries\"
+xcopy /Y /E /F /I "$(TargetPath)\..\nl" "c:\builds\Platform\Binaries\nl\"
+xcopy /Y /E /F /I "$(TargetPath)\..\structuremap.dll" "c:\builds\Platform\Binaries"
+xcopy /Y /E /F /I "$(TargetPath)\..\structuremap.web.dll" "c:\builds\Platform\Binaries"
+xcopy /Y /E /F /I "$(TargetPath)" "$(TargetPath)\..\..\..\..\StrixIT.Platform.WebClient\Libraries"
+xcopy /Y /E /F /I "$(TargetPath)\..\nl" "$(TargetPath)\..\..\..\..\StrixIT.Platform.WebClient\Libraries\nl"
+xcopy /Y /E /F /I "$(TargetPath)\..\structuremap.dll" "$(TargetPath)\..\..\..\..\StrixIT.Platform.WebClient\Libraries"
+xcopy /Y /E /F /I "$(TargetPath)\..\structuremap.web.dll" "$(TargetPath)\..\..\..\..\StrixIT.Platform.WebClient\Libraries"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
