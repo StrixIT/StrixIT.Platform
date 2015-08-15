@@ -75,14 +75,14 @@
     <Compile Include="Files\IFileSystemWrapper.cs" />
     <Compile Include="Files\TemplateData.cs" />
     <Compile Include="Helpers.cs" />
-    <Compile Include="IViewModel.cs" />
-    <Compile Include="IListModel.cs" />
+    <Compile Include="Crud\IViewModel.cs" />
+    <Compile Include="Crud\IListModel.cs" />
     <Compile Include="Startup and Configuration\IConfiguration.cs" />
-    <Compile Include="ICrudService.cs" />
+    <Compile Include="Crud\ICrudService.cs" />
     <Compile Include="Membership\IMembershipService.cs" />
     <Compile Include="Libraries\DynamicLinq.cs" />
-    <Compile Include="ListConfiguration.cs" />
-    <Compile Include="ListFieldConfiguration.cs" />
+    <Compile Include="Crud\ListConfiguration.cs" />
+    <Compile Include="Crud\ListFieldConfiguration.cs" />
     <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\LogLevel.cs" />
@@ -111,7 +111,7 @@
     </Compile>
     <Compile Include="SaveResult.cs" />
     <Compile Include="Startup and Configuration\Bootstrapper.cs" />
-    <Compile Include="DependencyInjector.cs" />
+    <Compile Include="DependencyInjection\DependencyInjector.cs" />
     <Compile Include="DependencyInjection\IDependencyInjector.cs" />
     <Compile Include="Startup and Configuration\IInitializer.cs" />
     <Compile Include="Startup and Configuration\IModuleConfiguration.cs" />

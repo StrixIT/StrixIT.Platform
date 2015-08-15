@@ -42,7 +42,6 @@ namespace StrixIT.Platform.Core
         public static readonly string ENTITYFRAMEWORKPROXYTYPE = "System.Data.Entity.DynamicProxies";
         public static readonly string LANGUAGE = "language";
         public static readonly string PLATFORM = "Platform";
-        public static readonly string STRUCTUREMAPPRIVATE = "Private";
 
         #endregion Public Fields
     }

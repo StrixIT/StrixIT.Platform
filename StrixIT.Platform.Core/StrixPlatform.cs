@@ -41,7 +41,6 @@ namespace StrixIT.Platform.Core
         private static string _defaultCultureCode;
         private static IEnvironment _environment;
         private static Guid _mainGroupId;
-        private static IList<string> _startupMessages = new List<string>();
 
         #endregion Private Fields
 
@@ -179,17 +178,6 @@ namespace StrixIT.Platform.Core
             }
         }
 
-        /// <summary>
-        /// Gets the startup messages logged when the platform starts.
-        /// </summary>
-        public static IList<string> StartupMessages
-        {
-            get
-            {
-                return _startupMessages;
-            }
-        }
-
         #endregion Public Properties
 
         #region Public Methods
@@ -205,19 +193,6 @@ namespace StrixIT.Platform.Core
             {
                 handler.Handle(args);
             }
-        }
-
-        /// <summary>
-        /// Logs a startup message.
-        /// </summary>
-        /// <param name="message">The message to log</param>
-        /// <param name="level">The level of the message</param>
-        public static void WriteStartupMessage(string message, LogLevel level = LogLevel.Debug)
-        {
-            string fullPattern = DateTimeFormatInfo.CurrentInfo.FullDateTimePattern;
-            fullPattern = Regex.Replace(fullPattern, "(:ss|:s)", "$1.fff");
-            message = string.Format("At: {0}. Level: {1}. Message: {2}", DateTime.Now.ToString(fullPattern), level, message);
-            _startupMessages.Add(message);
         }
 
         #endregion Public Methods

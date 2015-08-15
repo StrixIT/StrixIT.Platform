@@ -178,30 +178,15 @@ namespace StrixIT.Platform.Core
 
                         foreach (string dll in dlls)
                         {
-                            try
-                            {
-                                string assemblyName = dll.Substring(dll.LastIndexOf('\\') + 1).Replace(".dll", string.Empty).ToLower();
+                            string assemblyName = dll.Substring(dll.LastIndexOf('\\') + 1).Replace(".dll", string.Empty).ToLower();
 
-                                if (loadedAssemblyNames.Contains(assemblyName))
-                                {
-                                    continue;
-                                }
+                            if (loadedAssemblyNames.Contains(assemblyName))
+                            {
+                                continue;
+                            }
 
-                                _assemblies.Add(Assembly.LoadFrom(dll));
-                                loadedAssemblyNames.Add(assemblyName);
-                            }
-                            catch (FileLoadException)
-                            {
-                                StrixPlatform.WriteStartupMessage(string.Format("Assembly {0} has already been loaded.", dll), LogLevel.Error);
-                            }
-                            catch (BadImageFormatException)
-                            {
-                                StrixPlatform.WriteStartupMessage(string.Format("File {0} is not an assembly.", dll), LogLevel.Error);
-                            }
-                            catch (NotSupportedException)
-                            {
-                                StrixPlatform.WriteStartupMessage(string.Format("Error loading assembly {0}.", dll), LogLevel.Error);
-                            }
+                            _assemblies.Add(Assembly.LoadFrom(dll));
+                            loadedAssemblyNames.Add(assemblyName);
                         }
 
                         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolve;

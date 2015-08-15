@@ -245,7 +245,6 @@ namespace StrixIT.Platform.Framework
             {
                 string duplicateName = Regex.Match(ex.BareMessage, "'([^']*')").ToString();
                 var message = string.Format("While reading the module connection strings, multiple entries with the name {0} were found. Please make sure the connection strings of the platform and the modules all have unique names.", duplicateName);
-                StrixPlatform.WriteStartupMessage(message, LogLevel.Error);
                 throw new System.Configuration.ConfigurationErrorsException(message);
             }
 

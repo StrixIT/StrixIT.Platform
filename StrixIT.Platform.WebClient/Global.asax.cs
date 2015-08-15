@@ -41,19 +41,19 @@ namespace StrixIT.Platform.Cms.Web
             SetupFileWatcher();
             Bootstrapper.Run();
 
-            StrixPlatform.WriteStartupMessage("Web application start. Initialize Mvc.");
+            Logger.Log("Web application start. Initialize Mvc.");
             var mvcService = DependencyInjector.Get<IMvcService>();
             mvcService.Initialize();
 
-            StrixPlatform.WriteStartupMessage("Run all web initializers");
+            Logger.Log("Run all web initializers");
 
             foreach (var initializer in DependencyInjector.GetAll<IWebInitializer>())
             {
-                StrixPlatform.WriteStartupMessage(string.Format("Start web initializer {0}.", initializer.GetType().Name));
+                Logger.Log(string.Format("Start web initializer {0}.", initializer.GetType().Name));
                 initializer.WebInitialize();
             }
 
-            StrixPlatform.WriteStartupMessage("Web application startup finished.");
+            Logger.Log("Web application startup finished.");
         }
 
         #endregion Protected Methods

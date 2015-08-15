@@ -20,15 +20,18 @@
 
 #endregion Apache License
 
-using System.Collections.Generic;
+using System;
 
-namespace StrixIT.Platform.Core.DependencyInjection
+namespace StrixIT.Platform.Core
 {
-    public interface IServiceConfiguration
+    public interface IListModel
     {
         #region Public Properties
 
-        IList<ServiceDescriptor> Services { get; }
+        /// <summary>
+        /// Gets or sets the entity type the data transfer object is for.
+        /// </summary>
+        Type EntityType { get; }
 
         #endregion Public Properties
     }

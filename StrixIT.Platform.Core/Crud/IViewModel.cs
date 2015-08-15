@@ -20,15 +20,28 @@
 
 #endregion Apache License
 
-using System.Collections.Generic;
+using System;
 
-namespace StrixIT.Platform.Core.DependencyInjection
+namespace StrixIT.Platform.Core
 {
-    public interface IServiceConfiguration
+    public interface IViewModel
     {
         #region Public Properties
 
-        IList<ServiceDescriptor> Services { get; }
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can delete this entity.
+        /// </summary>
+        bool CanDelete { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can edit this entity.
+        /// </summary>
+        bool CanEdit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the entity type the data transfer object is for.
+        /// </summary>
+        Type EntityType { get; }
 
         #endregion Public Properties
     }

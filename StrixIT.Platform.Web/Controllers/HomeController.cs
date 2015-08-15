@@ -29,8 +29,6 @@ namespace StrixIT.Platform.Web
     {
         #region Private Fields
 
-        private static object _lockObject = new object();
-        private static bool _startup = true;
         private IConfiguration _config;
         private IResourceService _resourceService;
 
@@ -69,8 +67,6 @@ namespace StrixIT.Platform.Web
 
         public ActionResult Index()
         {
-            WriteMessagesOnStartup();
-
             if (_config.GetConfiguration<PlatformConfiguration>().SecureHomeController && !HttpContext.Request.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account", new { area = "Membership", culture = StrixPlatform.CurrentCultureCode });
@@ -80,30 +76,5 @@ namespace StrixIT.Platform.Web
         }
 
         #endregion Public Methods
-
-        #region Private Methods
-
-        private void WriteMessagesOnStartup()
-        {
-            if (_startup)
-            {
-                lock (_lockObject)
-                {
-                    if (_startup)
-                    {
-                        StrixPlatform.WriteStartupMessage("Load home page");
-
-                        foreach (var message in StrixPlatform.StartupMessages)
-                        {
-                            Logger.Log("Application startup: " + message);
-                        }
-
-                        _startup = false;
-                    }
-                }
-            }
-        }
-
-        #endregion Private Methods
     }
 }
