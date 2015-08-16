@@ -16,22 +16,22 @@
 *@
 <!-- #endregion -->
 @{
-    var list = StrixPlatform.Cultures;
+    var list = Platform.Cultures.Cultures;
 }
 @if (list.Count() > 1)
 {
-<span>@Interface.Language</span>
-<ul class="cms-languagepicker list-inline" ng-controller="navigationcontroller">
-    @foreach (var language in list)
-    {
-    var imagePath = string.Format("Styles\\Images\\flag_{0}.jpg", language.Code);
-    var image = System.IO.File.Exists(Server.MapPath("~") + imagePath) ? "/" + imagePath.Replace("\\", "/") : null;
-    var itemClass = language.Code == StrixPlatform.CurrentCultureCode ? "selected" : string.Empty;
-    <li class="@itemClass">
-        <a ng-href="{{ getUrl('@language.Code.ToLower()', element) }}" target="{{ getTarget() }}" href="#">
-            <img src="@image" class="@string.Format(" culture_{0}", language.Code)" alt="@language.Name" title="@language.NativeName" />
-        </a>
-    </li>
-    }
-</ul>
+    <span>@Interface.Language</span>
+    <ul class="cms-languagepicker list-inline" ng-controller="navigationcontroller">
+        @foreach (var language in list)
+        {
+            var imagePath = string.Format("Styles\\Images\\flag_{0}.jpg", language.Code);
+            var image = System.IO.File.Exists(Server.MapPath("~") + imagePath) ? "/" + imagePath.Replace("\\", "/") : null;
+            var itemClass = language.Code == Platform.Cultures.CurrentCultureCode ? "selected" : string.Empty;
+            <li class="@itemClass">
+                <a ng-href="{{ getUrl('@language.Code.ToLower()', element) }}" target="{{ getTarget() }}" href="#">
+                    <img src="@image" class="@string.Format(" culture_{0}", language.Code)" alt="@language.Name" title="@language.NativeName" />
+                </a>
+            </li>
+        }
+    </ul>
 }

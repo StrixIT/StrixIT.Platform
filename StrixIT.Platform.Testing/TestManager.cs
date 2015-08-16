@@ -101,7 +101,6 @@ namespace StrixIT.Platform.Testing
         /// <param name="configuration">The build configuration to use</param>
         public static void SetupTestRun(string projectName, TestBrowser browser, string configuration = "Test")
         {
-            StrixPlatform.Environment = new DefaultEnvironment();
             var projectDirectory = new DirectoryInfo(GetProjectDirectory(projectName));
             _basicHost = new IISRunner();
             _basicHost.ProjectPath = projectDirectory.EnumerateFiles("*.csproj").First().FullName;

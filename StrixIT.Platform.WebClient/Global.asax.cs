@@ -34,7 +34,6 @@ namespace StrixIT.Platform.Cms.Web
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            StrixPlatform.Environment = new WebEnvironment();
             DependencyInjector.Injector = new StructureMapDependencyInjector();
             DependencyResolver.SetResolver(new StructureMapDependencyResolver());
 

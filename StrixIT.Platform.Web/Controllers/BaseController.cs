@@ -30,15 +30,23 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class BaseController : Controller
     {
+        #region Private Fields
+
+        private IEnvironment _environment;
+
+        #endregion Private Fields
+
         #region Protected Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseController"/> class.
         /// </summary>
-        protected BaseController()
+        protected BaseController(IEnvironment environment)
         {
+            _environment = environment;
+
             // Set the culture for the controller.
-            var cultureCode = StrixPlatform.CurrentCultureCode;
+            var cultureCode = _environment.Cultures.CurrentCultureCode;
 
             if (!string.IsNullOrWhiteSpace(cultureCode))
             {
@@ -50,6 +58,14 @@ namespace StrixIT.Platform.Web
         #endregion Protected Constructors
 
         #region Protected Methods
+
+        protected IEnvironment Environment
+        {
+            get
+            {
+                return _environment;
+            }
+        }
 
         /// <summary>
         /// Gets the view result for the requested view or the template in case of a non-ajax

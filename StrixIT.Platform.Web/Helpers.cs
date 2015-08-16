@@ -58,89 +58,7 @@ namespace StrixIT.Platform.Web
 
         #endregion Internal Properties
 
-        #region Public Methods
-
-        /// <summary>
-        /// Gets the virtual path for a physical path.
-        /// </summary>
-        /// <param name="physicalPath">The physical path to get the virtual path for</param>
-        /// <returns>The virtual path</returns>
-        public static string GetVirtualPath(string physicalPath)
-        {
-            string virtualPath = physicalPath;
-
-            if (physicalPath == null)
-            {
-                throw new ArgumentNullException("physicalPath");
-            }
-
-            bool isPhysical = Regex.Match(physicalPath, @"[a-zA-Z]:\\[(\w+.\\]{1,}").Success;
-
-            if (isPhysical)
-            {
-                var root = StrixPlatform.Environment.WorkingDirectory;
-                var pathInRoot = physicalPath.Replace(root, string.Empty);
-                virtualPath = pathInRoot.Replace("\\", "/");
-
-                if (virtualPath.StartsWith("/"))
-                {
-                    virtualPath = virtualPath.Substring(1);
-                }
-            }
-
-            return virtualPath;
-        }
-
-        /// <summary>
-        /// HTML decodes a text.
-        /// </summary>
-        /// <param name="text">The text to HTML decode</param>
-        /// <param name="replaceDangerousCharacters">
-        /// True if dangerous characters should be replaced by html-safe versions, false if not
-        /// </param>
-        /// <returns>The HTML decoded text</returns>
-        public static string HtmlDecode(string text, bool replaceDangerousCharacters = true)
-        {
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                return text;
-            }
-
-            var decoded = WebUtility.HtmlDecode(text);
-
-            if (replaceDangerousCharacters)
-            {
-                decoded = decoded.Replace("&", "&amp;")
-                                 .Replace("<", "&lt;")
-                                 .Replace(">", "&gt;")
-                                 .Replace("\"", "&quot;")
-                                 .Replace("\'", "&#39;")
-                                 .Replace("/", "&#47;");
-            }
-
-            return decoded;
-        }
-
-        /// <summary>
-        /// HTML encodes a text.
-        /// </summary>
-        /// <param name="text">The text to HTML encode</param>
-        /// <returns>The HTML encoded text</returns>
-        public static string HtmlEncode(string text)
-        {
-            return WebUtility.HtmlEncode(text);
-        }
-
-        #endregion Public Methods
-
         #region Internal Methods
-
-        internal static bool CustomErrorsEnabled(HttpRequestBase request)
-        {
-            var config = DependencyInjector.Get<IConfiguration>();
-            var systemWeb = config.GetConfigSectionGroup("system.web");
-            return systemWeb.CustomErrors.Mode != CustomErrorsMode.Off && !(systemWeb.CustomErrors.Mode == CustomErrorsMode.RemoteOnly && request.IsLocal);
-        }
 
         internal static IDictionary<string, object> GetSessionDictionary(HttpSessionStateBase session)
         {
@@ -157,22 +75,6 @@ namespace StrixIT.Platform.Web
             }
 
             return dictionary;
-        }
-
-        internal static void Redirect(HttpResponseBase response, string url)
-        {
-            string redirectUrl;
-
-            if (StrixPlatform.CurrentCultureCode.ToLower() == StrixPlatform.DefaultCultureCode.ToLower())
-            {
-                redirectUrl = string.Format("~/{0}", url);
-            }
-            else
-            {
-                redirectUrl = string.Format("~/{0}/{1}", StrixPlatform.CurrentCultureCode, url);
-            }
-
-            response.Redirect(redirectUrl);
         }
 
         #endregion Internal Methods

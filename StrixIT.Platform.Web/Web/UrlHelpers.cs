@@ -73,7 +73,7 @@ namespace StrixIT.Platform.Web
 
             // Decode the string first to get the original characters, then trim leading and
             // trailing spaces from the path.
-            text = Helpers.HtmlDecode(text, false).Trim();
+            text = HtmlHelpers.HtmlDecode(text, false).Trim();
             text = text.Replace(' ', replaceChar.Value);
 
             for (int i = 0; i < text.Count(); i++)

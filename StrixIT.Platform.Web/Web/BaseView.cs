@@ -1,4 +1,5 @@
 ﻿using StrixIT.Platform.Core;
+using StrixIT.Platform.Core.Environment;
 using System.Web.Mvc;
 
 namespace StrixIT.Platform.Web
@@ -7,8 +8,7 @@ namespace StrixIT.Platform.Web
     {
         #region Private Fields
 
-        private IConfiguration _config;
-        private IUserContext _user;
+        private IEnvironment _environment;
 
         #endregion Private Fields
 
@@ -16,27 +16,18 @@ namespace StrixIT.Platform.Web
 
         public BasePage()
         {
-            _user = DependencyInjector.TryGet<IUserContext>();
-            _config = DependencyInjector.Get<IConfiguration>();
+            _environment = DependencyInjector.Get<IEnvironment>();
         }
 
         #endregion Public Constructors
 
         #region Public Properties
 
-        public IConfiguration Configuration
+        public IEnvironment Platform
         {
             get
             {
-                return _config;
-            }
-        }
-
-        public new IUserContext User
-        {
-            get
-            {
-                return _user;
+                return _environment;
             }
         }
 

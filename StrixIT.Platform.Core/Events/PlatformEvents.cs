@@ -1,7 +1,7 @@
 ﻿#region Apache License
 
 //-----------------------------------------------------------------------
-// <copyright file="IMembershipService.cs" company="StrixIT">
+// <copyright file="PlatformEvents.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,33 +20,30 @@
 
 #endregion Apache License
 
-using System.Linq;
-
 namespace StrixIT.Platform.Core
 {
     /// <summary>
-    /// The interface for the membership service.
+    /// A class to allow for easily raising and consuming events.
     /// </summary>
-    public interface IMembershipService
+    public static class PlatformEvents
     {
         #region Public Methods
 
         /// <summary>
-        /// Gets a query of group data.
+        /// Raises an event for the platform.
         /// </summary>
-        /// <returns>The group data</returns>
-        IQueryable<GroupData> GroupData();
-
-        /// <summary>
-        /// Initializes the membership service.
-        /// </summary>
-        void Initialize();
-
-        /// <summary>
-        /// Gets a query of user data.
-        /// </summary>
-        /// <returns>The user data</returns>
-        IQueryable<UserData> UserData();
+        /// <typeparam name="T">The type of the event to raise</typeparam>
+        /// <param name="args">The event to raise</param>
+        public static void Raise<T>(T args) where T : IPlatformEvent
+        {
+            if (DependencyInjector.Injector != null)
+            {
+                foreach (var handler in DependencyInjector.GetAll<IHandlePlatformEvent<T>>())
+                {
+                    handler.Handle(args);
+                }
+            }
+        }
 
         #endregion Public Methods
     }

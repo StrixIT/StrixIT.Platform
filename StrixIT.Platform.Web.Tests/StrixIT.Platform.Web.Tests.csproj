@@ -89,12 +89,8 @@
     <Compile Include="TestEntity.cs" />
     <Compile Include="TestEntityFactory.cs" />
     <Compile Include="UrlHelpersTests.cs" />
-    <Compile Include="WebEnvironmentTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

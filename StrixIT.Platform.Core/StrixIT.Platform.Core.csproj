@@ -44,6 +44,7 @@
     <Compile Include="Attributes\StrixRequiredAttribute.cs" />
     <Compile Include="Attributes\StrixRequiredWithMembershipAttribute.cs" />
     <Compile Include="Cache\ICacheService.cs" />
+    <Compile Include="Cms\ICmsService.cs" />
     <Compile Include="Data Access\IDataSource.cs" />
     <Compile Include="Data Filtering\DataFilter.cs" />
     <Compile Include="Data Filtering\Filter.cs" />
@@ -62,8 +63,10 @@
     <Compile Include="DependencyInjection\ServiceDescriptor.cs" />
     <Compile Include="DependencyInjection\ServiceLifetime.cs" />
     <Compile Include="Environment\CultureData.cs" />
-    <Compile Include="Environment\DefaultEnvironment.cs" />
+    <Compile Include="Environment\ICultureService.cs" />
     <Compile Include="Environment\IEnvironment.cs" />
+    <Compile Include="Environment\IMembershipSettings.cs" />
+    <Compile Include="Environment\ISessionService.cs" />
     <Compile Include="Environment\IUserContext.cs" />
     <Compile Include="Environment\NullUserContext.cs" />
     <Compile Include="Events\GeneralEvent.cs" />
@@ -72,7 +75,7 @@
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
-    <Compile Include="Files\IFileSystemWrapper.cs" />
+    <Compile Include="Files\IFileSystem.cs" />
     <Compile Include="Files\TemplateData.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Crud\IViewModel.cs" />
@@ -119,7 +122,7 @@
     <Compile Include="Startup and Configuration\IWebModuleConfiguration.cs" />
     <Compile Include="Startup and Configuration\ModuleLink.cs" />
     <Compile Include="Startup and Configuration\PlatformConfiguration.cs" />
-    <Compile Include="StrixPlatform.cs" />
+    <Compile Include="Events\PlatformEvents.cs" />
     <Compile Include="Tokenizer.cs" />
     <Compile Include="Validation\ValidationExtensions.cs" />
   </ItemGroup>

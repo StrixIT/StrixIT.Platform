@@ -21,6 +21,7 @@
 #endregion Apache License
 
 using StrixIT.Platform.Core;
+using StrixIT.Platform.Core.Environment;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -36,7 +37,7 @@ namespace StrixIT.Platform.Web
     {
         #region Private Fields
 
-        private static string _culture = StrixPlatform.DefaultCultureCode;
+        private static string _culture = DependencyInjector.Get<ICultureService>().DefaultCultureCode;
 
         #endregion Private Fields
 

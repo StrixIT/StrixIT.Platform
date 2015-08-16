@@ -21,6 +21,7 @@
 #endregion Apache License
 
 using StrixIT.Platform.Core;
+using StrixIT.Platform.Core.Environment;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
@@ -34,7 +35,18 @@ namespace StrixIT.Platform.Web
         private static string[] _areaNames;
         private static string[] _cultureCodes;
 
+        private ICultureService _cultureService;
+
         #endregion Private Fields
+
+        #region Public Constructors
+
+        public AdminRouteConstraint(ICultureService cultureService)
+        {
+            _cultureService = cultureService;
+        }
+
+        #endregion Public Constructors
 
         #region Public Methods
 
@@ -42,12 +54,12 @@ namespace StrixIT.Platform.Web
         {
             if (_cultureCodes == null)
             {
-                _cultureCodes = StrixPlatform.Cultures.Select(c => c.Code).ToLower().ToArray();
+                _cultureCodes = _cultureService.Cultures.Select(c => c.Code).ToLower().ToArray();
             }
 
             if (_areaNames == null)
             {
-                _areaNames = Web.Helpers.AreaNames.Where(a => a != WebConstants.ADMIN).ToArray();
+                _areaNames = Helpers.AreaNames.Where(a => a != WebConstants.ADMIN).ToArray();
             }
 
             var match = _cultureCodes.Contains(((string)values[PlatformConstants.LANGUAGE]).ToLower());

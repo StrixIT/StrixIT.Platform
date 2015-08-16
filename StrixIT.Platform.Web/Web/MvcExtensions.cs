@@ -23,6 +23,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using StrixIT.Platform.Core;
+using StrixIT.Platform.Core.Environment;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,6 +42,7 @@ namespace StrixIT.Platform.Web
         #region Private Fields
 
         private const string DISPLAY = "display";
+        private static string _defaultCulture = DependencyInjector.Get<ICultureService>().DefaultCultureCode.ToLower();
 
         #endregion Private Fields
 
@@ -410,12 +412,12 @@ namespace StrixIT.Platform.Web
             var rootIndex = link.IndexOf(root) + root.Length;
             var language = (string)helper.RequestContext.RouteData.Values[PlatformConstants.LANGUAGE];
 
-            if (language != null && language != StrixPlatform.DefaultCultureCode.ToLower())
+            if (language != null && language != _defaultCulture)
             {
                 rootIndex += language.Length + 1;
             }
 
-            link = link.Replace(string.Format("/{0}/", StrixPlatform.DefaultCultureCode.ToLower()), "/");
+            link = link.Replace(string.Format("/{0}/", _defaultCulture), "/");
 
             string admin = string.Empty;
 
@@ -589,7 +591,7 @@ namespace StrixIT.Platform.Web
             if (controller != null)
             {
                 var getContentEvent = new GetContentEvent(helper, options);
-                StrixPlatform.RaiseEvent(getContentEvent);
+                PlatformEvents.Raise(getContentEvent);
 
                 if (getContentEvent.Result != null)
                 {
@@ -688,7 +690,8 @@ namespace StrixIT.Platform.Web
         public static IHtmlString Widget(this HtmlHelper helper, string controllerName, string action, string mainUrl)
         {
             var path = helper.ViewContext.RequestContext.HttpContext.Request.Path.ToLower();
-            path = path.Replace(string.Format("/{0}/", StrixPlatform.CurrentCultureCode), string.Empty).Replace("/index", string.Empty);
+            var currentCulture = DependencyInjector.Get<ICultureService>().CurrentCultureCode;
+            path = path.Replace(string.Format("/{0}/", currentCulture), string.Empty).Replace("/index", string.Empty);
             var url = path.Substring(path.LastIndexOf("/") + 1);
 
             if (!string.IsNullOrWhiteSpace(mainUrl))
@@ -712,12 +715,12 @@ namespace StrixIT.Platform.Web
 
         public static IHtmlString RenderEscapedHtml(this HtmlHelper helper, string text)
         {
-            return helper.Raw(Web.Helpers.HtmlDecode(text));
+            return helper.Raw(HtmlHelpers.HtmlDecode(text));
         }
 
         public static IHtmlString RenderHtml(this HtmlHelper helper, string text)
         {
-            return helper.Raw(Web.Helpers.HtmlDecode(text, false));
+            return helper.Raw(HtmlHelpers.HtmlDecode(text, false));
         }
 
         #endregion RenderHtml

@@ -21,6 +21,7 @@
 #endregion Apache License
 
 using StrixIT.Platform.Core;
+using StrixIT.Platform.Core.Environment;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -32,14 +33,18 @@ namespace StrixIT.Platform.Web
     {
         #region Private Fields
 
+        private ICultureService _cultureService;
         private HttpContextBase _httpContext;
+        private ISessionService _sessionService;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public HttpService(HttpContextBase context)
+        public HttpService(ICultureService cultureService, ISessionService sessionService, HttpContextBase context)
         {
+            _cultureService = cultureService;
+            _sessionService = sessionService;
             this._httpContext = context;
         }
 
@@ -60,7 +65,7 @@ namespace StrixIT.Platform.Web
         public void SetCultureForRequest()
         {
             var url = this._httpContext.Request.Url.ToString();
-            string currentCulture = StrixPlatform.CurrentCultureCode;
+            string currentCulture = _cultureService.CurrentCultureCode;
 
             var culturePattern = string.Format("/{0}/", WebConstants.CULTUREREGEX);
             var match = Regex.Match(this._httpContext.Request.AppRelativeCurrentExecutionFilePath, culturePattern);
@@ -77,21 +82,21 @@ namespace StrixIT.Platform.Web
 
                 if (newCultureCode != currentCulture)
                 {
-                    var newCulture = StrixPlatform.Cultures.Where(cu => cu.Code.ToLower() == newCultureCode).Select(cu => cu.Code).FirstOrDefault();
+                    var newCulture = _cultureService.Cultures.Where(cu => cu.Code.ToLower() == newCultureCode).Select(cu => cu.Code).FirstOrDefault();
 
                     if (newCulture != null)
                     {
-                        StrixPlatform.Environment.StoreInSession(PlatformConstants.CURRENTCULTURE, newCulture);
+                        _sessionService.Store(PlatformConstants.CURRENTCULTURE, newCulture);
                     }
                 }
             }
             else
             {
-                var defaultCode = StrixPlatform.DefaultCultureCode;
+                var defaultCode = _cultureService.DefaultCultureCode;
 
                 if (currentCulture != defaultCode)
                 {
-                    StrixPlatform.Environment.StoreInSession(PlatformConstants.CURRENTCULTURE, defaultCode);
+                    _sessionService.Store(PlatformConstants.CURRENTCULTURE, defaultCode);
                 }
             }
         }

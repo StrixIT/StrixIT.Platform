@@ -45,7 +45,7 @@ namespace StrixIT.Platform.Web
         {
             object result = null;
             var args = new BindModelEvent(controllerContext, bindingContext);
-            StrixPlatform.RaiseEvent(args);
+            PlatformEvents.Raise(args);
 
             if (args.IsBound)
             {
@@ -135,7 +135,7 @@ namespace StrixIT.Platform.Web
                 return value;
             }
 
-            return Helpers.HtmlDecode((string)value);
+            return HtmlHelpers.HtmlDecode((string)value);
         }
 
         private static bool IsAtoZ(char c)

@@ -4,9 +4,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using StrixIT.Platform.Core;
+using StrixIT.Platform.Core.Environment;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Web;
 
 namespace StrixIT.Platform.Framework.Tests
 {
@@ -15,27 +19,15 @@ namespace StrixIT.Platform.Framework.Tests
     {
         #region Public Methods
 
-        [ClassInitialize]
-        public static void Init(TestContext context)
-        {
-            // Todo: remove
-            DependencyInjector.Injector = new StructureMapDependencyInjector();
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            StrixPlatform.CurrentCultureCode = null;
-        }
-
         [TestMethod()]
         public void DeleteFileShouldRemoveFileFromDisk()
         {
-            var wrapper = new FileSystemWrapper();
+            var wrapper = GetFileSystemWrapper();
+            var workingDir = Core.Helpers.GetWorkingDirectory();
             var date = DateTime.Now;
-            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", StrixPlatform.Environment.WorkingDirectory, date.Year, date.Month);
+            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", workingDir, date.Year, date.Month);
             string fullPath = destinationPath + "\\Strix_losuiltje.png";
-            string originalFullPath = StrixPlatform.Environment.WorkingDirectory + "\\TestFiles\\Strix_losuiltje.png";
+            string originalFullPath = workingDir + "\\TestFiles\\Strix_losuiltje.png";
 
             if (!System.IO.Directory.Exists(destinationPath))
             {
@@ -47,7 +39,7 @@ namespace StrixIT.Platform.Framework.Tests
                 System.IO.File.Copy(originalFullPath, fullPath);
             }
 
-            string root = Path.Combine(StrixPlatform.Environment.WorkingDirectory, "TestResults");
+            string root = Path.Combine(workingDir, "TestResults");
             string fileName = "Strix_losuiltje";
             string fileExtension = "png";
             wrapper.DeleteFile(string.Format("{0}\\{1}.{2}", System.IO.Path.Combine(root, date.Year.ToString(), date.Month.ToString()), fileName, fileExtension));
@@ -59,8 +51,9 @@ namespace StrixIT.Platform.Framework.Tests
         [TestMethod()]
         public void GetHtmlTemplateDataForSpecificCultureShouldGetTemplateForCulture()
         {
-            var wrapper = new FileSystemWrapper();
-            var result = wrapper.GetHtmlTemplate(Path.Combine(StrixPlatform.Environment.WorkingDirectory, "TestFiles"), "AccountInformationMail", "en");
+            var wrapper = GetFileSystemWrapper();
+            var workingDir = Core.Helpers.GetWorkingDirectory();
+            var result = wrapper.GetHtmlTemplate(Path.Combine(workingDir, "TestFiles"), "AccountInformationMail", "en");
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("Your account for [[SITENAME]]", result[0].Subject);
@@ -77,8 +70,9 @@ namespace StrixIT.Platform.Framework.Tests
         [TestMethod()]
         public void GetHtmlTemplateDataForUnknownCultureShouldGetTemplateForDefaultCulture()
         {
-            var wrapper = new FileSystemWrapper();
-            var result = wrapper.GetHtmlTemplate(Path.Combine(StrixPlatform.Environment.WorkingDirectory, "TestFiles"), "AccountInformationMail", "fr");
+            var wrapper = GetFileSystemWrapper();
+            var workingDir = Core.Helpers.GetWorkingDirectory();
+            var result = wrapper.GetHtmlTemplate(Path.Combine(workingDir, "TestFiles"), "AccountInformationMail", "fr");
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("Your account for [[SITENAME]]", result[0].Subject);
@@ -88,8 +82,9 @@ namespace StrixIT.Platform.Framework.Tests
         [TestMethod()]
         public void GetHtmlTemplateDataShouldGetTemplatesForAllCultures()
         {
-            var wrapper = new FileSystemWrapper();
-            var result = wrapper.GetHtmlTemplate(Path.Combine(StrixPlatform.Environment.WorkingDirectory, "TestFiles"), "AccountInformationMail", null);
+            var wrapper = GetFileSystemWrapper();
+            var workingDir = Core.Helpers.GetWorkingDirectory();
+            var result = wrapper.GetHtmlTemplate(Path.Combine(workingDir, "TestFiles"), "AccountInformationMail", null);
             Assert.IsNotNull(result);
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("Your account for [[SITENAME]]", result[0].Subject);
@@ -111,21 +106,16 @@ namespace StrixIT.Platform.Framework.Tests
             Assert.AreEqual("nl", result[1].Culture);
         }
 
-        [TestInitialize]
-        public void Init()
-        {
-            StrixPlatform.CurrentCultureCode = "en";
-        }
-
         [TestMethod()]
         public void SaveDocumentFromByteArrayShouldSaveDocumentToDisk()
         {
-            var wrapper = new FileSystemWrapper();
+            var wrapper = GetFileSystemWrapper();
+            var workingDir = Core.Helpers.GetWorkingDirectory();
             var date = DateTime.Now;
             string fileName = "test_from_bytearray";
             string fileExtension = "pdf";
-            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", StrixPlatform.Environment.WorkingDirectory, date.Year, date.Month);
-            string originalFullPath = StrixPlatform.Environment.WorkingDirectory + "\\TestFiles\\test.pdf";
+            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", workingDir, date.Year, date.Month);
+            string originalFullPath = workingDir + "\\TestFiles\\test.pdf";
             Stream inputStream = new FileStream(originalFullPath, FileMode.Open);
             byte[] bytes = new byte[inputStream.Length];
             inputStream.Read(bytes, 0, (int)inputStream.Length);
@@ -138,12 +128,13 @@ namespace StrixIT.Platform.Framework.Tests
         [TestMethod()]
         public void SaveImageFromByteArrayShouldSaveImageToDisk()
         {
-            var wrapper = new FileSystemWrapper();
+            var wrapper = GetFileSystemWrapper();
+            var workingDir = Core.Helpers.GetWorkingDirectory();
             var date = DateTime.Now;
             string fileName = "Strix_losuiltje_from_bytearray";
             string fileExtension = "png";
-            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", StrixPlatform.Environment.WorkingDirectory, date.Year, date.Month);
-            string originalFullPath = StrixPlatform.Environment.WorkingDirectory + "\\TestFiles\\Strix_losuiltje_2.png";
+            string destinationPath = string.Format("{0}\\TestResults\\{1}\\{2}", workingDir, date.Year, date.Month);
+            string originalFullPath = workingDir + "\\TestFiles\\Strix_losuiltje_2.png";
             Stream inputStream = new FileStream(originalFullPath, FileMode.Open);
             byte[] bytes = new byte[inputStream.Length];
             inputStream.Read(bytes, 0, (int)inputStream.Length);
@@ -154,5 +145,20 @@ namespace StrixIT.Platform.Framework.Tests
         }
 
         #endregion Public Methods
+
+        #region Private Methods
+
+        private FileSystem GetFileSystemWrapper()
+        {
+            var environmentMock = new Mock<IEnvironment>();
+            var cultureMock = new Mock<ICultureService>();
+            cultureMock.Setup(c => c.DefaultCultureCode).Returns("en");
+            environmentMock.Setup(e => e.Cultures).Returns(cultureMock.Object);
+            environmentMock.Setup(e => e.MapPath(It.IsAny<string>())).Returns<string>(x => x);
+            var wrapper = new FileSystem(environmentMock.Object);
+            return wrapper;
+        }
+
+        #endregion Private Methods
     }
 }

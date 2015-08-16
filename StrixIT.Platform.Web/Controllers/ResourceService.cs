@@ -21,6 +21,7 @@
 #endregion Apache License
 
 using StrixIT.Platform.Core;
+using StrixIT.Platform.Core.Environment;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -35,7 +36,18 @@ namespace StrixIT.Platform.Web
 
         private const string RESOURCEIDENTIFIER = "client";
 
+        private ICultureService _cultureService;
+
         #endregion Private Fields
+
+        #region Public Constructors
+
+        public ResourceService(ICultureService cultureService)
+        {
+            _cultureService = cultureService;
+        }
+
+        #endregion Public Constructors
 
         #region Public Methods
 
@@ -49,7 +61,7 @@ namespace StrixIT.Platform.Web
                 return a.GetTypes().Where(t => typeof(Enum).IsAssignableFrom(t) && t.HasAttribute(typeof(ClientEnumAttribute)) && moduleName == assemblyName);
             });
 
-            var cultureInfo = new CultureInfo(StrixPlatform.CurrentCultureCode);
+            var cultureInfo = new CultureInfo(_cultureService.CurrentCultureCode);
 
             foreach (var enumType in loadedEnumTypes)
             {
@@ -85,7 +97,7 @@ namespace StrixIT.Platform.Web
 
                 try
                 {
-                    resourceSet = manager.GetResourceSet(new CultureInfo(StrixPlatform.CurrentCultureCode), true, true);
+                    resourceSet = manager.GetResourceSet(new CultureInfo(_cultureService.CurrentCultureCode), true, true);
                 }
                 catch (System.Resources.MissingManifestResourceException)
                 {

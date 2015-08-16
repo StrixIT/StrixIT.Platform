@@ -4,28 +4,38 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using StrixIT.Platform.Framework.Environment;
 using System.Linq;
 
 namespace StrixIT.Platform.Core.Tests
 {
     [TestClass]
-    public class StrixPlatformTests
+    public class CultureTests
     {
         #region Public Methods
 
-        [Ignore]
         [TestMethod]
         public void PlatformShouldReturnFirstConfiguredCultureAsDefault()
         {
-            var result = StrixPlatform.DefaultCultureCode;
+            var configMock = new Mock<IConfiguration>();
+            var config = new PlatformConfiguration();
+            config.Cultures = "en,nl,de";
+            configMock.Setup(c => c.GetConfiguration<PlatformConfiguration>()).Returns(config);
+            var service = new CultureService(configMock.Object, null);
+            var result = service.DefaultCultureCode;
             Assert.AreEqual("en", result);
         }
 
-        [Ignore]
         [TestMethod]
         public void PlatformShouldReturnListOfCultures()
         {
-            var list = StrixPlatform.Cultures;
+            var configMock = new Mock<IConfiguration>();
+            var config = new PlatformConfiguration();
+            config.Cultures = "en,nl,de";
+            configMock.Setup(c => c.GetConfiguration<PlatformConfiguration>()).Returns(config);
+            var service = new CultureService(configMock.Object, null);
+            var list = service.Cultures;
             Assert.AreEqual(3, list.Count);
             Assert.IsTrue(list.Any(c => c.Code == "nl" && c.NativeName == "Nederlands"));
         }

@@ -53,11 +53,7 @@ namespace StrixIT.Platform.Framework
             var mail = new MailMessage(fromAddress, toAddress, subject, body);
             mail.IsBodyHtml = true;
             bool success = false;
-            var mailSettings = _config.GetConfigSectionGroup("system.net/mailSettings");
-            var pickupDir = mailSettings != null &&
-                            mailSettings.Smtp != null &&
-                            mailSettings.Smtp.SpecifiedPickupDirectory != null ?
-                            mailSettings.Smtp.SpecifiedPickupDirectory.PickupDirectoryLocation : null;
+            var pickupDir = _config.MailPickupDirectory;
 
             if (!string.IsNullOrWhiteSpace(pickupDir) && !Directory.Exists(pickupDir))
             {

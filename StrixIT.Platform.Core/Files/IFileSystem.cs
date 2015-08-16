@@ -1,7 +1,7 @@
 ﻿#region Apache License
 
 //-----------------------------------------------------------------------
-// <copyright file="IFileSystemWrapper.cs" company="StrixIT">
+// <copyright file="IFileSystem.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +27,7 @@ namespace StrixIT.Platform.Core
     /// <summary>
     /// The interface for abstracting away the file system.
     /// </summary>
-    public interface IFileSystemWrapper
+    public interface IFileSystem
     {
         #region Public Methods
 

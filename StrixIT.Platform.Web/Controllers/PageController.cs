@@ -20,6 +20,7 @@
 
 #endregion Apache License
 
+using StrixIT.Platform.Core;
 using System.IO;
 using System.Web.Mvc;
 
@@ -33,6 +34,14 @@ namespace StrixIT.Platform.Web
     /// </summary>
     public class PageController : BaseController
     {
+        #region Public Constructors
+
+        public PageController(IEnvironment environment) : base(environment)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Public Methods
 
         /// <summary>
@@ -67,7 +76,7 @@ namespace StrixIT.Platform.Web
                 return this.View("NotFound");
             }
 
-            return this.View("~/" + Web.Helpers.GetVirtualPath(viewPath));
+            return this.View("~/" + Environment.GetVirtualPath(viewPath));
         }
 
         #endregion Public Methods

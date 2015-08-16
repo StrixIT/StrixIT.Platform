@@ -44,7 +44,7 @@ namespace StrixIT.Platform.Core
         {
             get
             {
-                if (_loggingService == null)
+                if (_loggingService == null && DependencyInjector.Injector != null)
                 {
                     _loggingService = DependencyInjector.TryGet<ILoggingService>();
                 }

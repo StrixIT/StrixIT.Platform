@@ -10,7 +10,11 @@ namespace StrixIT.Platform.Core
     {
         #region Public Methods
 
-        dynamic GetConfigSectionGroup(string group);
+        bool CustomErrorsEnabled { get; }
+
+        string FromAddress { get; }
+
+        string MailPickupDirectory { get; }
 
         T GetConfiguration<T>(string key) where T : class, new();
 

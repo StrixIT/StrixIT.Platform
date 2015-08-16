@@ -38,6 +38,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -55,6 +59,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache\CacheService.cs" />
@@ -67,7 +72,11 @@
     <Compile Include="DataAccess\EntityFrameworkDataSource.cs" />
     <Compile Include="DependencyInjection\PlatformServiceConfiguration.cs" />
     <Compile Include="DependencyInjection\StructureMapDependencyInjector.cs" />
-    <Compile Include="FileSystem\FileSystemWrapper.cs" />
+    <Compile Include="Environment\CultureService.cs" />
+    <Compile Include="Environment\DefaultEnvironment.cs" />
+    <Compile Include="Environment\NullMembershipSettings.cs" />
+    <Compile Include="Environment\SessionService.cs" />
+    <Compile Include="FileSystem\FileSystem.cs" />
     <Compile Include="Mailing\DefaultSmtpClient.cs" />
     <Compile Include="Mailing\Mailer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

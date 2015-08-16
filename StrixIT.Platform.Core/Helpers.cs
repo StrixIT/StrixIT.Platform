@@ -24,7 +24,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace StrixIT.Platform.Core
 {
@@ -88,6 +90,18 @@ namespace StrixIT.Platform.Core
             }
 
             return typedValue;
+        }
+
+        public static string GetWorkingDirectory()
+        {
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToLower();
+
+            if (path.Contains("\\bin\\"))
+            {
+                path = path.Substring(0, path.IndexOf("\\bin\\"));
+            }
+
+            return path;
         }
 
         /// <summary>

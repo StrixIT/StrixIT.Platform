@@ -29,6 +29,14 @@ namespace StrixIT.Platform.Web
     [StrixAuthorization(Permissions = PlatformPermissions.ViewAdminDashboard)]
     public class AdminController : BaseController
     {
+        #region Public Constructors
+
+        public AdminController(IEnvironment environment) : base(environment)
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Public Methods
 
         public ActionResult Index()

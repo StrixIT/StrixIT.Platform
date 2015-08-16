@@ -45,6 +45,14 @@ namespace StrixIT.Platform.Core
             }
         }
 
+        public string Email
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public Guid GroupId
         {
             get

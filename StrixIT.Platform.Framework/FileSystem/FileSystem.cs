@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FileSystemWrapper.cs" company="StrixIT">
+// <copyright file="FileSystem.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,22 +17,35 @@
 //-----------------------------------------------------------------------
 
 using StrixIT.Platform.Core;
+using StrixIT.Platform.Core.Environment;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace StrixIT.Platform.Framework
 {
-    public class FileSystemWrapper : IFileSystemWrapper
+    public class FileSystem : IFileSystem
     {
         #region Private Fields
 
         private List<string> _deleteQueue = new List<string>();
+        private IEnvironment _environment;
         private List<string> _savedQueue = new List<string>();
 
         #endregion Private Fields
+
+        #region Public Constructors
+
+        public FileSystem(IEnvironment environment)
+        {
+            _environment = environment;
+        }
+
+        #endregion Public Constructors
 
         #region Public Methods
 
@@ -116,7 +129,7 @@ namespace StrixIT.Platform.Framework
                 }
                 else
                 {
-                    cultureTemplate.Culture = StrixPlatform.DefaultCultureCode;
+                    cultureTemplate.Culture = _environment.Cultures.DefaultCultureCode;
                     return new List<TemplateData>() { cultureTemplate };
                 }
             }
@@ -125,7 +138,7 @@ namespace StrixIT.Platform.Framework
             {
                 if (string.IsNullOrWhiteSpace(template.Culture))
                 {
-                    template.Culture = StrixPlatform.DefaultCultureCode;
+                    template.Culture = _environment.Cultures.DefaultCultureCode;
                 }
             }
 
@@ -155,7 +168,7 @@ namespace StrixIT.Platform.Framework
             }
 
             bool result = true;
-            fullPath = StrixPlatform.Environment.MapPath(fullPath);
+            fullPath = _environment.MapPath(fullPath);
             string fileDirectory = Path.GetDirectoryName(fullPath);
 
             if (!Directory.Exists(fileDirectory))

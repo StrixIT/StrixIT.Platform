@@ -39,7 +39,7 @@ namespace StrixIT.Platform.Web
         {
             // Allow hooking in to the controller retrieval process.
             var findControllerEvent = new GetControllerEvent(requestContext, controllerType, base.GetControllerInstance, ControllerResolveStage.Find);
-            StrixPlatform.RaiseEvent(findControllerEvent);
+            PlatformEvents.Raise(findControllerEvent);
 
             if (findControllerEvent.Controller != null)
             {
@@ -61,7 +61,7 @@ namespace StrixIT.Platform.Web
                 {
                     // Allow hooking in when no controller is found.
                     var notFoundControllerEvent = new GetControllerEvent(requestContext, controllerType, base.GetControllerInstance, ControllerResolveStage.NotFound);
-                    StrixPlatform.RaiseEvent(notFoundControllerEvent);
+                    PlatformEvents.Raise(notFoundControllerEvent);
 
                     if (notFoundControllerEvent.Controller != null)
                     {

@@ -105,14 +105,13 @@
     <Compile Include="StructureMapDependencyResolver.cs" />
     <Compile Include="WebAssemblyLoader.cs" />
     <Compile Include="WebConstants.cs" />
-    <Compile Include="WebEnvironment.cs" />
-    <Compile Include="WebServiceConfiguration.cs" />
     <Compile Include="Web\AdminAreaRegistration.cs" />
     <Compile Include="Web\AdminRouteConstraint.cs" />
     <Compile Include="Web\BaseView.cs" />
     <Compile Include="Web\ConfirmationConfig.cs" />
     <Compile Include="Web\DataRecords.cs" />
     <Compile Include="Web\DisplayOptions.cs" />
+    <Compile Include="Web\HtmlHelpers.cs" />
     <Compile Include="Web\JsonDotNetValueProviderFactory.cs" />
     <Compile Include="Web\JsonHandlerAttribute.cs" />
     <Compile Include="Web\JsonNetResult.cs" />

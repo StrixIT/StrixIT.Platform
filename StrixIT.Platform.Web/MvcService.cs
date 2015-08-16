@@ -34,15 +34,15 @@ namespace StrixIT.Platform.Web
     {
         #region Private Fields
 
-        private HttpContextBase _httpContext;
+        private IEnvironment _environment;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public MvcService(HttpContextBase httpContext)
+        public MvcService(IEnvironment environment)
         {
-            this._httpContext = httpContext;
+            this._environment = environment;
         }
 
         #endregion Public Constructors
@@ -51,7 +51,7 @@ namespace StrixIT.Platform.Web
 
         public void ConfigureRoutes(RouteCollection routes)
         {
-            var culture = StrixPlatform.DefaultCultureCode.ToLower();
+            var culture = _environment.Cultures.DefaultCultureCode.ToLower();
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.LowercaseUrls = true;
@@ -61,7 +61,7 @@ namespace StrixIT.Platform.Web
                  "Admin_default",
                  "{language}/Admin/{controller}/{action}/{id}",
                  new { language = culture, controller = WebConstants.ADMIN, action = MvcConstants.INDEX, id = UrlParameter.Optional },
-                 new { controller = new AdminRouteConstraint() });
+                 new { controller = new AdminRouteConstraint(_environment.Cultures) });
 
             routes.RemoveAt(routes.Count - 1);
             routes.Insert(0, adminRoute);
@@ -124,11 +124,11 @@ namespace StrixIT.Platform.Web
 
             var cultureFiles = new List<string>();
 
-            foreach (var culture in StrixPlatform.Cultures.Select(c => c.Code))
+            foreach (var culture in _environment.Cultures.Cultures.Select(c => c.Code))
             {
                 var fileName = string.Format("~/Scripts/Kendo/Localization/kendo.culture.{0}.min.js", culture);
 
-                if (System.IO.File.Exists(HttpContext.Current.Server.MapPath(fileName)))
+                if (System.IO.File.Exists(_environment.MapPath(fileName)))
                 {
                     cultureFiles.Add(fileName);
                 }

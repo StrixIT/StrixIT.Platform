@@ -46,6 +46,7 @@ namespace StrixIT.Platform.Web
                 var exception = filterContext.Exception;
                 var request = filterContext.HttpContext.Request;
                 var response = filterContext.HttpContext.Response;
+                var environment = DependencyInjector.Get<IEnvironment>();
                 Logger.Log(exception.Message, exception, LogLevel.Fatal);
 
                 if (request.IsAjaxRequest())
@@ -54,10 +55,21 @@ namespace StrixIT.Platform.Web
                     response.StatusCode = 500;
                     response.TrySkipIisCustomErrors = true;
                 }
-                else if (Helpers.CustomErrorsEnabled(request))
+                else if (environment.Configuration.CustomErrorsEnabled)
                 {
                     filterContext.ExceptionHandled = true;
-                    Helpers.Redirect(response, "Error");
+                    string redirectUrl;
+
+                    if (environment.Cultures.CurrentCultureCode.ToLower() == environment.Cultures.DefaultCultureCode.ToLower())
+                    {
+                        redirectUrl = string.Format("~/{0}", "Error");
+                    }
+                    else
+                    {
+                        redirectUrl = string.Format("~/{0}/{1}", environment.Cultures.CurrentCultureCode, "Error");
+                    }
+
+                    response.Redirect(redirectUrl);
                 }
             }
         }

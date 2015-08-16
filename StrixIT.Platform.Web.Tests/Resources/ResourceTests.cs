@@ -5,6 +5,7 @@
 //------------------------------------------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using StrixIT.Platform.Core.Environment;
 using StrixIT.Platform.Web;
 
 namespace StrixIT.Platform.Core.UnitTests.Resources
@@ -14,23 +15,10 @@ namespace StrixIT.Platform.Core.UnitTests.Resources
     {
         #region Public Methods
 
-        [ClassInitialize]
-        public static void Init(TestContext context)
-        {
-            StrixPlatform.Environment = new DefaultEnvironment();
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            StrixPlatform.CurrentCultureCode = null;
-            StrixPlatform.Environment = null;
-        }
-
         [TestMethod]
         public void GetResourcesForEnShouldReturnResourceStringsForEn()
         {
-            var controller = new HomeController(new ResourceService(), new Mock<IConfiguration>().Object);
+            var controller = GetController("en");
             var result = (ClientResourceCollection)controller.GetResources("tests").Data;
             Assert.AreEqual("User", result["membership"]["user"]);
             Assert.AreEqual("Permission", result["membership"]["permission"]);
@@ -41,23 +29,27 @@ namespace StrixIT.Platform.Core.UnitTests.Resources
         [TestMethod]
         public void GetResourcesForNlShouldReturnResourceStringsForNl()
         {
-            StrixPlatform.CurrentCultureCode = "nl";
-            var controller = new HomeController(new ResourceService(), new Mock<IConfiguration>().Object);
+            var controller = GetController("nl");
             var result = (ClientResourceCollection)controller.GetResources("tests").Data;
-            StrixPlatform.CurrentCultureCode = null;
             Assert.AreEqual("Gebruiker", result["membership"]["user"]);
             Assert.AreEqual("Recht", result["membership"]["permission"]);
             Assert.AreEqual("Nieuws", result["cms"]["news"]);
             Assert.AreEqual("Commentaar", result["cms"]["comment"]);
         }
 
-        [TestInitialize]
-        public void Init()
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private HomeController GetController(string currentCultureCode)
         {
-            StrixPlatform.CurrentCultureCode = "en";
-            StrixPlatform.Environment = new DefaultEnvironment();
+            var cultureServiceMock = new Mock<ICultureService>();
+            cultureServiceMock.Setup(c => c.CurrentCultureCode).Returns(currentCultureCode);
+            var environmentMock = new Mock<IEnvironment>();
+            environmentMock.Setup(e => e.Cultures).Returns(cultureServiceMock.Object);
+            return new HomeController(environmentMock.Object, new ResourceService(cultureServiceMock.Object));
         }
 
-        #endregion Public Methods
+        #endregion Private Methods
     }
 }

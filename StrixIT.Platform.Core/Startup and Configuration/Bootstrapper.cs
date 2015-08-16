@@ -46,6 +46,15 @@ namespace StrixIT.Platform.Core
                 membershipService.Initialize();
             }
 
+            // Initialize cms data
+            var cmsService = DependencyInjector.TryGet<ICmsService>();
+
+            if (cmsService != null)
+            {
+                Logger.Log("Initialize cms");
+                cmsService.Initialize();
+            }
+
             Logger.Log("Run all application initializers");
 
             foreach (var initializer in DependencyInjector.GetAll<IInitializer>())

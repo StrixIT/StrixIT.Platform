@@ -18,8 +18,8 @@
 
 @using System.Web.Optimization;
 @{
-    var defaultCulture = StrixPlatform.DefaultCultureCode.ToLower();
-    var currentCulture = StrixPlatform.CurrentCultureCode.ToLower();
+    var defaultCulture = Platform.Cultures.DefaultCultureCode.ToLower();
+    var currentCulture = Platform.Cultures.CurrentCultureCode.ToLower();
     currentCulture = currentCulture == defaultCulture ? null : currentCulture;
     var loggingService = DependencyInjector.TryGet<ILoggingService>();
     var loggingUrl = loggingService != null ? loggingService.LogScriptErrorUrl : null;

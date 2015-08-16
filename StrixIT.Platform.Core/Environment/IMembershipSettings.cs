@@ -1,7 +1,7 @@
 ﻿#region Apache License
 
 //-----------------------------------------------------------------------
-// <copyright file="IMembershipService.cs" company="StrixIT">
+// <copyright file="IMembershipSettings.cs" company="StrixIT">
 // Copyright 2015 StrixIT. Author R.G. Schurgers MA MSc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,34 +20,29 @@
 
 #endregion Apache License
 
-using System.Linq;
+using System;
 
-namespace StrixIT.Platform.Core
+namespace StrixIT.Platform.Core.Environment
 {
-    /// <summary>
-    /// The interface for the membership service.
-    /// </summary>
-    public interface IMembershipService
+    public interface IMembershipSettings
     {
-        #region Public Methods
+        #region Public Properties
 
         /// <summary>
-        /// Gets a query of group data.
+        /// Gets the id of the admin user.
         /// </summary>
-        /// <returns>The group data</returns>
-        IQueryable<GroupData> GroupData();
+        Guid AdminId { get; }
 
         /// <summary>
-        /// Initializes the membership service.
+        /// Gets the id of the application.
         /// </summary>
-        void Initialize();
+        Guid ApplicationId { get; }
 
         /// <summary>
-        /// Gets a query of user data.
+        /// Gets the id of the main group.
         /// </summary>
-        /// <returns>The user data</returns>
-        IQueryable<UserData> UserData();
+        Guid MainGroupId { get; }
 
-        #endregion Public Methods
+        #endregion Public Properties
     }
 }

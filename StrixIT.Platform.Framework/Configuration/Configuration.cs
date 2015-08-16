@@ -5,7 +5,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net.Configuration;
 using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.Configuration;
 
 namespace StrixIT.Platform.Framework
 {
@@ -14,17 +17,25 @@ namespace StrixIT.Platform.Framework
         #region Private Fields
 
         private static Dictionary<string, IDictionary<string, string>> _combinedAppSettings;
-        private static System.Configuration.ConnectionStringSettingsCollection _combinedConnections;
+        private static ConnectionStringSettingsCollection _combinedConnections;
         private static ConcurrentDictionary<string, object> _configurationCache = new ConcurrentDictionary<string, object>();
         private static bool _configurationsLoaded = false;
         private static object _loadConfigLock = new object();
+
+        private bool _isLocalRequest;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public Configuration()
+        public Configuration() : this(true)
         {
+        }
+
+        public Configuration(bool isLocalRequest)
+        {
+            _isLocalRequest = isLocalRequest;
+
             if (!_configurationsLoaded)
             {
                 LoadConfigurations();
@@ -54,18 +65,39 @@ namespace StrixIT.Platform.Framework
             }
         }
 
+        public bool CustomErrorsEnabled
+        {
+            get
+            {
+                var settings = GetConfigSectionGroup<SystemWebSectionGroup>("system.web");
+                return settings.CustomErrors.Mode != CustomErrorsMode.Off && !(settings.CustomErrors.Mode == CustomErrorsMode.RemoteOnly && _isLocalRequest);
+            }
+        }
+
+        public string FromAddress
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string MailPickupDirectory
+        {
+            get
+            {
+                var mailSettings = GetConfigSectionGroup<MailSettingsSectionGroup>("system.net/mailSettings");
+                var pickupDir = mailSettings != null &&
+                                mailSettings.Smtp != null &&
+                                mailSettings.Smtp.SpecifiedPickupDirectory != null ?
+                                mailSettings.Smtp.SpecifiedPickupDirectory.PickupDirectoryLocation : null;
+                return pickupDir;
+            }
+        }
+
         #endregion Public Properties
 
         #region Public Methods
-
-        public dynamic GetConfigSectionGroup(string group)
-        {
-            ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
-            configMap.ExeConfigFilename = Path.Combine(StrixPlatform.Environment.WorkingDirectory, "web.config");
-            var config = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
-            dynamic settings = config.GetSectionGroup(group);
-            return settings;
-        }
 
         public T GetConfiguration<T>(string key) where T : class, new()
         {
@@ -179,7 +211,7 @@ namespace StrixIT.Platform.Framework
                             _combinedConnections.Add(connection);
                         }
 
-                        var moduleDirectory = Path.Combine(StrixPlatform.Environment.WorkingDirectory, "Areas");
+                        var moduleDirectory = Path.Combine(WorkingDirectory, "Areas");
 
                         if (Directory.Exists(moduleDirectory))
                         {
@@ -202,6 +234,23 @@ namespace StrixIT.Platform.Framework
         }
 
         #endregion Public Methods
+
+        #region Private Properties
+
+        private string WorkingDirectory
+        {
+            get
+            {
+                if (HttpRuntime.AppDomainAppVirtualPath != null)
+                {
+                    return HttpRuntime.AppDomainAppPath;
+                }
+
+                return Helpers.GetWorkingDirectory();
+            }
+        }
+
+        #endregion Private Properties
 
         #region Private Methods
 
@@ -260,6 +309,15 @@ namespace StrixIT.Platform.Framework
                     _combinedConnections.Add(new System.Configuration.ConnectionStringSettings(cs.Name.ToLower(), cs.ConnectionString));
                 }
             }
+        }
+
+        private T GetConfigSectionGroup<T>(string group) where T : class
+        {
+            ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
+            configMap.ExeConfigFilename = Path.Combine(WorkingDirectory, "web.config");
+            var config = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+            T settings = config.GetSectionGroup(group) as T;
+            return settings;
         }
 
         #endregion Private Methods

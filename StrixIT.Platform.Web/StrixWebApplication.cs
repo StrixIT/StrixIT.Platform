@@ -72,12 +72,25 @@ namespace StrixIT.Platform.Web
                 return;
             }
 
-            if (Helpers.CustomErrorsEnabled(new HttpRequestWrapper(Request)))
+            var environment = DependencyInjector.Get<IEnvironment>();
+
+            if (environment.Configuration.CustomErrorsEnabled)
             {
                 if (Response.StatusCode != 401)
                 {
                     Server.ClearError();
-                    Helpers.Redirect(new HttpResponseWrapper(Response), "Error");
+                    string redirectUrl;
+
+                    if (environment.Cultures.CurrentCultureCode.ToLower() == environment.Cultures.DefaultCultureCode.ToLower())
+                    {
+                        redirectUrl = string.Format("~/{0}", "Error");
+                    }
+                    else
+                    {
+                        redirectUrl = string.Format("~/{0}/{1}", environment.Cultures.CurrentCultureCode, "Error");
+                    }
+
+                    Response.Redirect(redirectUrl);
                 }
             }
         }
@@ -117,7 +130,8 @@ namespace StrixIT.Platform.Web
 
         protected void SetupFileWatcher()
         {
-            _fileWatcher = new FileSystemWatcher(Path.Combine(StrixPlatform.Environment.WorkingDirectory, "Areas"));
+            var environment = DependencyInjector.Get<IEnvironment>();
+            _fileWatcher = new FileSystemWatcher(Path.Combine(environment.WorkingDirectory, "Areas"));
             _fileWatcher.IncludeSubdirectories = true;
             _fileWatcher.Created += new FileSystemEventHandler(RestartApp);
             _fileWatcher.Deleted += new FileSystemEventHandler(RestartApp);

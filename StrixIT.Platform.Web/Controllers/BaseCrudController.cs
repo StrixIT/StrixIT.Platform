@@ -53,8 +53,8 @@ namespace StrixIT.Platform.Web
         /// Initializes a new instance of the <see cref="BaseCrudController{TKey,TModel}"/> class.
         /// </summary>
         /// <param name="service">The CRUD service to use</param>
-        protected BaseCrudController(ICrudService<TKey, TModel> service)
-            : base()
+        protected BaseCrudController(IEnvironment environment, ICrudService<TKey, TModel> service)
+            : base(environment)
         {
             this._service = service;
         }

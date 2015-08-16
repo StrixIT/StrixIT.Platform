@@ -29,17 +29,15 @@ namespace StrixIT.Platform.Web
     {
         #region Private Fields
 
-        private IConfiguration _config;
         private IResourceService _resourceService;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public HomeController(IResourceService resourceService, IConfiguration config)
+        public HomeController(IEnvironment environment, IResourceService resourceService) : base(environment)
         {
             _resourceService = resourceService;
-            _config = config;
         }
 
         #endregion Public Constructors
@@ -67,9 +65,9 @@ namespace StrixIT.Platform.Web
 
         public ActionResult Index()
         {
-            if (_config.GetConfiguration<PlatformConfiguration>().SecureHomeController && !HttpContext.Request.IsAuthenticated)
+            if (Environment.Configuration.GetConfiguration<PlatformConfiguration>().SecureHomeController && !HttpContext.Request.IsAuthenticated)
             {
-                return RedirectToAction("Login", "Account", new { area = "Membership", culture = StrixPlatform.CurrentCultureCode });
+                return RedirectToAction("Login", "Account", new { area = "Membership", culture = Environment.Cultures.CurrentCultureCode });
             }
 
             return View();

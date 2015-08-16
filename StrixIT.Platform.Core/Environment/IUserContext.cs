@@ -33,6 +33,11 @@ namespace StrixIT.Platform.Core
         #region Public Properties
 
         /// <summary>
+        /// Gets the current user's name.
+        /// </summary>
+        string Email { get; }
+
+        /// <summary>
         /// Gets or sets the current user's current group id, or the id of the main group if no user
         /// is currently active.
         /// </summary>

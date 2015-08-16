@@ -29,6 +29,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Web;
 
 namespace StrixIT.Platform.Framework
 {
@@ -38,6 +40,7 @@ namespace StrixIT.Platform.Framework
 
         private static IContainer _container;
         private static bool _initialized = false;
+        private static object _lockObject = new object();
 
         #endregion Private Fields
 
@@ -47,8 +50,14 @@ namespace StrixIT.Platform.Framework
         {
             if (!_initialized)
             {
-                _container = CreateContainer();
-                _initialized = true;
+                lock (_lockObject)
+                {
+                    if (!_initialized)
+                    {
+                        _container = CreateContainer();
+                        _initialized = true;
+                    }
+                }
             }
         }
 
@@ -100,6 +109,11 @@ namespace StrixIT.Platform.Framework
 
         #region Private Methods
 
+        private static Expression<Func<T, bool>> FuncToExpression<T>(Func<T, bool> f)
+        {
+            return x => f(x);
+        }
+
         private IContainer CreateContainer()
         {
             return new Container(x =>
@@ -118,6 +132,20 @@ namespace StrixIT.Platform.Framework
                     scanner.ConnectImplementationsToTypesClosing(typeof(IHandlePlatformEvent<>));
                     scanner.WithDefaultConventions();
                 });
+
+                Func<IContext, bool> isLocalFunc = i =>
+                {
+                    try
+                    {
+                        return HttpContext.Current != null && HttpContext.Current.Request != null ? HttpContext.Current.Request.IsLocal : true;
+                    }
+                    catch
+                    {
+                        return true;
+                    }
+                };
+
+                x.For<IConfiguration>().Use<Configuration>().Ctor<bool>("isLocalRequest").Is(FuncToExpression(isLocalFunc));
 
                 var descriptors = GetObjectList<IServiceConfiguration>();
 

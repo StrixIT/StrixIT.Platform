@@ -9,7 +9,7 @@ using System;
 namespace StrixIT.Platform.Core.Tests
 {
     [TestClass()]
-    public class EntityTest
+    public class ValidationTest
     {
         #region Public Methods
 
