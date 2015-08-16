@@ -78,7 +78,9 @@ namespace StrixIT.Platform.Framework
         {
             get
             {
-                throw new NotImplementedException();
+                var mailSettings = GetConfigSectionGroup<MailSettingsSectionGroup>("system.net/mailSettings");
+                var from = mailSettings != null && mailSettings.Smtp != null ? mailSettings.Smtp.From : null;
+                return from;
             }
         }
 

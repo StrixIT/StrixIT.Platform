@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace StrixIT.Platform.Core
@@ -45,6 +46,11 @@ namespace StrixIT.Platform.Core
             var listType = typeof(List<>).MakeGenericType(type);
             var constructor = listType.GetConstructor(new Type[] { typeof(int) });
             return constructor.Invoke(new object[] { length }) as IList;
+        }
+
+        public static Expression<Func<T>> FuncToExpression<T>(Func<T> f)
+        {
+            return () => f();
         }
 
         /// <summary>

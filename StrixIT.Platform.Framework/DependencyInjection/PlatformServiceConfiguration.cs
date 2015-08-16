@@ -2,6 +2,7 @@
 using StrixIT.Platform.Core.DependencyInjection;
 using StrixIT.Platform.Core.Environment;
 using StrixIT.Platform.Framework.Environment;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -49,6 +50,26 @@ namespace StrixIT.Platform.Framework
                 // Tell StructureMap how to construct the objects for which the HttpContext is
                 // needed. A Func<object> is needed, because these have to be created per request by StructureMap.
                 serviceList.Add(new ServiceDescriptor(typeof(HttpContextBase), () => System.Web.HttpContext.Current != null ? new HttpContextWrapper(System.Web.HttpContext.Current) : null));
+
+                Func<bool> isLocalFunc = () =>
+                {
+                    try
+                    {
+                        return HttpContext.Current != null && HttpContext.Current.Request != null ? HttpContext.Current.Request.IsLocal : true;
+                    }
+                    catch
+                    {
+                        return true;
+                    }
+                };
+
+                var constructorValues = new List<ConstructorValue<bool>>()
+                {
+                    new ConstructorValue<bool>("isLocalRequest", Helpers.FuncToExpression(isLocalFunc))
+                };
+
+                var configServiceDescriptor = new ServiceDescriptorWithConstructorValues<bool>(typeof(IConfiguration), typeof(Configuration), constructorValues);
+                serviceList.Add(configServiceDescriptor);
 
                 return serviceList;
             }

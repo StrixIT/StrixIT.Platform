@@ -30,6 +30,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Web;
 
 namespace StrixIT.Platform.Framework
@@ -109,11 +110,6 @@ namespace StrixIT.Platform.Framework
 
         #region Private Methods
 
-        private static Expression<Func<T, bool>> FuncToExpression<T>(Func<T, bool> f)
-        {
-            return x => f(x);
-        }
-
         private IContainer CreateContainer()
         {
             return new Container(x =>
@@ -133,21 +129,11 @@ namespace StrixIT.Platform.Framework
                     scanner.WithDefaultConventions();
                 });
 
-                Func<IContext, bool> isLocalFunc = i =>
-                {
-                    try
-                    {
-                        return HttpContext.Current != null && HttpContext.Current.Request != null ? HttpContext.Current.Request.IsLocal : true;
-                    }
-                    catch
-                    {
-                        return true;
-                    }
-                };
-
-                x.For<IConfiguration>().Use<Configuration>().Ctor<bool>("isLocalRequest").Is(FuncToExpression(isLocalFunc));
-
+                // Process the platform service configuration before any other.
                 var descriptors = GetObjectList<IServiceConfiguration>();
+                var platformConfig = descriptors.First(d => d.GetType().Equals(typeof(PlatformServiceConfiguration)));
+                descriptors.Remove(platformConfig);
+                descriptors.Insert(0, platformConfig);
 
                 foreach (var descriptor in descriptors.SelectMany(d => d.Services))
                 {
@@ -163,7 +149,41 @@ namespace StrixIT.Platform.Framework
                     }
                     else if (descriptor.ImplementationType != null)
                     {
-                        x.For(descriptor.ServiceType).Use(descriptor.ImplementationType).SetLifecycleTo(lifeCycle);
+                        var config = x.For(descriptor.ServiceType).Use(descriptor.ImplementationType);
+
+                        if (descriptor.HasProperty("ConstructorValues"))
+                        {
+                            var values = descriptor.GetPropertyValue("ConstructorValues") as IEnumerable;
+
+                            foreach (var constructorValue in values)
+                            {
+                                var ctorMethod = config.GetType().GetMethods().FirstOrDefault(m => m.Name == "Ctor" && m.GetParameters().Length == 1);
+
+                                if (ctorMethod != null)
+                                {
+                                    var ctorInvoke = ctorMethod.MakeGenericMethod(constructorValue.GetType().GetGenericArguments()).Invoke(config, new object[] { constructorValue.GetPropertyValue("Name") });
+                                    var factory = constructorValue.GetPropertyValue("ObjectFactory");
+                                    var valueType = constructorValue.GetType().GetGenericArguments().First();
+                                    MethodInfo isMethod;
+
+                                    if (factory != null)
+                                    {
+                                        var funcType = typeof(Func<>).MakeGenericType(valueType);
+                                        var expressionType = typeof(Expression<>).MakeGenericType(funcType);
+                                        isMethod = ctorInvoke.GetType().GetMethods().Where(m => m.Name == "Is" && m.GetParameters().Length == 1 && m.GetParameters().First().ParameterType == expressionType).FirstOrDefault();
+                                        isMethod.Invoke(ctorInvoke, new object[] { factory });
+                                    }
+                                    else
+                                    {
+                                        var value = constructorValue.GetPropertyValue("Value");
+                                        isMethod = ctorInvoke.GetType().GetMethods().Where(m => m.Name == "Is" && m.GetParameters().Length == 1 && m.GetParameters().First().ParameterType == valueType).FirstOrDefault();
+                                        isMethod.Invoke(ctorInvoke, new object[] { value });
+                                    }
+                                }
+                            }
+                        }
+
+                        config.SetLifecycleTo(lifeCycle);
                     }
                     else
                     {

@@ -59,7 +59,9 @@
     <Compile Include="Data Mapping\CreateMapEventArgs.cs" />
     <Compile Include="Data Mapping\DataMapper.cs" />
     <Compile Include="Data Mapping\MapConfig.cs" />
+    <Compile Include="DependencyInjection\ConstructorValue.cs" />
     <Compile Include="DependencyInjection\IServiceConfiguration.cs" />
+    <Compile Include="DependencyInjection\ServiceDescriptorWithConstructorValues.cs" />
     <Compile Include="DependencyInjection\ServiceDescriptor.cs" />
     <Compile Include="DependencyInjection\ServiceLifetime.cs" />
     <Compile Include="Environment\CultureData.cs" />

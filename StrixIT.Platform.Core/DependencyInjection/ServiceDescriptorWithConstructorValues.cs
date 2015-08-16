@@ -25,49 +25,37 @@ using System.Collections.Generic;
 
 namespace StrixIT.Platform.Core.DependencyInjection
 {
-    public class ServiceDescriptor
+    public class ServiceDescriptorWithConstructorValues<T> : ServiceDescriptor
     {
         #region Public Constructors
 
-        public ServiceDescriptor(Type serviceType, Func<object> factory) : this(serviceType, factory, ServiceLifetime.Unique)
+        public ServiceDescriptorWithConstructorValues(Type serviceType, Func<object> factory) : base(serviceType, factory)
         {
         }
 
-        public ServiceDescriptor(Type serviceType, Func<object> factory, ServiceLifetime lifetime)
+        public ServiceDescriptorWithConstructorValues(Type serviceType, Func<object> factory, ServiceLifetime lifetime) : base(serviceType, factory, lifetime)
         {
-            ServiceType = serviceType;
-            Factory = factory;
-            Lifetime = lifetime;
+            ConstructorValues = new List<ConstructorValue<T>>();
         }
 
-        public ServiceDescriptor(Type serviceType, ServiceLifetime lifetime) : this(serviceType, (Type)null, lifetime)
-        {
-        }
-
-        public ServiceDescriptor(Type serviceType, Type implementationType) : this(serviceType, implementationType, ServiceLifetime.Unique)
+        public ServiceDescriptorWithConstructorValues(Type serviceType, ServiceLifetime lifetime) : base(serviceType, (Type)null, lifetime)
         {
         }
 
-        public ServiceDescriptor(Type serviceType, Type implementationType, ServiceLifetime lifetime)
+        public ServiceDescriptorWithConstructorValues(Type serviceType, Type implementationType, List<ConstructorValue<T>> values) : this(serviceType, implementationType, ServiceLifetime.Unique, values)
         {
-            ServiceType = serviceType;
-            ImplementationType = implementationType;
-            Lifetime = lifetime;
+        }
+
+        public ServiceDescriptorWithConstructorValues(Type serviceType, Type implementationType, ServiceLifetime lifetime, IList<ConstructorValue<T>> values) : base(serviceType, implementationType, lifetime)
+        {
+            ConstructorValues = values;
         }
 
         #endregion Public Constructors
 
         #region Public Properties
 
-        public Func<object> Factory { get; private set; }
-
-        public Type ImplementationType { get; private set; }
-
-        public object Instance { get; private set; }
-
-        public ServiceLifetime Lifetime { get; private set; }
-
-        public Type ServiceType { get; private set; }
+        public IList<ConstructorValue<T>> ConstructorValues { get; set; }
 
         #endregion Public Properties
     }
