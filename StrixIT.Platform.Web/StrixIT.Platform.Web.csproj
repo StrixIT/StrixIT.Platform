@@ -59,7 +59,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseCrudController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Events\BindModelEvent.cs" />
     <Compile Include="Events\ControllerResolveStage.cs" />
     <Compile Include="Events\GetContentEvent.cs" />

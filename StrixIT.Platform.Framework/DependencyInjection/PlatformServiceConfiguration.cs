@@ -76,9 +76,9 @@ namespace StrixIT.Platform.Framework
                     }
                 };
 
-                var constructorValue = new ConstructorValue<bool>("isLocalRequest", Helpers.FuncToExpression(isLocalFunc));
+                var isLocalValue = new ConstructorValue<bool>("isLocalRequest", Helpers.FuncToExpression(isLocalFunc));
 
-                var configServiceDescriptor = new ServiceDescriptorWithConstructorValue<bool>(typeof(IConfiguration), typeof(Configuration), constructorValue);
+                var configServiceDescriptor = new ServiceDescriptorWithConstructorValue<bool>(typeof(IConfiguration), typeof(Configuration), isLocalValue);
                 serviceList.Add(configServiceDescriptor);
 
                 return serviceList;
