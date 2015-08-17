@@ -33,15 +33,15 @@ namespace StrixIT.Platform.Framework.Environment
     {
         #region Private Fields
 
-        private HttpContextBase _httpContext;
+        private HttpSessionStateBase _httpSession;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public SessionService(HttpContextBase httpContext)
+        public SessionService(HttpSessionStateBase httpSession)
         {
-            _httpContext = httpContext;
+            _httpSession = httpSession;
         }
 
         #endregion Public Constructors
@@ -50,20 +50,20 @@ namespace StrixIT.Platform.Framework.Environment
 
         public void Abandon()
         {
-            if (_httpContext != null && _httpContext.Session != null)
+            if (_httpSession != null)
             {
-                _httpContext.Session.Abandon();
+                _httpSession.Abandon();
             }
         }
 
         public T Get<T>(string key)
         {
-            if (_httpContext == null || _httpContext.Session == null)
+            if (_httpSession == null)
             {
                 return default(T);
             }
 
-            var result = _httpContext.Session[key.ToLower()];
+            var result = _httpSession[key.ToLower()];
 
             if (result == null)
             {
@@ -89,9 +89,20 @@ namespace StrixIT.Platform.Framework.Environment
         {
             IDictionary<string, object> dictionary = new Dictionary<string, object>();
 
-            if (_httpContext != null && _httpContext.Session != null)
+            if (_httpSession != null)
             {
-                dictionary = GetSessionDictionary(_httpContext.Session);
+                var valuesToExclude = new string[] { PlatformConstants.CURRENTUSER.ToLower(), PlatformConstants.CURRENTUSEREMAIL.ToLower(), PlatformConstants.CURRENTUSERGROUPS.ToLower() };
+
+                foreach (var key in _httpSession.Keys)
+                {
+                    if (!valuesToExclude.Contains(key.ToString().ToLower()))
+                    {
+                        var value = _httpSession[(string)key];
+                        dictionary.Add((string)key, JsonConvert.SerializeObject(value));
+                    }
+                }
+
+                return dictionary;
             }
 
             return dictionary;
@@ -99,33 +110,12 @@ namespace StrixIT.Platform.Framework.Environment
 
         public void Store(string key, object value)
         {
-            if (_httpContext != null && _httpContext.Session != null)
+            if (_httpSession != null)
             {
-                _httpContext.Session[key.ToLower()] = value;
+                _httpSession[key.ToLower()] = value;
             }
         }
 
         #endregion Public Methods
-
-        #region Internal Methods
-
-        internal static IDictionary<string, object> GetSessionDictionary(HttpSessionStateBase session)
-        {
-            var dictionary = new Dictionary<string, object>();
-            var valuesToExclude = new string[] { PlatformConstants.CURRENTUSER.ToLower(), PlatformConstants.CURRENTUSEREMAIL.ToLower(), PlatformConstants.CURRENTUSERGROUPS.ToLower() };
-
-            foreach (var key in session.Keys)
-            {
-                if (!valuesToExclude.Contains(key.ToString().ToLower()))
-                {
-                    var value = session[(string)key];
-                    dictionary.Add((string)key, JsonConvert.SerializeObject(value));
-                }
-            }
-
-            return dictionary;
-        }
-
-        #endregion Internal Methods
     }
 }

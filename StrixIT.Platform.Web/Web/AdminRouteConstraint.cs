@@ -24,6 +24,7 @@ using StrixIT.Platform.Core;
 using StrixIT.Platform.Core.Environment;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace StrixIT.Platform.Web
@@ -50,16 +51,24 @@ namespace StrixIT.Platform.Web
 
         #region Public Methods
 
+        internal static string[] AreaNames
+        {
+            get
+            {
+                if (_areaNames == null)
+                {
+                    _areaNames = DependencyInjector.GetTypeList(typeof(AreaRegistration)).Select(a => a.Name.Replace("AreaRegistration", string.Empty).ToLower()).ToArray();
+                }
+
+                return _areaNames;
+            }
+        }
+
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
             if (_cultureCodes == null)
             {
                 _cultureCodes = _cultureService.Cultures.Select(c => c.Code).ToLower().ToArray();
-            }
-
-            if (_areaNames == null)
-            {
-                _areaNames = Helpers.AreaNames.Where(a => a != WebConstants.ADMIN).ToArray();
             }
 
             var match = _cultureCodes.Contains(((string)values[PlatformConstants.LANGUAGE]).ToLower());
@@ -68,7 +77,7 @@ namespace StrixIT.Platform.Web
             {
                 var isAreaRoute = values.ContainsKey("area") || values[parameterName].ToString().ToLower() == "admin";
                 var isAdminUrl = httpContext.Request.Url != null && httpContext.Request.Url.ToString().ToLower().Contains("/admin");
-                var isAreaUrl = !_areaNames.Any(a => a == values[parameterName].ToString().ToLower());
+                var isAreaUrl = !AreaNames.Any(a => a == values[parameterName].ToString().ToLower());
 
                 return isAreaRoute && isAdminUrl && isAreaUrl;
             }

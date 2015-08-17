@@ -58,11 +58,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BaseCrudController.cs" />
-    <Compile Include="Controllers\ClientResourceCollection.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\IResourceService.cs" />
     <Compile Include="Controllers\PageController.cs" />
-    <Compile Include="Controllers\ResourceService.cs" />
     <Compile Include="Events\BindModelEvent.cs" />
     <Compile Include="Events\ControllerResolveStage.cs" />
     <Compile Include="Events\GetContentEvent.cs" />
@@ -71,7 +68,6 @@
     <Compile Include="Filters\LinkAuthenticationToSessionAttribute.cs" />
     <Compile Include="Filters\LogErrorAttribute.cs" />
     <Compile Include="Filters\StrixAuthorizationAttribute.cs" />
-    <Compile Include="Helpers.cs" />
     <Compile Include="Http\HttpService.cs" />
     <Compile Include="Http\IHttpService.cs" />
     <Compile Include="IAuthenticationService.cs" />

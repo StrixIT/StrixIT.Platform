@@ -25,37 +25,24 @@ using System.Collections.Generic;
 
 namespace StrixIT.Platform.Core.DependencyInjection
 {
-    public class ServiceDescriptorWithConstructorValues<T> : ServiceDescriptor
+    public class ServiceDescriptorWithConstructorValue<T> : ServiceDescriptor
     {
         #region Public Constructors
 
-        public ServiceDescriptorWithConstructorValues(Type serviceType, Func<object> factory) : base(serviceType, factory)
+        public ServiceDescriptorWithConstructorValue(Type serviceType, Type implementationType, ConstructorValue<T> value) : this(serviceType, implementationType, ServiceLifetime.Unique, value)
         {
         }
 
-        public ServiceDescriptorWithConstructorValues(Type serviceType, Func<object> factory, ServiceLifetime lifetime) : base(serviceType, factory, lifetime)
+        public ServiceDescriptorWithConstructorValue(Type serviceType, Type implementationType, ServiceLifetime lifetime, ConstructorValue<T> value) : base(serviceType, implementationType, lifetime)
         {
-            ConstructorValues = new List<ConstructorValue<T>>();
-        }
-
-        public ServiceDescriptorWithConstructorValues(Type serviceType, ServiceLifetime lifetime) : base(serviceType, (Type)null, lifetime)
-        {
-        }
-
-        public ServiceDescriptorWithConstructorValues(Type serviceType, Type implementationType, List<ConstructorValue<T>> values) : this(serviceType, implementationType, ServiceLifetime.Unique, values)
-        {
-        }
-
-        public ServiceDescriptorWithConstructorValues(Type serviceType, Type implementationType, ServiceLifetime lifetime, IList<ConstructorValue<T>> values) : base(serviceType, implementationType, lifetime)
-        {
-            ConstructorValues = values;
+            ConstructorValue = value;
         }
 
         #endregion Public Constructors
 
         #region Public Properties
 
-        public IList<ConstructorValue<T>> ConstructorValues { get; set; }
+        public ConstructorValue<T> ConstructorValue { get; set; }
 
         #endregion Public Properties
     }

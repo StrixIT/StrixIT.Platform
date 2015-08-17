@@ -19,7 +19,8 @@ namespace StrixIT.Platform.Framework.Environment
         private static bool? _membershipActive;
         private IConfiguration _configuration;
         private ICultureService _cultures;
-        private HttpContextBase _httpContext;
+        private IMembershipSettings _membershipSettings;
+        private HttpServerUtilityBase _server;
         private ISessionService _session;
         private IUserContext _user;
 
@@ -27,13 +28,14 @@ namespace StrixIT.Platform.Framework.Environment
 
         #region Public Constructors
 
-        public DefaultEnvironment(IConfiguration configuration, ICultureService cultures, ISessionService session, IUserContext user, HttpContextBase httpContext)
+        public DefaultEnvironment(IConfiguration configuration, ICultureService cultures, ISessionService session, IUserContext user, IMembershipSettings membershipSettings, HttpServerUtilityBase server)
         {
             _configuration = configuration;
             _cultures = cultures;
             _session = session;
             _user = user;
-            _httpContext = httpContext;
+            _membershipSettings = membershipSettings;
+            _server = server;
         }
 
         #endregion Public Constructors
@@ -66,6 +68,14 @@ namespace StrixIT.Platform.Framework.Environment
             get
             {
                 return _cultures;
+            }
+        }
+
+        public IMembershipSettings Membership
+        {
+            get
+            {
+                return _membershipSettings;
             }
         }
 
@@ -161,7 +171,7 @@ namespace StrixIT.Platform.Framework.Environment
 
             if (isVirtual)
             {
-                path = _httpContext.Server.MapPath(path);
+                path = _server.MapPath(path);
             }
 
             return path;

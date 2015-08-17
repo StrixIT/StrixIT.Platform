@@ -20,7 +20,6 @@
 
 #endregion Apache License
 
-using StrixIT.Platform.Core;
 using StrixIT.Platform.Core.Environment;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ using System.Globalization;
 using System.Linq;
 using System.Resources;
 
-namespace StrixIT.Platform.Web
+namespace StrixIT.Platform.Core
 {
     public class ResourceService : IResourceService
     {

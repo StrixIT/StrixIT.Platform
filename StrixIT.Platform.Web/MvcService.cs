@@ -168,7 +168,7 @@ namespace StrixIT.Platform.Web
             List<string> viewLocations = new List<string>();
             List<string> partialViewLocations = new List<string>();
 
-            foreach (string area in Helpers.AreaNames)
+            foreach (string area in AdminRouteConstraint.AreaNames)
             {
                 viewLocations.Add(string.Format("~/Areas/{0}/Views/Shared/{{0}}.cshtml", area));
                 viewLocations.Add(string.Format("~/Areas/{0}/Views/{{1}}/{{0}}.cshtml", area));

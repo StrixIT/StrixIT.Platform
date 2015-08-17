@@ -21,6 +21,7 @@
 #endregion Apache License
 
 using StrixIT.Platform.Core;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -29,10 +30,17 @@ namespace StrixIT.Platform.Web
     [StrixAuthorization(Permissions = PlatformPermissions.ViewAdminDashboard)]
     public class AdminController : BaseController
     {
+        #region Private Fields
+
+        private IList<IModuleConfiguration> _moduleConfigs;
+
+        #endregion Private Fields
+
         #region Public Constructors
 
-        public AdminController(IEnvironment environment) : base(environment)
+        public AdminController(IEnvironment environment, IList<IModuleConfiguration> moduleConfigs) : base(environment)
         {
+            _moduleConfigs = moduleConfigs;
         }
 
         #endregion Public Constructors
@@ -41,9 +49,7 @@ namespace StrixIT.Platform.Web
 
         public ActionResult Index()
         {
-            var modules = DependencyInjector.GetAll<IModuleConfiguration>();
-
-            if (!modules.Any(m => m.ModuleLinks.Any()))
+            if (!_moduleConfigs.Any(m => m.ModuleLinks.Any()))
             {
                 Response.StatusCode = 404;
                 Response.TrySkipIisCustomErrors = true;
@@ -55,7 +61,7 @@ namespace StrixIT.Platform.Web
                 return this.View(MvcConstants.TEMPLATE);
             }
 
-            ViewBag.Modules = modules.Where(m => m.ModuleLinks.Count > 0).OrderBy(e => e.Name);
+            ViewBag.Modules = _moduleConfigs.Where(m => m.ModuleLinks.Count > 0).OrderBy(e => e.Name);
             return this.View();
         }
 

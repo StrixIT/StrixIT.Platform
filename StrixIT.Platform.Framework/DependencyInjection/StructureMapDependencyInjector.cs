@@ -31,7 +31,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Web;
 
 namespace StrixIT.Platform.Framework
 {
@@ -151,34 +150,30 @@ namespace StrixIT.Platform.Framework
                     {
                         var config = x.For(descriptor.ServiceType).Use(descriptor.ImplementationType);
 
-                        if (descriptor.HasProperty("ConstructorValues"))
+                        if (descriptor.HasProperty("ConstructorValue"))
                         {
-                            var values = descriptor.GetPropertyValue("ConstructorValues") as IEnumerable;
+                            var value = descriptor.GetPropertyValue("ConstructorValue");
+                            var ctorMethod = config.GetType().GetMethods().FirstOrDefault(m => m.Name == "Ctor" && m.GetParameters().Length == 1);
 
-                            foreach (var constructorValue in values)
+                            if (ctorMethod != null)
                             {
-                                var ctorMethod = config.GetType().GetMethods().FirstOrDefault(m => m.Name == "Ctor" && m.GetParameters().Length == 1);
+                                var ctorInvoke = ctorMethod.MakeGenericMethod(value.GetType().GetGenericArguments()).Invoke(config, new object[] { value.GetPropertyValue("Name") });
+                                var factory = value.GetPropertyValue("ObjectFactory");
+                                var valueType = value.GetType().GetGenericArguments().First();
+                                MethodInfo isMethod;
 
-                                if (ctorMethod != null)
+                                if (factory != null)
                                 {
-                                    var ctorInvoke = ctorMethod.MakeGenericMethod(constructorValue.GetType().GetGenericArguments()).Invoke(config, new object[] { constructorValue.GetPropertyValue("Name") });
-                                    var factory = constructorValue.GetPropertyValue("ObjectFactory");
-                                    var valueType = constructorValue.GetType().GetGenericArguments().First();
-                                    MethodInfo isMethod;
-
-                                    if (factory != null)
-                                    {
-                                        var funcType = typeof(Func<>).MakeGenericType(valueType);
-                                        var expressionType = typeof(Expression<>).MakeGenericType(funcType);
-                                        isMethod = ctorInvoke.GetType().GetMethods().Where(m => m.Name == "Is" && m.GetParameters().Length == 1 && m.GetParameters().First().ParameterType == expressionType).FirstOrDefault();
-                                        isMethod.Invoke(ctorInvoke, new object[] { factory });
-                                    }
-                                    else
-                                    {
-                                        var value = constructorValue.GetPropertyValue("Value");
-                                        isMethod = ctorInvoke.GetType().GetMethods().Where(m => m.Name == "Is" && m.GetParameters().Length == 1 && m.GetParameters().First().ParameterType == valueType).FirstOrDefault();
-                                        isMethod.Invoke(ctorInvoke, new object[] { value });
-                                    }
+                                    var funcType = typeof(Func<>).MakeGenericType(valueType);
+                                    var expressionType = typeof(Expression<>).MakeGenericType(funcType);
+                                    isMethod = ctorInvoke.GetType().GetMethods().Where(m => m.Name == "Is" && m.GetParameters().Length == 1 && m.GetParameters().First().ParameterType == expressionType).FirstOrDefault();
+                                    isMethod.Invoke(ctorInvoke, new object[] { factory });
+                                }
+                                else
+                                {
+                                    var propertyValue = value.GetPropertyValue("Value");
+                                    isMethod = ctorInvoke.GetType().GetMethods().Where(m => m.Name == "Is" && m.GetParameters().Length == 1 && m.GetParameters().First().ParameterType == valueType).FirstOrDefault();
+                                    isMethod.Invoke(ctorInvoke, new object[] { propertyValue });
                                 }
                             }
                         }
@@ -205,7 +200,7 @@ namespace StrixIT.Platform.Framework
                     }
                     break;
 
-                case ServiceLifetime.PerRequest:
+                case ServiceLifetime.PerContext:
                     {
                         lifeCycleType = typeof(HybridLifecycle);
                     }

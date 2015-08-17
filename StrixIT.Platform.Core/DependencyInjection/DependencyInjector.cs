@@ -53,11 +53,6 @@ namespace StrixIT.Platform.Core
             return Injector.Get<T>();
         }
 
-        public static T Get<T>(string instanceKey)
-        {
-            return Injector.Get<T>(instanceKey);
-        }
-
         public static object Get(Type type)
         {
             return Injector.Get(type);
@@ -87,16 +82,6 @@ namespace StrixIT.Platform.Core
         }
 
         /// <summary>
-        /// Gets an object type by its full name from any of the loaded assemblies.
-        /// </summary>
-        /// <param name="typeName">The full name of the type</param>
-        /// <returns>The type</returns>
-        public static Type GetObjectTypeByFullName(string typeName)
-        {
-            return GetObjectType(typeName, x => x.FullName.ToLower() == typeName.ToLower());
-        }
-
-        /// <summary>
         /// Gets an object type by its name from any of the loaded assemblies.
         /// </summary>
         /// <param name="typeName">The name of the type</param>
@@ -119,11 +104,6 @@ namespace StrixIT.Platform.Core
         public static T TryGet<T>()
         {
             return Injector.TryGet<T>();
-        }
-
-        public static T TryGet<T>(string instanceKey)
-        {
-            return Injector.TryGet<T>(instanceKey);
         }
 
         public static object TryGet(Type dependencyType)

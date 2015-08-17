@@ -36,6 +36,7 @@ namespace StrixIT.Platform.Core
         bool CmsActive { get; }
         IConfiguration Configuration { get; }
         ICultureService Cultures { get; }
+        IMembershipSettings Membership { get; }
         bool MembershipActive { get; }
         ISessionService Session { get; }
 

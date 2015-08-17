@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace StrixIT.Platform.Web
+namespace StrixIT.Platform.Core
 {
     /// <summary>
     /// A class to collect resources (strings from resource files and localized enums) to send to

@@ -82,6 +82,9 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Crud\IViewModel.cs" />
     <Compile Include="Crud\IListModel.cs" />
+    <Compile Include="Resources\ClientResourceCollection.cs" />
+    <Compile Include="Resources\IResourceService.cs" />
+    <Compile Include="Resources\ResourceService.cs" />
     <Compile Include="Startup and Configuration\IConfiguration.cs" />
     <Compile Include="Crud\ICrudService.cs" />
     <Compile Include="Membership\IMembershipService.cs" />

@@ -48,14 +48,6 @@ namespace StrixIT.Platform.Core.DependencyInjection
         object Get(Type dependencyType);
 
         /// <summary>
-        /// Gets a named instance of the class of type T.
-        /// </summary>
-        /// <typeparam name="T">The type to get an instance of</typeparam>
-        /// <param name="key">The instance name</param>
-        /// <returns>The instance</returns>
-        T Get<T>(string key);
-
-        /// <summary>
         /// Gets an instance of all classes of type T.
         /// </summary>
         /// <typeparam name="T">The type to get</typeparam>
@@ -82,14 +74,6 @@ namespace StrixIT.Platform.Core.DependencyInjection
         /// <param name="dependencyType">The type to get an instance of</param>
         /// <returns>The instance, or NULL if it was not found</returns>
         object TryGet(Type dependencyType);
-
-        /// <summary>
-        /// Tries to get a named instance of the class of type T.
-        /// </summary>
-        /// <typeparam name="T">The type to get an instance of</typeparam>
-        /// <param name="key">The instance name</param>
-        /// <returns>The instance, or NULL if it was not found</returns>
-        T TryGet<T>(string key);
 
         #endregion Public Methods
     }

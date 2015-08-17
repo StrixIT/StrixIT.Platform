@@ -20,10 +20,13 @@
 
 #endregion Apache License
 
+using Newtonsoft.Json;
 using StrixIT.Platform.Core;
 using StrixIT.Platform.Web;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -119,7 +122,7 @@ namespace StrixIT.Platform.Web
             {
                 var session = this.Session;
                 var email = (string)session[PlatformConstants.CURRENTUSEREMAIL];
-                var dictionary = Helpers.GetSessionDictionary(new HttpSessionStateWrapper(session));
+                var dictionary = GetSessionDictionary(new HttpSessionStateWrapper(session));
                 authenticationService.LogOff(email, dictionary);
             }
         }
@@ -138,6 +141,25 @@ namespace StrixIT.Platform.Web
             _fileWatcher.Changed += new FileSystemEventHandler(RestartApp);
             _fileWatcher.Renamed += new RenamedEventHandler(RestartApp);
             _fileWatcher.EnableRaisingEvents = true;
+        }
+
+        // Todo: this code is also present in the Framework SessionService. Refactor to one
+        //       location? Problem is that I must pass the session here.
+        private static IDictionary<string, object> GetSessionDictionary(HttpSessionStateBase session)
+        {
+            var dictionary = new Dictionary<string, object>();
+            var valuesToExclude = new string[] { PlatformConstants.CURRENTUSER.ToLower(), PlatformConstants.CURRENTUSEREMAIL.ToLower(), PlatformConstants.CURRENTUSERGROUPS.ToLower() };
+
+            foreach (var key in session.Keys)
+            {
+                if (!valuesToExclude.Contains(key.ToString().ToLower()))
+                {
+                    var value = session[(string)key];
+                    dictionary.Add((string)key, JsonConvert.SerializeObject(value));
+                }
+            }
+
+            return dictionary;
         }
 
         private static void RestartApp(object source, FileSystemEventArgs e)

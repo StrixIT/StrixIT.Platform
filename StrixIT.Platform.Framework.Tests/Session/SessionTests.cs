@@ -20,7 +20,6 @@ namespace StrixIT.Platform.Web.Tests
     {
         #region Private Fields
 
-        private Mock<HttpContextBase> _httpContextMock = new Mock<HttpContextBase>();
         private Mock<HttpSessionStateBase> _sessionMock = new Mock<HttpSessionStateBase>();
 
         #endregion Private Fields
@@ -67,8 +66,7 @@ namespace StrixIT.Platform.Web.Tests
 
         private SessionService GetSessionService()
         {
-            _httpContextMock.Setup(m => m.Session).Returns(_sessionMock.Object);
-            return new SessionService(_httpContextMock.Object);
+            return new SessionService(_sessionMock.Object);
         }
 
         #endregion Private Methods

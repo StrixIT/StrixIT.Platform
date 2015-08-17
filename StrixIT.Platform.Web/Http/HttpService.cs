@@ -45,7 +45,7 @@ namespace StrixIT.Platform.Web
         {
             _cultureService = cultureService;
             _sessionService = sessionService;
-            this._httpContext = context;
+            _httpContext = context;
         }
 
         #endregion Public Constructors
@@ -54,26 +54,26 @@ namespace StrixIT.Platform.Web
 
         public void CompressRequest()
         {
-            if (!this._httpContext.IsDebuggingEnabled && !Regex.Match(this._httpContext.Request.Url.ToString(), WebConstants.RESOURCEREGEX).Success)
+            if (!_httpContext.IsDebuggingEnabled && !Regex.Match(_httpContext.Request.Url.ToString(), WebConstants.RESOURCEREGEX).Success)
             {
-                this._httpContext.Response.Filter = new GZipStream(this._httpContext.Response.Filter, CompressionMode.Compress);
-                this._httpContext.Response.AppendHeader("Content-encoding", "gzip");
-                this._httpContext.Response.Cache.VaryByHeaders["Accept-encoding"] = true;
+                _httpContext.Response.Filter = new GZipStream(_httpContext.Response.Filter, CompressionMode.Compress);
+                _httpContext.Response.AppendHeader("Content-encoding", "gzip");
+                _httpContext.Response.Cache.VaryByHeaders["Accept-encoding"] = true;
             }
         }
 
         public void SetCultureForRequest()
         {
-            var url = this._httpContext.Request.Url.ToString();
+            var url = _httpContext.Request.Url.ToString();
             string currentCulture = _cultureService.CurrentCultureCode;
 
             var culturePattern = string.Format("/{0}/", WebConstants.CULTUREREGEX);
-            var match = Regex.Match(this._httpContext.Request.AppRelativeCurrentExecutionFilePath, culturePattern);
+            var match = Regex.Match(_httpContext.Request.AppRelativeCurrentExecutionFilePath, culturePattern);
 
-            if (!match.Success && this._httpContext.Request.AppRelativeCurrentExecutionFilePath.Substring(2).IndexOf("/") <= 0)
+            if (!match.Success && _httpContext.Request.AppRelativeCurrentExecutionFilePath.Substring(2).IndexOf("/") <= 0)
             {
                 culturePattern = string.Format("/{0}", WebConstants.CULTUREREGEX);
-                match = Regex.Match(this._httpContext.Request.AppRelativeCurrentExecutionFilePath, culturePattern);
+                match = Regex.Match(_httpContext.Request.AppRelativeCurrentExecutionFilePath, culturePattern);
             }
 
             if (match.Success)
@@ -103,7 +103,7 @@ namespace StrixIT.Platform.Web
 
         public void SetResponseHeaders()
         {
-            var response = this._httpContext.Response;
+            var response = _httpContext.Response;
             response.Headers.Remove("Server");
             response.Headers.Remove("X-AspNetMvc-Version");
             response.Headers.Remove("X-AspNet-Version");

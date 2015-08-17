@@ -20,7 +20,7 @@
 
 #endregion Apache License
 
-namespace StrixIT.Platform.Web
+namespace StrixIT.Platform.Core
 {
     /// <summary>
     /// An interface for retrieving string resources and localized enums.

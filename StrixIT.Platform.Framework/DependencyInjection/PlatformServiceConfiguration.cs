@@ -25,7 +25,7 @@ namespace StrixIT.Platform.Framework
                 }
                 else
                 {
-                    serviceList.Add(new ServiceDescriptor(typeof(IUserContext), ServiceLifetime.PerRequest));
+                    serviceList.Add(new ServiceDescriptor(typeof(IUserContext), ServiceLifetime.PerContext));
                 }
 
                 if (!DependencyInjector.GetTypeList(typeof(IMembershipSettings)).Where(t => !t.IsInterface && !t.Equals(typeof(NullMembershipSettings))).Any())
@@ -44,12 +44,14 @@ namespace StrixIT.Platform.Framework
                 // Scope all data sources to http or thread local.
                 foreach (var type in DependencyInjector.GetLoadedAssemblies().SelectMany(a => a.GetTypes().Where(t => typeof(IDataSource).IsAssignableFrom(t) && t.IsInterface)))
                 {
-                    serviceList.Add(new ServiceDescriptor(type, ServiceLifetime.PerRequest));
+                    serviceList.Add(new ServiceDescriptor(type, ServiceLifetime.PerContext));
                 }
 
                 // Tell StructureMap how to construct the objects for which the HttpContext is
                 // needed. A Func<object> is needed, because these have to be created per request by StructureMap.
                 serviceList.Add(new ServiceDescriptor(typeof(HttpContextBase), () => System.Web.HttpContext.Current != null ? new HttpContextWrapper(System.Web.HttpContext.Current) : null));
+                serviceList.Add(new ServiceDescriptor(typeof(HttpServerUtilityBase), () => System.Web.HttpContext.Current != null ? new HttpServerUtilityWrapper(System.Web.HttpContext.Current.Server) : null));
+                serviceList.Add(new ServiceDescriptor(typeof(HttpSessionStateBase), () => System.Web.HttpContext.Current != null && HttpContext.Current.Session != null ? new HttpSessionStateWrapper(System.Web.HttpContext.Current.Session) : null));
 
                 Func<bool> isLocalFunc = () =>
                 {
@@ -63,12 +65,9 @@ namespace StrixIT.Platform.Framework
                     }
                 };
 
-                var constructorValues = new List<ConstructorValue<bool>>()
-                {
-                    new ConstructorValue<bool>("isLocalRequest", Helpers.FuncToExpression(isLocalFunc))
-                };
+                var constructorValue = new ConstructorValue<bool>("isLocalRequest", Helpers.FuncToExpression(isLocalFunc));
 
-                var configServiceDescriptor = new ServiceDescriptorWithConstructorValues<bool>(typeof(IConfiguration), typeof(Configuration), constructorValues);
+                var configServiceDescriptor = new ServiceDescriptorWithConstructorValue<bool>(typeof(IConfiguration), typeof(Configuration), constructorValue);
                 serviceList.Add(configServiceDescriptor);
 
                 return serviceList;
