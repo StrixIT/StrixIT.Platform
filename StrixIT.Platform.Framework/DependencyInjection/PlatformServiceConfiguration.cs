@@ -50,6 +50,17 @@ namespace StrixIT.Platform.Framework
                 // Tell StructureMap how to construct the objects for which the HttpContext is
                 // needed. A Func<object> is needed, because these have to be created per request by StructureMap.
                 serviceList.Add(new ServiceDescriptor(typeof(HttpContextBase), () => System.Web.HttpContext.Current != null ? new HttpContextWrapper(System.Web.HttpContext.Current) : null));
+                serviceList.Add(new ServiceDescriptor(typeof(HttpRequestBase), () =>
+                {
+                    try
+                    {
+                        return System.Web.HttpContext.Current != null && HttpContext.Current.Request != null ? new HttpRequestWrapper(System.Web.HttpContext.Current.Request) : null;
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }));
                 serviceList.Add(new ServiceDescriptor(typeof(HttpServerUtilityBase), () => System.Web.HttpContext.Current != null ? new HttpServerUtilityWrapper(System.Web.HttpContext.Current.Server) : null));
                 serviceList.Add(new ServiceDescriptor(typeof(HttpSessionStateBase), () => System.Web.HttpContext.Current != null && HttpContext.Current.Session != null ? new HttpSessionStateWrapper(System.Web.HttpContext.Current.Session) : null));
 
