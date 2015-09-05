@@ -136,8 +136,11 @@
     <Content Include="Areas\Admin\Views\Web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Scripts\Kendo\Localization\kendo.culture.de.js" />
+    <Content Include="Scripts\Kendo\Localization\kendo.culture.de.min.js" />
     <Content Include="Scripts\Kendo\Localization\kendo.culture.en.js" />
+    <Content Include="Scripts\Kendo\Localization\kendo.culture.en.min.js" />
     <Content Include="Scripts\Kendo\Localization\kendo.culture.nl.js" />
+    <Content Include="Scripts\Kendo\Localization\kendo.culture.nl.min.js" />
     <Content Include="Styles\fonts\fontawesome-webfont.eot" />
     <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
     <Content Include="Styles\fonts\fontawesome-webfont.woff" />
