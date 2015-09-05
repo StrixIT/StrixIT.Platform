@@ -42,11 +42,9 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper.Net4">
-      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.0.4.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -137,13 +135,20 @@
     <Content Include="Areas\Admin\Views\Shared\_ListLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Scripts\Kendo\Localization\kendo.culture.de.js" />
+    <Content Include="Scripts\Kendo\Localization\kendo.culture.en.js" />
+    <Content Include="Scripts\Kendo\Localization\kendo.culture.nl.js" />
     <Content Include="Styles\fonts\fontawesome-webfont.eot" />
     <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
     <Content Include="Styles\fonts\fontawesome-webfont.woff" />
     <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
     <Content Include="Styles\fonts\FontAwesome.otf" />
+    <Content Include="Styles\Kendo\Bootstrap\markers.png" />
+    <Content Include="Styles\Kendo\Bootstrap\markers_2x.png" />
     <Content Include="Styles\Kendo\images\kendoui.ttf" />
     <Content Include="Styles\Kendo\images\kendoui.woff" />
+    <Content Include="Styles\Kendo\Moonlight\markers.png" />
+    <Content Include="Styles\Kendo\Moonlight\markers_2x.png" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\LanguagePicker.cshtml" />
@@ -173,7 +178,7 @@
     <Content Include="Scripts\Angular\Services\angular-cookies.js" />
     <Content Include="Scripts\Angular\Services\angular-route.js" />
     <Content Include="Scripts\Angular\Services\angular-sanitize.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.3.js" />
+    <Content Include="Scripts\JQuery\jquery.js" />
     <Content Include="Scripts\Kendo\kendo.angular.js" />
     <Content Include="Scripts\Kendo\kendo.binder.js" />
     <Content Include="Scripts\Kendo\kendo.calendar.js" />
@@ -188,12 +193,6 @@
     <Content Include="Scripts\Kendo\kendo.userevents.js" />
     <Content Include="Scripts\Kendo\kendo.validator.js" />
     <Content Include="Scripts\Kendo\kendo.view.js" />
-    <Content Include="Scripts\Kendo\Localization\kendo.culture.de.js" />
-    <Content Include="Scripts\Kendo\Localization\kendo.culture.de.min.js" />
-    <Content Include="Scripts\Kendo\Localization\kendo.culture.en.js" />
-    <Content Include="Scripts\Kendo\Localization\kendo.culture.en.min.js" />
-    <Content Include="Scripts\Kendo\Localization\kendo.culture.nl.js" />
-    <Content Include="Scripts\Kendo\Localization\kendo.culture.nl.min.js" />
     <Content Include="Scripts\Kendo\Widgets\kendo.autocomplete.js" />
     <Content Include="Scripts\Kendo\Widgets\kendo.button.js" />
     <Content Include="Scripts\Kendo\Widgets\kendo.datepicker.js" />

@@ -135,7 +135,7 @@ namespace StrixIT.Platform.Web
             }
 
             bundles.Add(new ScriptBundle("~/bundles/framework").Include(
-                "~/Scripts/JQuery/jquery-2*",
+                "~/Scripts/JQuery/jquery*",
                 "~/Scripts/Angular/angular*",
                 "~/Scripts/Angular/Services/angular*",
                 "~/Scripts/Kendo/kendo.core.*",

@@ -81,9 +81,10 @@ namespace StrixIT.Platform.Core
             // Create the MapFrom expression.
             var mapParameter = Expression.Parameter(memberConfigExpressionType, "c");
 
-            // I can use MapFrom here because there is only one such method in the current version
-            // of AutoMapper. If that changes, find out how to get one with generic parameters.
-            var mapFromInfo = memberConfigExpressionType.GetMethod("MapFrom").MakeGenericMethod(propertyType);
+            // Todo: there are two MapFrom methods. The first one is correct at present. Find out
+            //       how to select the correct one without relying on its position.
+            var mapFromMethods = memberConfigExpressionType.GetMethods().Where(m => m.Name == "MapFrom");
+            var mapFromInfo = mapFromMethods.FirstOrDefault().MakeGenericMethod(propertyType);
             var mapFromBody = Expression.Call(mapParameter, mapFromInfo, GetPropertySelector(sourceType, name));
             var mapFromLambda = Expression.Lambda(mapFromBody, mapParameter);
 
@@ -298,7 +299,8 @@ namespace StrixIT.Platform.Core
             if (!_autoMapperMethods.ContainsKey(name))
             {
                 var typeQuery = Assembly.GetAssembly(typeof(Mapper)).GetTypes().SelectMany(t => t.GetMethods());
-                var info = typeQuery.FirstOrDefault(m => m.Name == name && m.GetGenericArguments().Count() == parameters.Count() && m.GetParameters().Count() == numberOfParameters);
+                var all = typeQuery.Where(m => m.Name == name && m.GetGenericArguments().Count() == parameters.Count() && m.GetParameters().Count() == numberOfParameters && m.IsStatic).ToList();
+                var info = all.FirstOrDefault();
                 _autoMapperMethods.GetOrAdd(name, info);
             }
 
