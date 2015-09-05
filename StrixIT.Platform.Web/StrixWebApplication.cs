@@ -189,7 +189,10 @@ namespace StrixIT.Platform.Web
 
         private static void TearDownFileWatcher()
         {
-            _fileWatcher.Dispose();
+            if (_fileWatcher != null)
+            {
+                _fileWatcher.Dispose();
+            }
         }
 
         private static bool TryWriteBinFolder()

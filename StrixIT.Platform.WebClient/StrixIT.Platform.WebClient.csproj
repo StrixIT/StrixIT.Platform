@@ -337,7 +337,7 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y /E /F /I "$(TargetPath)\..\..\Scripts" "c:\builds\Scripts"
-xcopy /Y /E /F /I "$(TargetPath)\..\..\Scripts" "c:\builds\Styles"</PostBuildEvent>
+xcopy /Y /E /F /I "$(TargetPath)\..\..\Styles" "c:\builds\Styles"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
