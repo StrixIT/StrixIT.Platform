@@ -141,6 +141,8 @@
     <Content Include="Scripts\Kendo\Localization\kendo.culture.en.min.js" />
     <Content Include="Scripts\Kendo\Localization\kendo.culture.nl.js" />
     <Content Include="Scripts\Kendo\Localization\kendo.culture.nl.min.js" />
+    <Content Include="Scripts\StrixIT\Directives\DropDown\strixit.dropdown.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Styles\fonts\fontawesome-webfont.eot" />
     <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
     <Content Include="Styles\fonts\fontawesome-webfont.woff" />
@@ -309,7 +311,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

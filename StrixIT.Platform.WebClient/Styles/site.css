@@ -52,9 +52,9 @@ a.nonexistentpage {
     overflow: hidden;
 }
 
-#languagepicker span {
-    display: none;
-}
+    #languagepicker span {
+        display: none;
+    }
 
 .search-result-list {
     border: none;

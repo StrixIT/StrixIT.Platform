@@ -137,7 +137,7 @@
 
     function isIE() {
         // Adapted from http://stackoverflow.com/questions/19999388/jquery-check-if-user-is-using-ie.
-            var userAgent = window.navigator.userAgent;
-            return userAgent.indexOf('MSIE ') > 0 || userAgent.indexOf('Trident/') > 0 || userAgent.indexOf('Edge/') > 0;
+        var userAgent = window.navigator.userAgent;
+        return userAgent.indexOf('MSIE ') > 0 || userAgent.indexOf('Trident/') > 0 || userAgent.indexOf('Edge/') > 0;
     }
 })(window);
